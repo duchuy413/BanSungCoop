@@ -9,13 +9,12 @@ namespace MoreMountains.CorgiEngine
 	/// </summary>
 	public class InputManager : PersistentSingleton<InputManager>
 	{
-		
 		public bool InDialogueZone;
-	    protected static CharacterBehavior _player;
-	    protected static CorgiController _controller;
-
 		public CharacterBehavior player;
 		public CorgiController controller;
+
+		protected static CharacterBehavior _player;
+	    protected static CorgiController _controller;
 
 		/// <summary>
 		/// We get the player from its tag.
