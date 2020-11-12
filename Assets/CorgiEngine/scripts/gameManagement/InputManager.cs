@@ -14,20 +14,26 @@ namespace MoreMountains.CorgiEngine
 	    protected static CharacterBehavior _player;
 	    protected static CorgiController _controller;
 
-	    /// <summary>
-	    /// We get the player from its tag.
-	    /// </summary>
-	    protected virtual void Start()
+		public CharacterBehavior player;
+		public CorgiController controller;
+
+		/// <summary>
+		/// We get the player from its tag.
+		/// </summary>
+		protected virtual void Start()
 		{
 			InDialogueZone = false;
-			if (GameManager.Instance.Player!=null)
-			{
-				_player = GameManager.Instance.Player;
-				if (GameManager.Instance.Player.GetComponent<CorgiController>() != null)	
-				{
-					_controller = GameManager.Instance.Player.GetComponent<CorgiController>();
-				}
-			}
+			//if (GameManager.Instance.Player!=null)
+			//{
+			//	_player = GameManager.Instance.Player;
+			//	if (GameManager.Instance.Player.GetComponent<CorgiController>() != null)	
+			//	{
+			//		_controller = GameManager.Instance.Player.GetComponent<CorgiController>();
+			//	}
+			//}
+
+			_player = player;
+			_controller = controller;
 		}
 
 	    /// <summary>
