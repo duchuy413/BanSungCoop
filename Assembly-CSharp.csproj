@@ -193,6 +193,8 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+    <Compile Include="Assets\_Game\Scripts\MyNetworkDiscoveryHUD.cs" />
+    <Compile Include="Assets\_Game\Scripts\NetworkSystem.cs" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\VortexEffect.shader" />

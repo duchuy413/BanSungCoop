@@ -44,11 +44,12 @@ namespace MoreMountains.CorgiEngine
 		public virtual void Awake()
 		{
 			Instance=this;
-	        if (PlayerPrefab!= null)
-	        { 
-	    		_player = (CharacterBehavior)Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-		    	GameManager.Instance.Player=_player;
-	        }
+	   //     if (PlayerPrefab!= null)
+	   //     { 
+	   // 		//_player = (CharacterBehavior)Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+				//_player = NetworkSystem.player.GetComponent<CharacterBehavior>();
+				//GameManager.Instance.Player=_player;
+	   //     }
 	    }
 		
 		/// <summary>
@@ -56,8 +57,15 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		public virtual void Start()
 		{
+			if (PlayerPrefab != null)
+			{
+				//_player = (CharacterBehavior)Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+				_player = NetworkSystem.player.GetComponent<CharacterBehavior>();
+				GameManager.Instance.Player = _player;
+			}
+
 			// storage
-			_savedPoints=GameManager.Instance.Points;
+			_savedPoints =GameManager.Instance.Points;
 			_checkpoints = FindObjectsOfType<CheckPoint>().OrderBy(t => t.transform.position.x).ToList();
 			_currentCheckPointIndex = _checkpoints.Count > 0 ? 0 : -1;
 			_started = DateTime.UtcNow;
@@ -90,28 +98,28 @@ namespace MoreMountains.CorgiEngine
 			    GUIManager.Instance.FaderOn(false,IntroFadeDuration);
 	        }
 
-	        // in debug mode we spawn the player on the debug spawn point
-	        #if UNITY_EDITOR 
-	        if (DebugSpawn!= null)
-			{
-				DebugSpawn.SpawnPlayer(_player);
-			}
-			else if (_currentCheckPointIndex != -1)
-			{
-				_checkpoints[_currentCheckPointIndex].SpawnPlayer(_player);
-			}
-			#else
+            // in debug mode we spawn the player on the debug spawn point
+#if UNITY_EDITOR
+            if (DebugSpawn != null)
+            {
+                DebugSpawn.SpawnPlayer(_player);
+            }
+            else if (_currentCheckPointIndex != -1)
+            {
+                _checkpoints[_currentCheckPointIndex].SpawnPlayer(_player);
+            }
+#else
 			if (_currentCheckPointIndex != -1)
 			{			
 				_checkpoints[_currentCheckPointIndex].SpawnPlayer(_player);
 			}
-			#endif		
-		}
+#endif
+        }
 
-		/// <summary>
-		/// Every frame we check for checkpoint reach
-		/// </summary>
-		public virtual void Update()
+        /// <summary>
+        /// Every frame we check for checkpoint reach
+        /// </summary>
+        public virtual void Update()
 		{
 			var isAtLastCheckPoint = _currentCheckPointIndex + 1 >= _checkpoints.Count;
 			if (isAtLastCheckPoint)

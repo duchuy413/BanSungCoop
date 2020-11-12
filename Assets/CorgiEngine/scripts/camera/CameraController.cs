@@ -9,7 +9,6 @@ namespace MoreMountains.CorgiEngine
 	/// </summary>
 	public class CameraController : MonoBehaviour 
 	{
-		
 		/// True if the camera should follow the player
 		public bool FollowsPlayer{get;set;}
 
@@ -80,9 +79,10 @@ namespace MoreMountains.CorgiEngine
 			// We make the camera follow the player
 			FollowsPlayer=true;
 			_currentZoom=MinimumZoom;
-			
+
 			// player and level bounds initialization
-			_target = GameManager.Instance.Player.transform;
+			//_target = GameManager.Instance.Player.transform;
+			_target = NetworkSystem.player.transform;
 			if (_target.GetComponent<CorgiController>()==null)
 				return;
 			_targetController=_target.GetComponent<CorgiController>();

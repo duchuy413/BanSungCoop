@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnitySampleAssets.CrossPlatformInput;
+using Mirror;
 
 namespace MoreMountains.CorgiEngine
 {	
@@ -8,7 +9,7 @@ namespace MoreMountains.CorgiEngine
 	/// This class will pilot the CorgiController component of your character.
 	/// This is where you'll implement all of your character's game rules, like jump, dash, shoot, stuff like that.
 	/// </summary>
-	public class CharacterBehavior : MonoBehaviour,CanTakeDamage
+	public class CharacterBehavior : NetworkBehaviour,CanTakeDamage
 	{
 		/// the boxcollider2D that will be used to check if the character's head is colliding with anything (used when crouched mostly)
 		public BoxCollider2D HeadCollider ;
@@ -101,10 +102,21 @@ namespace MoreMountains.CorgiEngine
 				_initialColor=GetComponent<Renderer>().material.color;
 		}
 
-	    /// <summary>
-	    /// Further initialization
-	    /// </summary>
-	    protected virtual void Start()
+		/// <summary>
+		/// Register gameObject to networkSystem, then player will be called somewhere else in game
+		/// </summary>
+		public override void OnStartLocalPlayer()
+		{
+			if (isLocalPlayer)
+			{
+				NetworkSystem.player = gameObject;
+			}
+		}
+
+		/// <summary>
+		/// Further initialization
+		/// </summary>
+		protected virtual void Start()
 		{
 	        // we get the animator
 	        if (GetComponent<Animator>() != null)
