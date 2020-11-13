@@ -4,102 +4,105 @@ using UnitySampleAssets.CrossPlatformInput;
 using Mirror;
 
 namespace MoreMountains.CorgiEngine
-{	
+{
 	/// <summary>
 	/// This class will pilot the CorgiController component of your character.
 	/// This is where you'll implement all of your character's game rules, like jump, dash, shoot, stuff like that.
 	/// </summary>
-	public class CharacterBehavior : NetworkBehaviour,CanTakeDamage
+	public class CharacterBehavior : NetworkBehaviour, CanTakeDamage
 	{
 		/// the boxcollider2D that will be used to check if the character's head is colliding with anything (used when crouched mostly)
-		public BoxCollider2D HeadCollider ;
-		
+		public BoxCollider2D HeadCollider;
+
 		/// the current health of the character
-		public int Health {get; set; }	
-		
+		public int Health { get; set; }
+
 		/// the various states of the character
 		public CharacterBehaviorState BehaviorState { get; protected set; }
 		/// the default parameters of the character
-		public CharacterBehaviorParameters DefaultBehaviorParameters;	
+		public CharacterBehaviorParameters DefaultBehaviorParameters;
 		/// the current behavior parameters (they can be overridden at times)
-		public CharacterBehaviorParameters BehaviorParameters{get{return _overrideBehaviorParameters ?? DefaultBehaviorParameters;}}
+		public CharacterBehaviorParameters BehaviorParameters { get { return _overrideBehaviorParameters ?? DefaultBehaviorParameters; } }
 		/// the permissions associated to the character
-		public CharacterBehaviorPermissions Permissions ; 
-		
-		[Space(10)]	
+		public CharacterBehaviorPermissions Permissions;
+
+		[Space(10)]
 		[Header("Particle Effects")]
 		/// the effect that will be instantiated everytime the character touches the ground
 		public ParticleSystem TouchTheGroundEffect;
 		/// the effect that will be instantiated everytime the character touches the ground
 		public ParticleSystem HurtEffect;
-		
-		[Space(10)]	
+
+		[Space(10)]
 		[Header("Sounds")]
 		// the sound to play when the player jumps
 		public AudioClip PlayerJumpSfx;
 		// the sound to play when the player gets hit
 		public AudioClip PlayerHitSfx;
-		
+
+		//[SyncVar]
+		//public Vector3 curPos;
+
 		/// is true if the character can jump
-		public bool JumpAuthorized 
-		{ 
-			get 
-			{ 
-				if ( (BehaviorParameters.JumpRestrictions == CharacterBehaviorParameters.JumpBehavior.CanJumpAnywhere) ||  (BehaviorParameters.JumpRestrictions == CharacterBehaviorParameters.JumpBehavior.CanJumpAnywhereAnyNumberOfTimes) )
+		public bool JumpAuthorized
+		{
+			get
+			{
+				if ((BehaviorParameters.JumpRestrictions == CharacterBehaviorParameters.JumpBehavior.CanJumpAnywhere) || (BehaviorParameters.JumpRestrictions == CharacterBehaviorParameters.JumpBehavior.CanJumpAnywhereAnyNumberOfTimes))
 					return true;
-				
+
 				if (BehaviorParameters.JumpRestrictions == CharacterBehaviorParameters.JumpBehavior.CanJumpOnGround)
 					return _controller.State.IsGrounded;
-				
-				return false; 
+
+				return false;
 			}
 		}
 
-	    // associated gameobjects and positions
-	    protected CameraController _sceneCamera;
+		// associated gameobjects and positions
+		protected CameraController _sceneCamera;
 		protected CorgiController _controller;
 
-	    protected Animator _animator;
-	    protected CharacterJetpack _jetpack;
-	    protected CharacterShoot _shoot;
-	    protected Color _initialColor;
-	    protected Vector3 _initialScale;
+		protected Animator _animator;
+		protected CharacterJetpack _jetpack;
+		protected CharacterShoot _shoot;
+		protected Color _initialColor;
+		protected Vector3 _initialScale;
 
-	    // storage for overriding behavior parameters
-	    protected CharacterBehaviorParameters _overrideBehaviorParameters;
-	    // storage for original gravity and timer
-	    protected float _originalGravity;
+		// storage for overriding behavior parameters
+		protected CharacterBehaviorParameters _overrideBehaviorParameters;
+		// storage for original gravity and timer
+		protected float _originalGravity;
 
-	    // the current normalized horizontal speed
-	    protected float _normalizedHorizontalSpeed;
+		// the current normalized horizontal speed
+		protected float _normalizedHorizontalSpeed;
 
-	    // pressure timed jumps
-	    protected float _jumpButtonPressTime = 0;
-	    protected bool _jumpButtonPressed=false;
-	    protected bool _jumpButtonReleased=false;
+		// pressure timed jumps
+		protected float _jumpButtonPressTime = 0;
+		protected bool _jumpButtonPressed = false;
+		protected bool _jumpButtonReleased = false;
 
-	    // true if the player is facing right
-	    protected bool _isFacingRight=true;
+		// true if the player is facing right
+		protected bool _isFacingRight = true;
 
-	    // INPUT AXIS
-	    protected float _horizontalMove;
-	    protected float _verticalMove;
-		
+		// INPUT AXIS
+		protected float _horizontalMove;
+		protected float _verticalMove;
+
 		/// <summary>
 		/// Initializes this instance of the character
 		/// </summary>
 		protected virtual void Awake()
-		{		
+		{
 			BehaviorState = new CharacterBehaviorState();
 			_sceneCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
 			_controller = GetComponent<CorgiController>();
 			_jetpack = GetComponent<CharacterJetpack>();
-			_shoot = GetComponent<CharacterShoot> ();
-	        _initialScale = transform.localScale;
-	        Health =BehaviorParameters.MaxHealth;
-			
-			if (GetComponent<Renderer>()!=null)
-				_initialColor=GetComponent<Renderer>().material.color;
+			_shoot = GetComponent<CharacterShoot>();
+			_initialScale = transform.localScale;
+			Health = BehaviorParameters.MaxHealth;
+
+			if (GetComponent<Renderer>() != null)
+				_initialColor = GetComponent<Renderer>().material.color;
 		}
 
 		/// <summary>
@@ -118,33 +121,40 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		protected virtual void Start()
 		{
-			if (!isLocalPlayer)
+			InvokeRepeating("DebugPosition", 4f, 4f);
+
+			//Debug.Log("HAS AUTHORITY IS: " + hasAuthority);
+			//if (!isLocalPlayer)
+			//{
+			//	return;
+			//}
+
+			// we get the animator
+			if (GetComponent<Animator>() != null)
 			{
-				return;
+				_animator = GetComponent<Animator>();
 			}
-
-			//CameraFollower.Instance.target = gameObject;
-
-			// only Init game when the player is spawned
-			//CameraController.Instance.Init();
-			//LevelManager.Instance.Init();
-
-	        // we get the animator
-	        if (GetComponent<Animator>() != null)
-	        {
-	            _animator = GetComponent<Animator>();
-	        }
 			// if the width of the character is positive, then it is facing right.
 			_isFacingRight = transform.localScale.x > 0;
-			
+
 			_originalGravity = _controller.Parameters.Gravity;
-			
+
 			// we initialize all the controller's states with their default values.
 			BehaviorState.Initialize();
-			BehaviorState.NumberOfJumpsLeft=BehaviorParameters.NumberOfJumps;
-			
+			BehaviorState.NumberOfJumpsLeft = BehaviorParameters.NumberOfJumps;
 
-			BehaviorState.CanJump=true;		
+
+			BehaviorState.CanJump = true;
+
+			
+		}
+
+		public void DebugPosition()
+		{
+			if (!isLocalPlayer)
+			{
+				Debug1.Log("Other position: " + transform.position);
+			}
 		}
 		
 		/// <summary>
@@ -152,8 +162,15 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		protected virtual void Update()
 		{
-			if (!isLocalPlayer)
-				return;
+			//if (!isLocalPlayer)
+			//{
+			//	// sync position
+			//	transform.position += (curPos - transform.position) * Time.deltaTime;
+			//	return;
+			//}
+
+			// send current position to sync var
+			//curPos = transform.position;
 
 			// we send our various states to the animator.		
 			if (BehaviorParameters.UseDefaultMecanim)

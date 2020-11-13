@@ -2,6 +2,7 @@
 using System.Collections;
 using UnitySampleAssets.CrossPlatformInput;
 using System.Collections.Generic;
+using Mirror;
 
 namespace MoreMountains.CorgiEngine
 {	
@@ -15,7 +16,7 @@ namespace MoreMountains.CorgiEngine
 	/// The character controller that handles the character's gravity and collisions.
 	/// It requires a Collider2D and a rigidbody to function.
 	/// </summary>
-	public class CorgiController : MonoBehaviour 
+	public class CorgiController : NetworkBehaviour 
 	{
 		/// the various states of our character
 		public CorgiControllerState State { get; protected set; }
@@ -175,7 +176,10 @@ namespace MoreMountains.CorgiEngine
 	    /// accordingly. When all the checks have been done, we apply that new position. 
 	    /// </summary>
 	    protected virtual void FixedUpdate()
-		{	
+		{
+			if (!isLocalPlayer)
+				return;
+
 			_contactList.Clear();
 		
 			_speed.y += (Parameters.Gravity + _movingPlatformsCurrentGravity) * Time.deltaTime;

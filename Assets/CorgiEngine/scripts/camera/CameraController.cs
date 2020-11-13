@@ -84,7 +84,6 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		public void InitOnce()
 		{
-			Debug.Log("THIS CALLING INIT ONCE");
 			// if already init
 			if (_target != null)
 				return;
