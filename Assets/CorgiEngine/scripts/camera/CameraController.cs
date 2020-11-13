@@ -84,12 +84,9 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		public void InitOnce()
 		{
-			Debug.Log("THIS CALLING INIT ONCE");
 			// if already init
 			if (_target != null)
 				return;
-
-			Debug.Log("THIS IS INIT CAMERA");
 
 			// we get the camera component
 			_camera = GetComponent<Camera>();
@@ -122,25 +119,19 @@ namespace MoreMountains.CorgiEngine
 	    /// </summary>
 	    protected virtual void FixedUpdate () 
 		{
-			// if the camera is not supposed to follow the player, we do nothing
-			//if (!FollowsPlayer)
-			//{
-			//	Debug.Log("NOT FOLLOW PLAYER, RETURNING");
-			//	return;
-			//}
-				
-
 			// if player is created, init
 			if (NetworkSystem.player == null)
 				return;
 			else
 				InitOnce();
 
-			//// if player is created, init
-			//if (_target == null)
-			//	return;
-				
-			Zoom();
+            // if the camera is not supposed to follow the player, we do nothing
+            if (!FollowsPlayer)
+            {
+                return;
+            }
+
+            Zoom();
 				
 			// if the player has moved since last update
 			float xMoveDelta = (_target.position - _lastTargetPosition).x;
