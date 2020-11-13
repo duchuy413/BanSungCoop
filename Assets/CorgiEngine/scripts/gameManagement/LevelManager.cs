@@ -55,8 +55,12 @@ namespace MoreMountains.CorgiEngine
 		/// <summary>
 		/// Initialization
 		/// </summary>
-		public virtual void Init()
+		public virtual void InitOnce()
 		{
+			// if inited then return;
+			if (_checkpoints != null)
+				return;
+
 			if (PlayerPrefab != null)
 			{
 				//_player = (CharacterBehavior)Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -121,6 +125,12 @@ namespace MoreMountains.CorgiEngine
         /// </summary>
         public virtual void Update()
 		{
+			// if player is created, init
+			if (NetworkSystem.player == null)
+				return;
+			else
+				InitOnce();
+
 			if (_checkpoints == null)
 				return;
 

@@ -71,43 +71,26 @@ namespace MoreMountains.CorgiEngine
 	    protected Vector3 _lookDirectionModifier = new Vector3(0,0,0);
 		
 		/// <summary>
-		/// Initialization
+		/// Singleton
 		/// </summary>
-		protected virtual void Start ()
+		protected virtual void Awake ()
 		{
+			Debug.Log("THIS INSTANCE CAMERA");
 			Instance = this;
-			//Debug.Log("THIS IS CAMERA CONTROLLER START");
-			//// we get the camera component
-			//_camera=GetComponent<Camera>();
-
-			//// We make the camera follow the player
-			//FollowsPlayer=true;
-			//_currentZoom=MinimumZoom;
-
-			//// player and level bounds initialization
-			////_target = GameManager.Instance.Player.transform;
-			//_target = NetworkSystem.player.transform;
-			//if (_target.GetComponent<CorgiController>()==null)
-			//	return;
-			//_targetController=_target.GetComponent<CorgiController>();
-			//_levelBounds = GameObject.FindGameObjectWithTag("LevelBounds").GetComponent<LevelLimits>();		
-
-			//// we store the target's last position
-			//_lastTargetPosition = _target.position;
-			//_offsetZ = (transform.position - _target.position).z;
-			//transform.parent = null;
-
-			////_lookDirectionModifier=new Vector3(0,0,0);
-
-			//Zoom();
 		}
 
 		/// <summary>
 		/// Initialization
 		/// </summary>
-		public void Init()
+		public void InitOnce()
 		{
-			Debug.Log("THIS IS CAMERA CONTROLLER START");
+			Debug.Log("THIS CALLING INIT ONCE");
+			// if already init
+			if (_target != null)
+				return;
+
+			Debug.Log("THIS IS INIT CAMERA");
+
 			// we get the camera component
 			_camera = GetComponent<Camera>();
 
@@ -140,8 +123,22 @@ namespace MoreMountains.CorgiEngine
 	    protected virtual void FixedUpdate () 
 		{
 			// if the camera is not supposed to follow the player, we do nothing
-			if (!FollowsPlayer)
+			//if (!FollowsPlayer)
+			//{
+			//	Debug.Log("NOT FOLLOW PLAYER, RETURNING");
+			//	return;
+			//}
+				
+
+			// if player is created, init
+			if (NetworkSystem.player == null)
 				return;
+			else
+				InitOnce();
+
+			//// if player is created, init
+			//if (_target == null)
+			//	return;
 				
 			Zoom();
 				

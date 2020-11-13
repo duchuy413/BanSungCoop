@@ -123,9 +123,11 @@ namespace MoreMountains.CorgiEngine
 				return;
 			}
 
+			//CameraFollower.Instance.target = gameObject;
+
 			// only Init game when the player is spawned
-			CameraController.Instance.Init();
-			LevelManager.Instance.Init();
+			//CameraController.Instance.Init();
+			//LevelManager.Instance.Init();
 
 	        // we get the animator
 	        if (GetComponent<Animator>() != null)
