@@ -55,7 +55,7 @@ namespace MoreMountains.CorgiEngine
 		/// <summary>
 		/// Initialization
 		/// </summary>
-		public virtual void Start()
+		public virtual void Init()
 		{
 			if (PlayerPrefab != null)
 			{
@@ -121,6 +121,9 @@ namespace MoreMountains.CorgiEngine
         /// </summary>
         public virtual void Update()
 		{
+			if (_checkpoints == null)
+				return;
+
 			var isAtLastCheckPoint = _currentCheckPointIndex + 1 >= _checkpoints.Count;
 			if (isAtLastCheckPoint)
 				return;

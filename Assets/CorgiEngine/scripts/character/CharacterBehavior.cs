@@ -118,6 +118,15 @@ namespace MoreMountains.CorgiEngine
 		/// </summary>
 		protected virtual void Start()
 		{
+			if (!isLocalPlayer)
+			{
+				return;
+			}
+
+			// only Init game when the player is spawned
+			CameraController.Instance.Init();
+			LevelManager.Instance.Init();
+
 	        // we get the animator
 	        if (GetComponent<Animator>() != null)
 	        {
@@ -140,7 +149,10 @@ namespace MoreMountains.CorgiEngine
 		/// This is called every frame.
 		/// </summary>
 		protected virtual void Update()
-		{		
+		{
+			if (!isLocalPlayer)
+				return;
+
 			// we send our various states to the animator.		
 			if (BehaviorParameters.UseDefaultMecanim)
 			{

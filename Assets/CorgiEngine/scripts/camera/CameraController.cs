@@ -9,6 +9,8 @@ namespace MoreMountains.CorgiEngine
 	/// </summary>
 	public class CameraController : MonoBehaviour 
 	{
+		public static CameraController Instance;
+
 		/// True if the camera should follow the player
 		public bool FollowsPlayer{get;set;}
 
@@ -72,29 +74,62 @@ namespace MoreMountains.CorgiEngine
 		/// Initialization
 		/// </summary>
 		protected virtual void Start ()
-		{		
+		{
+			Instance = this;
+			//Debug.Log("THIS IS CAMERA CONTROLLER START");
+			//// we get the camera component
+			//_camera=GetComponent<Camera>();
+
+			//// We make the camera follow the player
+			//FollowsPlayer=true;
+			//_currentZoom=MinimumZoom;
+
+			//// player and level bounds initialization
+			////_target = GameManager.Instance.Player.transform;
+			//_target = NetworkSystem.player.transform;
+			//if (_target.GetComponent<CorgiController>()==null)
+			//	return;
+			//_targetController=_target.GetComponent<CorgiController>();
+			//_levelBounds = GameObject.FindGameObjectWithTag("LevelBounds").GetComponent<LevelLimits>();		
+
+			//// we store the target's last position
+			//_lastTargetPosition = _target.position;
+			//_offsetZ = (transform.position - _target.position).z;
+			//transform.parent = null;
+
+			////_lookDirectionModifier=new Vector3(0,0,0);
+
+			//Zoom();
+		}
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		public void Init()
+		{
+			Debug.Log("THIS IS CAMERA CONTROLLER START");
 			// we get the camera component
-			_camera=GetComponent<Camera>();
-		
+			_camera = GetComponent<Camera>();
+
 			// We make the camera follow the player
-			FollowsPlayer=true;
-			_currentZoom=MinimumZoom;
+			FollowsPlayer = true;
+			_currentZoom = MinimumZoom;
 
 			// player and level bounds initialization
 			//_target = GameManager.Instance.Player.transform;
 			_target = NetworkSystem.player.transform;
-			if (_target.GetComponent<CorgiController>()==null)
+			if (_target.GetComponent<CorgiController>() == null)
 				return;
-			_targetController=_target.GetComponent<CorgiController>();
-			_levelBounds = GameObject.FindGameObjectWithTag("LevelBounds").GetComponent<LevelLimits>();		
-			
+			_targetController = _target.GetComponent<CorgiController>();
+			_levelBounds = GameObject.FindGameObjectWithTag("LevelBounds").GetComponent<LevelLimits>();
+
 			// we store the target's last position
 			_lastTargetPosition = _target.position;
 			_offsetZ = (transform.position - _target.position).z;
 			transform.parent = null;
-			
+
 			//_lookDirectionModifier=new Vector3(0,0,0);
-			
+
 			Zoom();
 		}
 
