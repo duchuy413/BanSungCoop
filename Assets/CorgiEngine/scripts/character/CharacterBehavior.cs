@@ -39,12 +39,7 @@ namespace MoreMountains.CorgiEngine
 		public AudioClip PlayerJumpSfx;
 		// the sound to play when the player gets hit
 		public AudioClip PlayerHitSfx;
-
-		//[SyncVar]
-		//// for syncing animation
-		//private string _behaviorState;
-
-
+		
 		/// is true if the character can jump
 		public bool JumpAuthorized 
 		{ 
@@ -128,6 +123,12 @@ namespace MoreMountains.CorgiEngine
 				return;
 			}
 
+			//CameraFollower.Instance.target = gameObject;
+
+			// only Init game when the player is spawned
+			//CameraController.Instance.Init();
+			//LevelManager.Instance.Init();
+
 	        // we get the animator
 	        if (GetComponent<Animator>() != null)
 	        {
@@ -141,6 +142,7 @@ namespace MoreMountains.CorgiEngine
 			// we initialize all the controller's states with their default values.
 			BehaviorState.Initialize();
 			BehaviorState.NumberOfJumpsLeft=BehaviorParameters.NumberOfJumps;
+			
 
 			BehaviorState.CanJump=true;		
 		}
@@ -151,13 +153,7 @@ namespace MoreMountains.CorgiEngine
 		protected virtual void Update()
 		{
 			if (!isLocalPlayer)
-			{
-				//BehaviorState = JsonUtility.FromJson<CharacterBehaviorState>(_behaviorState);		
-				//if (BehaviorParameters.UseDefaultMecanim) {
-				//	UpdateAnimator();
-				//}
 				return;
-			}
 
 			// we send our various states to the animator.		
 			if (BehaviorParameters.UseDefaultMecanim)
@@ -225,9 +221,6 @@ namespace MoreMountains.CorgiEngine
 				// if the character is dead, we prevent it from moving horizontally		
 				_controller.SetHorizontalForce(0);
 			}
-
-			// save state to sync client state
-			//_behaviorState = JsonUtility.ToJson(BehaviorState);
 		}
 		
 		/// <summary>
