@@ -19,7 +19,7 @@ public class PlayerAnimationUpdate : MonoBehaviour {
         animator = GetComponent<FramesAnimator>();
     }
 
-    void Update() {
+    public void Update() {
         if (player.state == "stand") {
             animator.spritesheet = stand;
         } else if (player.state == "go") {

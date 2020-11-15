@@ -28,10 +28,14 @@ public class Player : NetworkBehaviour {
         if (isLocalPlayer) {
             NetworkSystem.player = gameObject;
             CameraFollower.Instance.target = gameObject;
+            InputSystem.Instance.player = this;
         }
     }
 
     void Update() {
+        if (!isLocalPlayer)
+            return;
+
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
 
@@ -136,6 +140,10 @@ public class Player : NetworkBehaviour {
                 state = "stand";
             }
             jumpCount = 2;
+
+            //change sprite imediately after hit ground
+            GetComponent<PlayerAnimationUpdate>().Update();
+            GetComponent<SpriteRenderer>().sprite = GetComponent<FramesAnimator>().spritesheet[0];
         }
     }
 

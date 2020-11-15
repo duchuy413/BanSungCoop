@@ -23,6 +23,13 @@ public class InputSystem : MonoBehaviour
         NetworkSystem.player.GetComponent<Player>().ShootEnd();
     }
 
+    public void RunStart() {
+        NetworkSystem.player.GetComponent<Player>().RunStart();
+    }
+
+    public void RunEnd() {
+        NetworkSystem.player.GetComponent<Player>().RunEnd();
+    }
     public void UseSkill() {
         NetworkSystem.player.GetComponent<Player>().UseSkill();
     }

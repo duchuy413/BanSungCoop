@@ -198,6 +198,7 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\Player.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\PlayerAnimationUpdate.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\MyNetworkDiscoveryHUD.cs" />
+    <Compile Include="Assets\_Game\Scripts\Network\MySyncPosition.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\NetworkLerpRigidbody2D.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\NetworkSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\SyncPosition.cs" />
@@ -206,6 +207,8 @@
     <Compile Include="Assets\_Game\Scripts\_Basic\CameraFollower.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\Debug1.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\FramesAnimator.cs" />
+    <Compile Include="Assets\_Game\Scripts\_Basic\MyDebug.cs" />
+    <Compile Include="Assets\_Game\Scripts\_Basic\OpenSceneEditor.cs" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
