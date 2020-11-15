@@ -84,8 +84,6 @@ ScriptsOnlyBuild:
     Mirror.Components.dll:
     - Mirror.Discovery.NetworkDiscovery
     - Mirror.Experimental.NetworkTransform
-    Mirror.Editor.dll:
-    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -1211,7 +1209,7 @@ ScriptsOnlyBuild:
     className: AIFollower
   - hash:
       serializedVersion: 2
-      Hash: c53aeca9435b1d299fb49a1eaeed64da
+      Hash: 23df303b25469db2b6169eae82dd03e3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MySyncPosition
