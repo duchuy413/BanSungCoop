@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(FramesAnimator))]
-public class PlayerAnimationUpdate : MonoBehaviour {
+public class PlayerAnimationUpdate : NetworkBehaviour{
     public Sprite[] go;
     public Sprite[] stand;
     public Sprite[] jump;
@@ -20,23 +21,28 @@ public class PlayerAnimationUpdate : MonoBehaviour {
     }
 
     public void Update() {
-        if (player.state == "stand") {
+        if (isLocalPlayer) {
+            UpdateAnim(player.state);
+
+            if (player.direction == "left") {
+                GetComponent<SpriteRenderer>().flipX = false;
+            } else {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+        }
+    }
+
+    public void UpdateAnim(string state) {
+        if (state == "stand") {
             animator.spritesheet = stand;
-        } else if (player.state == "go") {
+        } else if (state == "go") {
             animator.spritesheet = go;
-        } else if (player.state == "jump") {
+        } else if (state == "jump") {
             animator.spritesheet = jump;
-        } else if (player.state == "fall") {
+        } else if (state == "fall") {
             animator.spritesheet = fall;
-        } else if (player.state == "run") {
+        } else if (state == "run") {
             animator.spritesheet = run;
         }
-
-        if (player.direction == "left") {
-            GetComponent<SpriteRenderer>().flipX = false;
-        } else {
-            GetComponent<SpriteRenderer>().flipX = true;
-        }
-
     }
 }
