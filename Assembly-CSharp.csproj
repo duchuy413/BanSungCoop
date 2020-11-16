@@ -204,9 +204,13 @@
     <Compile Include="Assets\_Game\Scripts\Network\SyncPosition.cs" />
     <Compile Include="Assets\_Game\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\_Game\Scripts\Weapon\HItParam.cs" />
+    <Compile Include="Assets\_Game\Scripts\Weapon\IAttack.cs" />
+    <Compile Include="Assets\_Game\Scripts\Weapon\Weapon.cs" />
+    <Compile Include="Assets\_Game\Scripts\Weapon\WeaponStat.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\CameraFollower.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\Debug1.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\FramesAnimator.cs" />
+    <Compile Include="Assets\_Game\Scripts\_Basic\GameSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\MyDebug.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\OpenSceneEditor.cs" />
     <None Include="Assets\CorgiEngine\scripts\UnityStandardAssets\Effects\ImageEffects\Shaders\Tonemapper.shader" />

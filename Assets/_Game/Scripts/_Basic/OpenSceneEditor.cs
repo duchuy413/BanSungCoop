@@ -15,29 +15,34 @@ public class OpenSceneEditor : MonoBehaviour
         //EditorApplication.EnterPlaymode();
     }
 
-    [MenuItem("Project/Open Scene - Level Editor Main %&w", false, 5000)]
-    public static void OpenMain()
-    {
-        OpenScene("LevelEditorMain");
+    [MenuItem("Project/Open Scene Gameplay", false, 5000)]
+    public static void OpenMain() {
+        OpenScene("Gameplay");
     }
 
-    [MenuItem("Project/Open Scene - Level Editor %&w", false, 5000)]
-    public static void OpenEditor()
-    {
-        OpenScene("LevelEditor");
-    }
+    //[MenuItem("Project/Open Scene - Gameplay %&w", false, 5000)]
+    //public static void OpenMain()
+    //{
+    //    OpenScene("Gameplay");
+    //}
 
-    [MenuItem("Project/Open Scene - Genre List %&w", false, 5000)]
-    public static void OpenGerneList()
-    {
-        OpenScene("GenreList");
-    }
+    //[MenuItem("Project/Open Scene - Level Editor %&w", false, 5000)]
+    //public static void OpenEditor()
+    //{
+    //    OpenScene("LevelEditor");
+    //}
 
-    [MenuItem("Project/Open Scene - Level Recorder %&w", false, 5000)]
-    public static void OpenRecorder()
-    {
-        OpenScene("LevelRecorder");
-    }
+    //[MenuItem("Project/Open Scene - Genre List %&w", false, 5000)]
+    //public static void OpenGerneList()
+    //{
+    //    OpenScene("GenreList");
+    //}
+
+    //[MenuItem("Project/Open Scene - Level Recorder %&w", false, 5000)]
+    //public static void OpenRecorder()
+    //{
+    //    OpenScene("LevelRecorder");
+    //}
 
     private static void OpenScene(string sceneName)
     {
