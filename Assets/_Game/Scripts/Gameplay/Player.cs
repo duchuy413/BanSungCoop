@@ -14,15 +14,18 @@ public class Player : NetworkBehaviour {
     public Rigidbody2D rb2d;
     public Transform hand;
     public Weapon weapon;
+    public WeaponStat weaponStat;
 
     bool isShooting = false;
     bool isRunning = false;
     float nextShoot = 0f;
     int jumpCount;
+    float scale = 1f;
 
     void Start() {
         rb2d = GetComponent<Rigidbody2D>();
         jumpCount = 2;
+        scale = transform.localScale.x;
         LoadWeapon("longgun");
     }
 
@@ -96,7 +99,13 @@ public class Player : NetworkBehaviour {
             hit.owner = gameObject;
             hit.ownerTag = tag;
             hit.targetTags = new List<string>() { "Player" };
-            weapon.Attack(hit);
+            Attack(hit);
+        }
+
+        if (direction == "left") {
+            transform.localScale = new Vector3(scale, scale);
+        } else {
+            transform.localScale = new Vector3(-scale, scale);
         }
     }
 
@@ -139,7 +148,6 @@ public class Player : NetworkBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("THIS IS TRIGGER ENTER 2D");
         if (collision.gameObject.CompareTag("Ground")) {
             if (Mathf.Abs(Joystick.Instance.Horizontal) > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
                 if (isRunning)
@@ -157,7 +165,32 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    public void LoadWeapon(string weapon) {
-        this.weapon.Init();
+    public void LoadWeapon(string s) {
+        //weapon = GetComponent<Weapon>();
+        weaponStat = weapon.stat;
+        weapon.Init();
+    }
+
+    public void Attack(HitParam hit) {
+        CmdAttack(hit);
+    }
+
+    [Command]
+    public void CmdAttack(HitParam hit) {
+        GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, weapon.barrel.position);
+
+        bullet.GetComponent<Bullet>().hitParam = hit;
+        bullet.GetComponent<TrailRenderer>().Clear();
+        float scale = bullet.transform.localScale.x;
+
+        if (hit.direction == "right") {
+            hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(-weaponStat.forceBack, 0));
+            bullet.transform.localScale = new Vector3(scale, scale);
+        } else if (hit.direction == "left") {
+            hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
+            bullet.transform.localScale = new Vector3(-scale, scale);
+        }
+
+        //NetworkClient. .spaw Spawn(bullet);
     }
 }
