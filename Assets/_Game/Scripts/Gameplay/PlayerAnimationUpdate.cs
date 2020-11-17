@@ -23,6 +23,12 @@ public class PlayerAnimationUpdate : NetworkBehaviour{
     public void Update() {
         if (isLocalPlayer) {
             UpdateAnim(player.state);
+
+            if (player.direction == "left") {
+                GetComponent<SpriteRenderer>().flipX = false;
+            } else {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
         }
     }
 

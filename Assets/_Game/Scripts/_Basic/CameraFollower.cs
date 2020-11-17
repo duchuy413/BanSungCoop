@@ -11,15 +11,15 @@ public class CameraFollower : MonoBehaviour
     public float speed = 25f;
 
     private Vector3 vectorToTarget;
-    private Rigidbody2D rb2d;
+    private Rigidbody2D rigidbody2D;
 
     void Start()
     {
         var renderer = GetComponent<SpriteRenderer>();
         if (renderer != null) renderer.enabled = false;
-        rb2d = GetComponent<Rigidbody2D>();
-        rb2d.isKinematic = true;
-        rb2d.gravityScale = 0;
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.isKinematic = true;
+        rigidbody2D.gravityScale = 0;
         Instance = this;
     }
 
@@ -45,14 +45,14 @@ public class CameraFollower : MonoBehaviour
 
         if (distanceToTarget <= maxDistanceToTarget)
         {
-            rb2d.velocity = new Vector3(0f, 0f);
+            rigidbody2D.velocity = new Vector3(0f, 0f);
             return;
         }
         else
         {
             vectorToTarget = target.transform.position - transform.position;
             vectorToTarget = vectorToTarget * speed / distanceToTarget;
-            rb2d.velocity = vectorToTarget;
+            rigidbody2D.velocity = vectorToTarget;
         }
     }
 
