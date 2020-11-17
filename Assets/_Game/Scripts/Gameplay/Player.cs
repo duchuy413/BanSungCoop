@@ -12,8 +12,7 @@ public class Player : NetworkBehaviour {
     public string state = "";
     public string direction = "left";
     public Rigidbody2D rb2d;
-    public Transform hand;
-    public Weapon weapon;
+    public Transform barrel;
 
     bool isShooting = false;
     bool isRunning = false;
@@ -23,7 +22,6 @@ public class Player : NetworkBehaviour {
     void Start() {
         rb2d = GetComponent<Rigidbody2D>();
         jumpCount = 2;
-        LoadWeapon("longgun");
     }
 
     public override void OnStartLocalPlayer() {
@@ -86,17 +84,9 @@ public class Player : NetworkBehaviour {
             isRunning = false;
         }
 
-        //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
-            //GameObject bullet = Gameplay.LoadPool("bullet", barrel.position);
-            HitParam hit = new HitParam();
-            hit.dame = 20f;
-            hit.direction = direction;
-            hit.owner = gameObject;
-            hit.ownerTag = tag;
-            hit.targetTags = new List<string>() { "Player" };
-            weapon.Attack(hit);
+            GameObject bullet = Gameplay.LoadPool("bullet", barrel.position);
         }
     }
 
@@ -157,7 +147,5 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    public void LoadWeapon(string weapon) {
-        this.weapon.Init();
-    }
+
 }
