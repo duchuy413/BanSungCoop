@@ -27,6 +27,12 @@ public class Player : NetworkBehaviour {
         jumpCount = 2;
         scale = transform.localScale.x;
         LoadWeapon("longgun");
+
+        if (!isLocalPlayer) {
+            GameObject go = GameSystem.LoadPool("puppet", transform.position);
+            go.GetComponent<MyNetworkPuppet>().target = gameObject;
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     public override void OnStartLocalPlayer() {
@@ -34,7 +40,7 @@ public class Player : NetworkBehaviour {
             NetworkSystem.player = gameObject;
             CameraFollower.Instance.target = gameObject;
             InputSystem.Instance.player = this;
-        }
+        } 
     }
 
     void Update() {
@@ -89,6 +95,14 @@ public class Player : NetworkBehaviour {
             isRunning = false;
         }
 
+        //TEST
+        //if (Input.GetKeyDown(KeyCode.C)) {
+        //    if (isLocalPlayer) {
+        //        foreach (NetworkClient.all)
+        //    }
+            
+        //}
+
         //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
@@ -118,6 +132,10 @@ public class Player : NetworkBehaviour {
         rb2d.AddForce(new Vector2(0, JUMP_FORCE));
         state = "jump";
         StartCoroutine(Fall(jumpCount));
+
+        MyNetworkMessage mess = new MyNetworkMessage();
+        mess.msg = "THIS IS JUMPING";
+        //NetworkClient.Send<MyNetworkMessage>(mess);
     }
 
     public IEnumerator Fall(int jumpId) {

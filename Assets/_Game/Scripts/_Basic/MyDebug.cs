@@ -6,9 +6,9 @@ using TMPro;
 
 public class MyDebug : MonoBehaviour {
     public static MyDebug Instance;
+    public static string filePath = @"C:\Users\Admin\Desktop\LOG.txt";
 
     public bool showLog = true;
-    public string filePath = @"C:\Users\RubyCell\Desktop\LogOutput.txt";
     public TextMeshProUGUI txt;
     public static StreamWriter file;
 

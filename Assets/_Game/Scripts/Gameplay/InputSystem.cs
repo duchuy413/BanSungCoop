@@ -33,4 +33,8 @@ public class InputSystem : MonoBehaviour
     public void UseSkill() {
         NetworkSystem.player.GetComponent<Player>().UseSkill();
     }
+
+    //public void SendChat() {
+    //    NetworkSystem.player.GetComponent<ChatBehavior>().Send();
+    //}
 }

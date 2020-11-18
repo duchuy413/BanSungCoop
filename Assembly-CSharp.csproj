@@ -197,7 +197,10 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\InputSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\Player.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\PlayerAnimationUpdate.cs" />
+    <Compile Include="Assets\_Game\Scripts\Network\ChatBehavior.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\MyNetworkDiscoveryHUD.cs" />
+    <Compile Include="Assets\_Game\Scripts\Network\MyNetworkMessage.cs" />
+    <Compile Include="Assets\_Game\Scripts\Network\MyNetworkPuppet.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\MySyncPosition.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\NetworkLerpRigidbody2D.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\NetworkSystem.cs" />
