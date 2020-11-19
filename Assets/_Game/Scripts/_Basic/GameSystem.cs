@@ -41,4 +41,10 @@ public class GameSystem : MonoBehaviour
         }
         return copy;
     }
+
+    public static double GetCurrentTimeStamp() {
+        var epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc);
+        var timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
+        return timestamp;
+    }
 }

@@ -4,6 +4,9 @@
 public class MyNetworkPuppet : MonoBehaviour {
     public static float MAX_SHOOT_RADIUS = 150f;
 
+    public float FAST_SPEED_1 = 2f;
+    public float FAST_SPEED_2 = 5f;
+
     public bool showDebug = true;
 
     public GameObject target;
@@ -52,9 +55,9 @@ public class MyNetworkPuppet : MonoBehaviour {
             if (distanceToTarget <= 1f) {
                 rb2d.velocity = vectorToTarget * speed;
             } else if (distanceToTarget <= 2f) {
-                rb2d.velocity = vectorToTarget * speed * 1.2f;
+                rb2d.velocity = vectorToTarget * speed * FAST_SPEED_1;
             } else {
-                rb2d.velocity = vectorToTarget * speed * 1.5f;
+                rb2d.velocity = vectorToTarget * speed * FAST_SPEED_2;
             }
 
             if (showDebug) {

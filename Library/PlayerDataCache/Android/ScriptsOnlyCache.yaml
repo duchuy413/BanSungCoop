@@ -1261,7 +1261,7 @@ ScriptsOnlyBuild:
     className: AIFollower
   - hash:
       serializedVersion: 2
-      Hash: 6fd2bb55b3ee5edb6040a1c5bccd0e07
+      Hash: d523c3f37f1be1b799b7c32d47bbd4b8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MySyncPosition
@@ -2059,7 +2059,7 @@ ScriptsOnlyBuild:
     className: BonusBlock
   - hash:
       serializedVersion: 2
-      Hash: 20c25a4030baaeda631c8ac10c00d105
+      Hash: d67ddc6ac86d814c331dbf1446a5117a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyNetworkPuppet
