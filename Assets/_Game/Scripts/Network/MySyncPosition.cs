@@ -67,6 +67,9 @@ public class MySyncPosition : NetworkBehaviour {
             }
 
             Vector3 newPos = Vector3.Lerp(_pos2, _pos1, rate);
+            MyDebug.Log("CLIENT pos - time - timerange: (" + newPos.x + " , " + newPos.y + " ) " );
+            MyDebug.Log("Time/range: " + (Time.time - updateTime).ToString() + " / " + (_time1 - _time2).ToString());
+            MyDebug.Log("Rate: " + rate);
 
             if (newPos.x > transform.position.x) {
                 transform.localScale = new Vector3(scale, scale);
