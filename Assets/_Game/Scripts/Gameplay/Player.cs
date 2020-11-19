@@ -23,16 +23,13 @@ public class Player : NetworkBehaviour {
     float scale = 1f;
 
     void Start() {
+        if (!isLocalPlayer)
+            return;
+
         rb2d = GetComponent<Rigidbody2D>();
         jumpCount = 2;
         scale = transform.localScale.x;
         LoadWeapon("longgun");
-
-        if (!isLocalPlayer) {
-            GameObject go = GameSystem.LoadPool("puppet", transform.position);
-            go.GetComponent<MyNetworkPuppet>().target = gameObject;
-            GetComponent<SpriteRenderer>().enabled = false;
-        }
     }
 
     public override void OnStartLocalPlayer() {
@@ -94,14 +91,6 @@ public class Player : NetworkBehaviour {
         if (Input.GetKeyUp(KeyCode.Z)) {
             isRunning = false;
         }
-
-        //TEST
-        //if (Input.GetKeyDown(KeyCode.C)) {
-        //    if (isLocalPlayer) {
-        //        foreach (NetworkClient.all)
-        //    }
-            
-        //}
 
         //check shooting
         if (isShooting && Time.time > nextShoot) {

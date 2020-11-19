@@ -17,6 +17,7 @@ public class MySyncPosition : NetworkBehaviour {
     PlayerSnapshot current;
 
     PlayerAnimationUpdate animUpdater;
+    MyNetworkPuppet puppet;
     Player player;
     float updateTime;
 
@@ -37,6 +38,17 @@ public class MySyncPosition : NetworkBehaviour {
 
         if (!isLocalPlayer) {
             GetComponent<Rigidbody2D>().isKinematic = true;
+            
+            GetComponent<SpriteRenderer>().enabled = false;
+            player.hand.GetComponent<SpriteRenderer>().enabled = false;
+            player.weapon.GetComponent<SpriteRenderer>().enabled = false;
+
+            GameObject go = GameSystem.LoadPool("puppet", transform.position);
+            puppet = go.GetComponent<MyNetworkPuppet>();
+            puppet.target = gameObject;
+
+            GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
+            animUpdater = puppet.GetComponent<PlayerAnimationUpdate>();
         }
 
         InvokeRepeating("TransmitPosition", 0.1f, 0.1f);

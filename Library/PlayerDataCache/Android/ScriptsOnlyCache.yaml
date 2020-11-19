@@ -11,7 +11,6 @@ ScriptsOnlyBuild:
     - Gameplay
     - InputSystem
     - Mirror.Discovery.MyNetworkDiscoveryHUD
-    - Mirror.Experimental.NetworkLerpRigidbody2D
     - MoreMountains.CorgiEngine.AIFollower
     - MoreMountains.CorgiEngine.AIMoveOnSight
     - MoreMountains.CorgiEngine.AIShootOnSight
@@ -75,6 +74,7 @@ ScriptsOnlyBuild:
     - MoreMountains.CorgiEngine.Weapon
     - MoreMountains.CorgiEngine.WeaponUpgrade
     - MyDebug
+    - MyNetworkPuppet
     - MySyncPosition
     - NetworkSystem
     - Player
@@ -267,19 +267,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14650}
     - Class: 114
-      Script: {instanceID: 14874}
+      Script: {instanceID: 14876}
     - Class: 114
-      Script: {instanceID: 14882}
+      Script: {instanceID: 14884}
     - Class: 114
-      Script: {instanceID: 15118}
+      Script: {instanceID: 15120}
     - Class: 114
-      Script: {instanceID: 15164}
+      Script: {instanceID: 15166}
     - Class: 114
-      Script: {instanceID: 15238}
+      Script: {instanceID: 15240}
     - Class: 114
-      Script: {instanceID: 15336}
+      Script: {instanceID: 15338}
     - Class: 114
-      Script: {instanceID: 15466}
+      Script: {instanceID: 15468}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -321,10 +321,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 50
-      Script: {instanceID: 0}
-    - Class: 58
-      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
     - Class: 81
@@ -342,8 +338,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11452}
     - Class: 114
-      Script: {instanceID: 11498}
-    - Class: 114
       Script: {instanceID: 11946}
     - Class: 114
       Script: {instanceID: 12130}
@@ -352,13 +346,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12576}
     - Class: 114
-      Script: {instanceID: 12622}
-    - Class: 114
       Script: {instanceID: 12722}
     - Class: 114
       Script: {instanceID: 12838}
-    - Class: 114
-      Script: {instanceID: 13518}
     - Class: 114
       Script: {instanceID: 13608}
     - Class: 114
@@ -366,27 +356,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14130}
     - Class: 114
-      Script: {instanceID: 14174}
-    - Class: 114
       Script: {instanceID: 14302}
     - Class: 114
       Script: {instanceID: 14402}
     - Class: 114
-      Script: {instanceID: 14424}
-    - Class: 114
       Script: {instanceID: 14650}
     - Class: 114
-      Script: {instanceID: 15104}
-    - Class: 114
-      Script: {instanceID: 15196}
-    - Class: 114
-      Script: {instanceID: 15226}
-    - Class: 114
-      Script: {instanceID: 15238}
-    - Class: 114
-      Script: {instanceID: 15336}
+      Script: {instanceID: 15240}
     - Class: 114
       Script: {instanceID: 15338}
+    - Class: 114
+      Script: {instanceID: 15340}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -595,8 +575,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14032}
     - Class: 114
-      Script: {instanceID: 14174}
-    - Class: 114
       Script: {instanceID: 14282}
     - Class: 114
       Script: {instanceID: 14300}
@@ -617,39 +595,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14696}
     - Class: 114
-      Script: {instanceID: 14724}
+      Script: {instanceID: 14698}
     - Class: 114
-      Script: {instanceID: 14874}
+      Script: {instanceID: 14726}
     - Class: 114
-      Script: {instanceID: 14882}
+      Script: {instanceID: 14876}
     - Class: 114
-      Script: {instanceID: 14888}
+      Script: {instanceID: 14884}
     - Class: 114
-      Script: {instanceID: 14898}
+      Script: {instanceID: 14890}
     - Class: 114
-      Script: {instanceID: 15042}
+      Script: {instanceID: 14900}
     - Class: 114
-      Script: {instanceID: 15104}
+      Script: {instanceID: 15044}
     - Class: 114
-      Script: {instanceID: 15118}
+      Script: {instanceID: 15106}
     - Class: 114
-      Script: {instanceID: 15140}
+      Script: {instanceID: 15120}
     - Class: 114
-      Script: {instanceID: 15164}
+      Script: {instanceID: 15142}
     - Class: 114
-      Script: {instanceID: 15196}
+      Script: {instanceID: 15166}
     - Class: 114
-      Script: {instanceID: 15226}
+      Script: {instanceID: 15198}
     - Class: 114
-      Script: {instanceID: 15238}
+      Script: {instanceID: 15228}
     - Class: 114
-      Script: {instanceID: 15254}
+      Script: {instanceID: 15240}
     - Class: 114
-      Script: {instanceID: 15276}
+      Script: {instanceID: 15256}
     - Class: 114
-      Script: {instanceID: 15336}
+      Script: {instanceID: 15278}
     - Class: 114
-      Script: {instanceID: 15466}
+      Script: {instanceID: 15338}
+    - Class: 114
+      Script: {instanceID: 15468}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -2079,6 +2059,12 @@ ScriptsOnlyBuild:
     className: BonusBlock
   - hash:
       serializedVersion: 2
+      Hash: 20c25a4030baaeda631c8ac10c00d105
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MyNetworkPuppet
+  - hash:
+      serializedVersion: 2
       Hash: cb669d2e08fa830f0657d9672feb3f9b
     assemblyName: Assembly-CSharp.dll
     namespaceName: MoreMountains.CorgiEngine
@@ -2413,12 +2399,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MyNetworkPuppet
   platform: 13
   scenePathNames:
   - Assets/_Game/Scenes/Login.unity

@@ -1,25 +1,4 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class MyNetworkPuppet : MonoBehaviour
-//{
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-        
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-        
-//    }
-//}
-
-
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class MyNetworkPuppet : MonoBehaviour {
@@ -28,6 +7,7 @@ public class MyNetworkPuppet : MonoBehaviour {
     public GameObject target;
     public float maxDistance = 4f;
     public float speed = 25f;
+    private float scale;
 
     private Vector3 vectorToTarget;
     private Rigidbody2D rb2d;
@@ -36,6 +16,15 @@ public class MyNetworkPuppet : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.isKinematic = true;
         rb2d.gravityScale = 0;
+        scale = Mathf.Abs(transform.localScale.x);
+    }
+
+    private void Update() {
+        if (rb2d.velocity.x > 0) {
+            transform.localScale = new Vector3(-scale, scale);
+        } else if (rb2d.velocity.x < 0) {
+            transform.localScale = new Vector3(scale, scale);
+        }
     }
 
     void LateUpdate() {
