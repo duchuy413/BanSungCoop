@@ -1,9 +1,9 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - AxisTouchButton
     - Bullet
     - CameraFollower
+    - DeathZone
     - Debug1
     - FixedJoystick
     - FramesAnimator
@@ -11,68 +11,6 @@ ScriptsOnlyBuild:
     - Gameplay
     - InputSystem
     - Mirror.Discovery.MyNetworkDiscoveryHUD
-    - MoreMountains.CorgiEngine.AIFollower
-    - MoreMountains.CorgiEngine.AIMoveOnSight
-    - MoreMountains.CorgiEngine.AIShootOnSight
-    - MoreMountains.CorgiEngine.AISimpleWalk
-    - MoreMountains.CorgiEngine.AutoDestroyParticleSystem
-    - MoreMountains.CorgiEngine.AutoRotate
-    - MoreMountains.CorgiEngine.BackgroundMusic
-    - MoreMountains.CorgiEngine.BackgroundTree
-    - MoreMountains.CorgiEngine.BonusBlock
-    - MoreMountains.CorgiEngine.CameraController
-    - MoreMountains.CorgiEngine.CharacterBehavior
-    - MoreMountains.CorgiEngine.CharacterJetpack
-    - MoreMountains.CorgiEngine.CharacterMelee
-    - MoreMountains.CorgiEngine.CharacterShoot
-    - MoreMountains.CorgiEngine.CheckPoint
-    - MoreMountains.CorgiEngine.Coin
-    - MoreMountains.CorgiEngine.CorgiController
-    - MoreMountains.CorgiEngine.CorgiControllerPhysicsVolume2D
-    - MoreMountains.CorgiEngine.DialogueBox
-    - MoreMountains.CorgiEngine.DialogueZone
-    - MoreMountains.CorgiEngine.FallingPlatform
-    - MoreMountains.CorgiEngine.FinishLevel
-    - MoreMountains.CorgiEngine.GUIManager
-    - MoreMountains.CorgiEngine.GameManager
-    - MoreMountains.CorgiEngine.GiveDamageToPlayer
-    - MoreMountains.CorgiEngine.Health
-    - MoreMountains.CorgiEngine.HealthBar
-    - MoreMountains.CorgiEngine.InputManager
-    - MoreMountains.CorgiEngine.JetpackBar
-    - MoreMountains.CorgiEngine.Jumper
-    - MoreMountains.CorgiEngine.KillPlayerOnTouch
-    - MoreMountains.CorgiEngine.Ladder
-    - MoreMountains.CorgiEngine.LadderTop
-    - MoreMountains.CorgiEngine.LevelBackground
-    - MoreMountains.CorgiEngine.LevelLimits
-    - MoreMountains.CorgiEngine.LevelManager
-    - MoreMountains.CorgiEngine.LevelMapCharacter
-    - MoreMountains.CorgiEngine.LevelRestarter
-    - MoreMountains.CorgiEngine.LevelSelector
-    - MoreMountains.CorgiEngine.MeleeWeapon
-    - MoreMountains.CorgiEngine.Mushroom
-    - MoreMountains.CorgiEngine.ParallaxCamera
-    - MoreMountains.CorgiEngine.ParallaxElement
-    - MoreMountains.CorgiEngine.PathDefinition
-    - MoreMountains.CorgiEngine.PathFollow
-    - MoreMountains.CorgiEngine.PathedProjectile
-    - MoreMountains.CorgiEngine.PathedProjectileSpawner
-    - MoreMountains.CorgiEngine.PauseButton
-    - MoreMountains.CorgiEngine.PlayerBounds
-    - MoreMountains.CorgiEngine.RandomSprite
-    - MoreMountains.CorgiEngine.SimpleProjectile
-    - MoreMountains.CorgiEngine.SoundManager
-    - MoreMountains.CorgiEngine.StartScreen
-    - MoreMountains.CorgiEngine.Stimpack
-    - MoreMountains.CorgiEngine.Stompable
-    - MoreMountains.CorgiEngine.SuperHipsterBrosCharacter
-    - MoreMountains.CorgiEngine.Teleporter
-    - MoreMountains.CorgiEngine.TimeModifier
-    - MoreMountains.CorgiEngine.VisibleParticle
-    - MoreMountains.CorgiEngine.Water
-    - MoreMountains.CorgiEngine.Weapon
-    - MoreMountains.CorgiEngine.WeaponUpgrade
     - MyDebug
     - MyNetworkPuppet
     - MySyncPosition
@@ -80,11 +18,6 @@ ScriptsOnlyBuild:
     - Player
     - PlayerAnimationUpdate
     - SyncPosition
-    - UnitySampleAssets.CrossPlatformInput.ButtonHandler
-    - UnitySampleAssets.CrossPlatformInput.MobileControlRig
-    - UnityStandardAssets.ImageEffects.BloomOptimized
-    - UnityStandardAssets.ImageEffects.CameraMotionBlur
-    - UnityStandardAssets.ImageEffects.VignetteAndChromaticAberration
     - Weapon
     - WeaponStat
     Mirror.Components.dll:
@@ -121,23 +54,17 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.EventSystems.TouchInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.RectMask2D
-    - UnityEngine.UI.Text
-    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/_Game/Scenes/CorgiGameplay.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
       Script: {instanceID: 0}
     - Class: 21
       Script: {instanceID: 0}
@@ -147,8 +74,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 33
       Script: {instanceID: 0}
-    - Class: 43
-      Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
     - Class: 50
@@ -157,54 +82,20 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
     - Class: 95
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11420}
-    - Class: 114
-      Script: {instanceID: 11422}
-    - Class: 114
-      Script: {instanceID: 12402}
-    - Class: 114
-      Script: {instanceID: 12470}
-    - Class: 114
-      Script: {instanceID: 12514}
-    - Class: 114
-      Script: {instanceID: 12568}
-    - Class: 114
-      Script: {instanceID: 12588}
-    - Class: 114
       Script: {instanceID: 12638}
-    - Class: 114
-      Script: {instanceID: 12748}
     - Class: 114
       Script: {instanceID: 12758}
     - Class: 114
       Script: {instanceID: 12764}
     - Class: 114
-      Script: {instanceID: 12780}
-    - Class: 114
-      Script: {instanceID: 12796}
-    - Class: 114
-      Script: {instanceID: 12828}
-    - Class: 114
       Script: {instanceID: 12836}
     - Class: 114
-      Script: {instanceID: 12848}
-    - Class: 114
       Script: {instanceID: 12978}
-    - Class: 114
-      Script: {instanceID: 13074}
     - Class: 114
       Script: {instanceID: 13146}
     - Class: 114
@@ -214,51 +105,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13162}
     - Class: 114
-      Script: {instanceID: 13188}
-    - Class: 114
-      Script: {instanceID: 13196}
-    - Class: 114
       Script: {instanceID: 13308}
-    - Class: 114
-      Script: {instanceID: 13406}
-    - Class: 114
-      Script: {instanceID: 13516}
     - Class: 114
       Script: {instanceID: 13556}
     - Class: 114
       Script: {instanceID: 13652}
     - Class: 114
-      Script: {instanceID: 13658}
-    - Class: 114
-      Script: {instanceID: 13678}
-    - Class: 114
-      Script: {instanceID: 13682}
-    - Class: 114
-      Script: {instanceID: 13790}
-    - Class: 114
-      Script: {instanceID: 13968}
-    - Class: 114
-      Script: {instanceID: 14032}
-    - Class: 114
-      Script: {instanceID: 14066}
-    - Class: 114
-      Script: {instanceID: 14120}
-    - Class: 114
-      Script: {instanceID: 14144}
-    - Class: 114
-      Script: {instanceID: 14152}
-    - Class: 114
-      Script: {instanceID: 14248}
-    - Class: 114
-      Script: {instanceID: 14360}
-    - Class: 114
       Script: {instanceID: 14374}
-    - Class: 114
-      Script: {instanceID: 14470}
-    - Class: 114
-      Script: {instanceID: 14626}
-    - Class: 114
-      Script: {instanceID: 14896}
     - Class: 114
       Script: {instanceID: 14968}
     - Class: 114
@@ -268,22 +121,12 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15600}
     - Class: 114
-      Script: {instanceID: 15824}
-    - Class: 114
-      Script: {instanceID: 15832}
-    - Class: 114
       Script: {instanceID: 16068}
     - Class: 114
       Script: {instanceID: 16114}
     - Class: 114
-      Script: {instanceID: 16188}
-    - Class: 114
-      Script: {instanceID: 16286}
-    - Class: 114
       Script: {instanceID: 16416}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 124
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -299,15 +142,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
     - Class: 224
-      Script: {instanceID: 0}
-    - Class: 225
       Script: {instanceID: 0}
     Assets/_Game/Scenes/Gameplay.unity:
     - Class: 1
@@ -368,6 +205,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16286}
     - Class: 114
       Script: {instanceID: 16288}
+    - Class: 114
+      Script: {instanceID: 59982}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -401,8 +240,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 33
       Script: {instanceID: 0}
-    - Class: 43
-      Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
     - Class: 49
@@ -411,19 +248,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 58
       Script: {instanceID: 0}
-    - Class: 60
-      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
-    - Class: 68
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
     - Class: 81
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
       Script: {instanceID: 0}
     - Class: 95
       Script: {instanceID: 0}
@@ -432,61 +259,15 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11420}
-    - Class: 114
-      Script: {instanceID: 11422}
-    - Class: 114
       Script: {instanceID: 12400}
-    - Class: 114
-      Script: {instanceID: 12402}
     - Class: 114
       Script: {instanceID: 12448}
     - Class: 114
-      Script: {instanceID: 12470}
-    - Class: 114
-      Script: {instanceID: 12514}
-    - Class: 114
-      Script: {instanceID: 12568}
-    - Class: 114
-      Script: {instanceID: 12588}
-    - Class: 114
-      Script: {instanceID: 12614}
-    - Class: 114
-      Script: {instanceID: 12624}
-    - Class: 114
       Script: {instanceID: 12638}
-    - Class: 114
-      Script: {instanceID: 12692}
-    - Class: 114
-      Script: {instanceID: 12748}
     - Class: 114
       Script: {instanceID: 12758}
     - Class: 114
-      Script: {instanceID: 12780}
-    - Class: 114
-      Script: {instanceID: 12786}
-    - Class: 114
-      Script: {instanceID: 12796}
-    - Class: 114
-      Script: {instanceID: 12828}
-    - Class: 114
-      Script: {instanceID: 12848}
-    - Class: 114
-      Script: {instanceID: 12920}
-    - Class: 114
-      Script: {instanceID: 12930}
-    - Class: 114
-      Script: {instanceID: 12964}
-    - Class: 114
       Script: {instanceID: 12978}
-    - Class: 114
-      Script: {instanceID: 13028}
-    - Class: 114
-      Script: {instanceID: 13050}
-    - Class: 114
-      Script: {instanceID: 13074}
-    - Class: 114
-      Script: {instanceID: 13084}
     - Class: 114
       Script: {instanceID: 13146}
     - Class: 114
@@ -494,129 +275,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13156}
     - Class: 114
-      Script: {instanceID: 13188}
-    - Class: 114
-      Script: {instanceID: 13196}
-    - Class: 114
-      Script: {instanceID: 13406}
-    - Class: 114
-      Script: {instanceID: 13516}
-    - Class: 114
       Script: {instanceID: 13556}
-    - Class: 114
-      Script: {instanceID: 13560}
     - Class: 114
       Script: {instanceID: 13578}
     - Class: 114
-      Script: {instanceID: 13634}
-    - Class: 114
       Script: {instanceID: 13652}
-    - Class: 114
-      Script: {instanceID: 13658}
-    - Class: 114
-      Script: {instanceID: 13666}
-    - Class: 114
-      Script: {instanceID: 13674}
     - Class: 114
       Script: {instanceID: 13678}
     - Class: 114
-      Script: {instanceID: 13682}
-    - Class: 114
       Script: {instanceID: 13736}
-    - Class: 114
-      Script: {instanceID: 13740}
-    - Class: 114
-      Script: {instanceID: 13790}
     - Class: 114
       Script: {instanceID: 13794}
     - Class: 114
-      Script: {instanceID: 13886}
-    - Class: 114
-      Script: {instanceID: 13968}
-    - Class: 114
-      Script: {instanceID: 14010}
-    - Class: 114
-      Script: {instanceID: 14032}
-    - Class: 114
-      Script: {instanceID: 14052}
-    - Class: 114
-      Script: {instanceID: 14066}
-    - Class: 114
-      Script: {instanceID: 14120}
-    - Class: 114
-      Script: {instanceID: 14144}
-    - Class: 114
-      Script: {instanceID: 14152}
-    - Class: 114
-      Script: {instanceID: 14248}
-    - Class: 114
-      Script: {instanceID: 14340}
-    - Class: 114
-      Script: {instanceID: 14360}
-    - Class: 114
-      Script: {instanceID: 14364}
-    - Class: 114
       Script: {instanceID: 14374}
-    - Class: 114
-      Script: {instanceID: 14382}
-    - Class: 114
-      Script: {instanceID: 14470}
     - Class: 114
       Script: {instanceID: 14472}
     - Class: 114
-      Script: {instanceID: 14556}
-    - Class: 114
-      Script: {instanceID: 14626}
-    - Class: 114
       Script: {instanceID: 14694}
-    - Class: 114
-      Script: {instanceID: 14744}
-    - Class: 114
-      Script: {instanceID: 14896}
     - Class: 114
       Script: {instanceID: 14968}
     - Class: 114
       Script: {instanceID: 14986}
     - Class: 114
-      Script: {instanceID: 15236}
-    - Class: 114
-      Script: {instanceID: 15254}
-    - Class: 114
       Script: {instanceID: 15320}
     - Class: 114
       Script: {instanceID: 15378}
-    - Class: 114
-      Script: {instanceID: 15388}
-    - Class: 114
-      Script: {instanceID: 15504}
-    - Class: 114
-      Script: {instanceID: 15510}
     - Class: 114
       Script: {instanceID: 15550}
     - Class: 114
       Script: {instanceID: 15600}
     - Class: 114
-      Script: {instanceID: 15646}
-    - Class: 114
       Script: {instanceID: 15648}
     - Class: 114
-      Script: {instanceID: 15676}
-    - Class: 114
-      Script: {instanceID: 15824}
-    - Class: 114
-      Script: {instanceID: 15832}
-    - Class: 114
-      Script: {instanceID: 15838}
-    - Class: 114
       Script: {instanceID: 15848}
-    - Class: 114
-      Script: {instanceID: 15992}
     - Class: 114
       Script: {instanceID: 16054}
     - Class: 114
       Script: {instanceID: 16068}
-    - Class: 114
-      Script: {instanceID: 16090}
     - Class: 114
       Script: {instanceID: 16114}
     - Class: 114
@@ -624,16 +319,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16176}
     - Class: 114
-      Script: {instanceID: 16188}
-    - Class: 114
-      Script: {instanceID: 16204}
-    - Class: 114
-      Script: {instanceID: 16224}
-    - Class: 114
       Script: {instanceID: 16286}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 124
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -650,14 +337,6 @@ ScriptsOnlyBuild:
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    - Class: 225
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -704,12 +383,6 @@ ScriptsOnlyBuild:
     className: Weapon
   - hash:
       serializedVersion: 2
-      Hash: 18ed102447bbd35ecdc1611af9fadb11
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: SoundManager
-  - hash:
-      serializedVersion: 2
       Hash: 87ff43d2baf3385cba327d8f803a4ebb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -722,64 +395,16 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 21be25811ed80c852a29100601d1a8b8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: TiltShift
-  - hash:
-      serializedVersion: 2
       Hash: 4e55399bb1b81f08ab790913f62fbbac
     assemblyName: Mirror.dll
     namespaceName: Mirror
     className: NetworkManagerHUD
   - hash:
       serializedVersion: 2
-      Hash: b13ddce1aad2535eb5e5079a67489d55
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelLimits
-  - hash:
-      serializedVersion: 2
-      Hash: 172cfdd977ca8a6f32932932c2f0d2ee
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ImageEffectBase
-  - hash:
-      serializedVersion: 2
-      Hash: ee37fe019430c6a16c98e9ae6280006a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CameraController
-  - hash:
-      serializedVersion: 2
-      Hash: b4d4317ccbde9c4f255882ba68bf518a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AIShootOnSight
-  - hash:
-      serializedVersion: 2
-      Hash: c150d9404e6b53770dd5f5e91004bccd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: BlurOptimized
-  - hash:
-      serializedVersion: 2
       Hash: 192ca9716d03752ea1d90a78bc2daac9
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: RandomColor
-  - hash:
-      serializedVersion: 2
-      Hash: dc20478d1a41e9633a0fba73d3ab4215
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelMapCharacter
-  - hash:
-      serializedVersion: 2
-      Hash: 99fec3a755373ebaa7af661930158e20
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Stimpack
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -800,12 +425,6 @@ ScriptsOnlyBuild:
     className: NetworkTransform
   - hash:
       serializedVersion: 2
-      Hash: f93a1d8fe9a6eb34d8cfd17d3e15bb8f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Stompable
-  - hash:
-      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -824,28 +443,10 @@ ScriptsOnlyBuild:
     className: PlayerController
   - hash:
       serializedVersion: 2
-      Hash: ac330d336bdc602480a96d517ce35de0
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: GlobalFog
-  - hash:
-      serializedVersion: 2
-      Hash: a5e44188ccd983bb228b74d4b7419ecf
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ContrastStretch
-  - hash:
-      serializedVersion: 2
       Hash: a5781dc71a671b1ad2b38de19f24b71f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationTrack
-  - hash:
-      serializedVersion: 2
-      Hash: b2119094b0083707a0b6ff356d4a1f66
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: VignetteAndChromaticAberration
   - hash:
       serializedVersion: 2
       Hash: b2b4a4bf81317f3c08703a1773162a08
@@ -878,18 +479,6 @@ ScriptsOnlyBuild:
     className: Scrollbar
   - hash:
       serializedVersion: 2
-      Hash: 1779e3782bb41c49733915987622c9c5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AIMoveOnSight
-  - hash:
-      serializedVersion: 2
-      Hash: 2a08b555015c9c32885a2fed6746e027
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: FinishLevel
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -900,18 +489,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
-  - hash:
-      serializedVersion: 2
-      Hash: 952cd9d7d938f93cb2d89a370df69acc
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: DialogueZone
-  - hash:
-      serializedVersion: 2
-      Hash: f0adccffaa460cb5c8914229276bfa0d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ColorCorrectionCurves
   - hash:
       serializedVersion: 2
       Hash: 89f9a1b4c64db9559e39f4a2e3bfaadd
@@ -938,18 +515,6 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 611fa809e105d5c03c1c81cca462d409
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: DialogueBox
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LadderTop
-  - hash:
-      serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -962,22 +527,10 @@ ScriptsOnlyBuild:
     className: QuickListServerDebug
   - hash:
       serializedVersion: 2
-      Hash: c2890f55ed0991db96761fcee572b0c8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: BackgroundTree
-  - hash:
-      serializedVersion: 2
       Hash: 37c782056623a482d772a08897449977
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror.Experimental
     className: NetworkRigidbody2D
-  - hash:
-      serializedVersion: 2
-      Hash: 399440e37bfac5c1f0a317ffe135ddab
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CharacterBehavior
   - hash:
       serializedVersion: 2
       Hash: 5da7b9e4b43d0ba75d617a81259ec141
@@ -998,12 +551,6 @@ ScriptsOnlyBuild:
     className: Spawner
   - hash:
       serializedVersion: 2
-      Hash: 88a1f790d58ec2ed6af4da802cc88a50
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: ParallaxElement
-  - hash:
-      serializedVersion: 2
       Hash: 523ce309f50d9eee6a8fc0e2f86c9c97
     assemblyName: Unity.2D.SpriteShape.Runtime.dll
     namespaceName: 
@@ -1022,22 +569,10 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
-      Hash: a4f53786c5e89397b7d34957535b29a9
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: NoiseAndScratches
-  - hash:
-      serializedVersion: 2
       Hash: 1cb3ae0a2d707e19133c67f4ce57102f
     assemblyName: Mirror.Cloud.dll
     namespaceName: Mirror.Cloud
     className: ApiConnector
-  - hash:
-      serializedVersion: 2
-      Hash: e6fca4ce4ac5fa4721eff2e2c0fb20c0
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: SimpleProjectile
   - hash:
       serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
@@ -1046,22 +581,10 @@ ScriptsOnlyBuild:
     className: LayoutElement
   - hash:
       serializedVersion: 2
-      Hash: 47f7902f8963babdce608bf76d778b9c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Antialiasing
-  - hash:
-      serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: PhysicsRaycaster
-  - hash:
-      serializedVersion: 2
-      Hash: 95637538378657905a3bdc59d2941373
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CharacterMelee
   - hash:
       serializedVersion: 2
       Hash: 681b5f9be6f57e5a7b20908e503986d3
@@ -1076,12 +599,6 @@ ScriptsOnlyBuild:
     className: SyncPosition
   - hash:
       serializedVersion: 2
-      Hash: 0d29eda989660800ba144cf635d139ea
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelManager
-  - hash:
-      serializedVersion: 2
       Hash: 9e27f44bbf48228f203a37254d40f8ae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1094,28 +611,10 @@ ScriptsOnlyBuild:
     className: NetworkHeadlessLogger
   - hash:
       serializedVersion: 2
-      Hash: 7b12afa62faa1780b0593d2c43725978
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: GiveDamageToPlayer
-  - hash:
-      serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 111a56638f2630bc245dc8fc3296f7b3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelBackground
-  - hash:
-      serializedVersion: 2
-      Hash: b6abddfe81ce7709fd679f1ea0433cf7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: BloomAndFlares
   - hash:
       serializedVersion: 2
       Hash: b2b4a4bf81317f3c08703a1773162a08
@@ -1160,18 +659,6 @@ ScriptsOnlyBuild:
     className: RectMask2D
   - hash:
       serializedVersion: 2
-      Hash: 8792e8356998aff9da84718837517b33
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Blur
-  - hash:
-      serializedVersion: 2
-      Hash: af78f221a76b31179241c75f785d3894
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: MotionBlur
-  - hash:
-      serializedVersion: 2
       Hash: 1103fb0758976355cdf9b7d5ce9cb7e0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -1196,22 +683,10 @@ ScriptsOnlyBuild:
     className: LogSettings
   - hash:
       serializedVersion: 2
-      Hash: 755aa9308df9cb5ec0a491ba4f5f09a5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Bloom
-  - hash:
-      serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
-  - hash:
-      serializedVersion: 2
-      Hash: 1d4fd17978aad5f90348afb834eabb06
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AutoDestroyParticleSystem
   - hash:
       serializedVersion: 2
       Hash: 192ca9716d03752ea1d90a78bc2daac9
@@ -1226,12 +701,6 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: 230f7b5038f49d457dbcc3c455c71d9a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ScreenSpaceAmbientObscurance
-  - hash:
-      serializedVersion: 2
       Hash: 071d93f3e16645b8ca72486802a5b912
     assemblyName: Mirror.dll
     namespaceName: Mirror
@@ -1244,40 +713,16 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: d94ff1314bcf09c18870761ceb709b3e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: GameManager
-  - hash:
-      serializedVersion: 2
       Hash: e87f50864f8a979f1228e8c69bd62658
     assemblyName: Mirror.Examples.Cloud.Pong.dll
     namespaceName: Mirror.Cloud.Examples.Pong
     className: Player
   - hash:
       serializedVersion: 2
-      Hash: 4c30d0f57fd378841ebb9efc1dc57150
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CharacterShoot
-  - hash:
-      serializedVersion: 2
-      Hash: 8628b9c15c9e9bac4fca4d48577348be
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AIFollower
-  - hash:
-      serializedVersion: 2
-      Hash: d523c3f37f1be1b799b7c32d47bbd4b8
+      Hash: 6fd2bb55b3ee5edb6040a1c5bccd0e07
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MySyncPosition
-  - hash:
-      serializedVersion: 2
-      Hash: 76ad40509d6fb2b7e8117a0a48a789c9
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CorgiControllerPhysicsVolume2D
   - hash:
       serializedVersion: 2
       Hash: 09a332418522e82d937585e2a061b3cf
@@ -1286,34 +731,10 @@ ScriptsOnlyBuild:
     className: BenchmarkNetworkManager
   - hash:
       serializedVersion: 2
-      Hash: 2d20ffc80f7ef0779cc9d09fb672688b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PlayerBounds
-  - hash:
-      serializedVersion: 2
-      Hash: 14493513e0874796e7a15f396ac50b15
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AISimpleWalk
-  - hash:
-      serializedVersion: 2
       Hash: d4a0f162fb9f35fcefae9e327cfb3d35
     assemblyName: Mirror.Examples.Cloud.GUI.dll
     namespaceName: Mirror.Cloud.Example
     className: ServerListManager
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: KillPlayerOnTouch
-  - hash:
-      serializedVersion: 2
-      Hash: 399440e37bfac5c1f0a317ffe135ddab
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: SuperHipsterBrosCharacter
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -1326,12 +747,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.Benchmark
     className: MonsterMovement
-  - hash:
-      serializedVersion: 2
-      Hash: 122d7ffab68b4eedc72a1fce03e63c2f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: BloomOptimized
   - hash:
       serializedVersion: 2
       Hash: b424b4eeb810aecb0ff91c62639241e9
@@ -1358,12 +773,6 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 85747da9736ad7a60523891564d17c49
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Coin
-  - hash:
-      serializedVersion: 2
       Hash: dbb6fc7e117f9cdea56b2fb106ddfe2c
     assemblyName: SimpleWebTransport.dll
     namespaceName: Mirror.SimpleWeb
@@ -1380,12 +789,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
-  - hash:
-      serializedVersion: 2
-      Hash: 0914d836389dd5fcf0d92f43268a864b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: InputManager
   - hash:
       serializedVersion: 2
       Hash: 95c0b04178c21dd9ebced0949235e9c4
@@ -1412,22 +815,10 @@ ScriptsOnlyBuild:
     className: Tank
   - hash:
       serializedVersion: 2
-      Hash: 8025f519f5bf62904a859ae5e4263aae
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: StartScreen
-  - hash:
-      serializedVersion: 2
       Hash: 9b01b1d80bd3ecf4eaca45e1a22d444e
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror.Experimental
     className: NetworkRigidbody
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PauseButton
   - hash:
       serializedVersion: 2
       Hash: ce669872a2be11bc686ea22961d8a3bb
@@ -1436,76 +827,16 @@ ScriptsOnlyBuild:
     className: FloatingJoystick
   - hash:
       serializedVersion: 2
-      Hash: c372bcb3ed1196bd5e6e225398f8fbe5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: FallingPlatform
-  - hash:
-      serializedVersion: 2
-      Hash: 84a201f5c7137f077e75cb7124a43460
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnitySampleAssets.CrossPlatformInput
-    className: InputAxisScrollbar
-  - hash:
-      serializedVersion: 2
-      Hash: fdd7177da17032ba94d98037cc97bb49
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: AxisTouchButton
-  - hash:
-      serializedVersion: 2
-      Hash: d0964d49d4bbaf51b27c5e865f8160c3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Water
-  - hash:
-      serializedVersion: 2
       Hash: 16a720ee1ef3f470f479041a1e75bdc1
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.MultipleAdditiveScenes
     className: PlayerController
   - hash:
       serializedVersion: 2
-      Hash: 39b960b852b5e5d66a80a4e65dedab2d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: HealthBar
-  - hash:
-      serializedVersion: 2
-      Hash: 3a3324b73792dde0ff97dae69b3a3dfb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: SunShafts
-  - hash:
-      serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ScrollRect
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: HipsterGUI
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CheckPoint
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnitySampleAssets.CrossPlatformInput
-    className: ButtonHandler
-  - hash:
-      serializedVersion: 2
-      Hash: 2a08b555015c9c32885a2fed6746e027
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelSelector
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -1520,22 +851,10 @@ ScriptsOnlyBuild:
     className: SpriteSkinEntity
   - hash:
       serializedVersion: 2
-      Hash: 2046ad28bc29ca58436fae72caf60470
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Health
-  - hash:
-      serializedVersion: 2
       Hash: 702330b33d6f348f76db0c974f6e02c3
     assemblyName: Mirror.Authenticators.dll
     namespaceName: Mirror.Authenticators
     className: BasicAuthenticator
-  - hash:
-      serializedVersion: 2
-      Hash: 86cfcd24b9fc59be9240f6811ea3b2b2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ScreenOverlay
   - hash:
       serializedVersion: 2
       Hash: 220bd265f54cc4cee8f1539ad2b2c64a
@@ -1556,46 +875,16 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: badf46eae01bbcf1b945f4a6ea5ec75b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PathedProjectileSpawner
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnitySampleAssets.CrossPlatformInput
-    className: MobileControlRig
-  - hash:
-      serializedVersion: 2
-      Hash: a61441899e357f71463a81953a2ca9ba
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PathFollow
-  - hash:
-      serializedVersion: 2
       Hash: e87f50864f8a979f1228e8c69bd62658
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.Pong
     className: Ball
   - hash:
       serializedVersion: 2
-      Hash: 498137d53d8da1fbdd9044034a598a85
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CharacterJetpack
-  - hash:
-      serializedVersion: 2
       Hash: b2b4a4bf81317f3c08703a1773162a08
     assemblyName: Mirror.Examples.Cloud.Pong.dll
     namespaceName: Mirror.Cloud.Example
     className: NetworkManagerListServerPong
-  - hash:
-      serializedVersion: 2
-      Hash: 3f7d3eac3468685ef18425a40cd5b891
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: AutoRotate
   - hash:
       serializedVersion: 2
       Hash: e87f50864f8a979f1228e8c69bd62658
@@ -1616,22 +905,10 @@ ScriptsOnlyBuild:
     className: NetworkLerpRigidbody
   - hash:
       serializedVersion: 2
-      Hash: 9cc3904a86f5a119184da7351cdb4e65
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: DepthOfField
-  - hash:
-      serializedVersion: 2
       Hash: 16a720ee1ef3f470f479041a1e75bdc1
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: PlayerController
-  - hash:
-      serializedVersion: 2
-      Hash: 6ead3d199aabb2182b31df3914d658be
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: GUIManager
   - hash:
       serializedVersion: 2
       Hash: 45dcee3934513f7d31be601b6598e245
@@ -1644,12 +921,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
-  - hash:
-      serializedVersion: 2
-      Hash: 2555a09210a0e68e902ced1213e03bad
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Jumper
   - hash:
       serializedVersion: 2
       Hash: 041c384aaa49d0bac4d0563caab0a85c
@@ -1682,22 +953,10 @@ ScriptsOnlyBuild:
     className: OpenSceneEditor
   - hash:
       serializedVersion: 2
-      Hash: 1e2063288ed9656dae64171fe425633d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: ParallaxCamera
-  - hash:
-      serializedVersion: 2
       Hash: 460f1bc7ddb5a5325403b8276116aa4d
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror
     className: NetworkAnimator
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: PostEffectsHelper
   - hash:
       serializedVersion: 2
       Hash: 192ca9716d03752ea1d90a78bc2daac9
@@ -1730,12 +989,6 @@ ScriptsOnlyBuild:
     className: NetworkMatchChecker
   - hash:
       serializedVersion: 2
-      Hash: 1a9e52e2ff472238deaebe06595ba637
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ScreenSpaceAmbientOcclusion
-  - hash:
-      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1766,12 +1019,6 @@ ScriptsOnlyBuild:
     className: AdditiveNetworkManager
   - hash:
       serializedVersion: 2
-      Hash: dfb7e0226ae3dbef7507bf09947e3289
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: JetpackBar
-  - hash:
-      serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1794,12 +1041,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: HorizontalLayoutGroup
-  - hash:
-      serializedVersion: 2
-      Hash: d7f470660e8e5bf322a5c170b752eff8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: CreaseShading
   - hash:
       serializedVersion: 2
       Hash: 344a8c2e106a0a4e098e91a52e0af063
@@ -1836,12 +1077,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.Cloud.GUI.dll
     namespaceName: Mirror.Cloud.Example
     className: ApiUpdater
-  - hash:
-      serializedVersion: 2
-      Hash: 28d790d202beb300ec2ffc6265160c26
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ContrastEnhance
   - hash:
       serializedVersion: 2
       Hash: 824e8d4cb47ffd88ddf959dbd4526585
@@ -1898,24 +1133,6 @@ ScriptsOnlyBuild:
     className: ServerListUIItem
   - hash:
       serializedVersion: 2
-      Hash: 96539fd6feebcbc9da75ce005fd446a9
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: NoiseAndGrain
-  - hash:
-      serializedVersion: 2
-      Hash: 14770d00375468d2b435b9ce7cfcfc5d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PathDefinition
-  - hash:
-      serializedVersion: 2
-      Hash: c998c8dbd372bc84a6051a7e77034482
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: BackgroundMusic
-  - hash:
-      serializedVersion: 2
       Hash: 424ff031df6708fbb7ddeffa03367809
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1934,12 +1151,6 @@ ScriptsOnlyBuild:
     className: FallbackTransport
   - hash:
       serializedVersion: 2
-      Hash: 7f5091ffb12cb736bde79b841cbb9a4b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelMapPathElement
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1952,52 +1163,16 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 1a10cfa38a4fa7084fca8734992f842d
+      Hash: 00ce45901dd61f11a92d95bd3030fb9a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelRestarter
   - hash:
       serializedVersion: 2
       Hash: e6b0b783ea73cf405c717cd9b89fbd7c
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
     className: NetworkRoomManagerExt
-  - hash:
-      serializedVersion: 2
-      Hash: a8c33406fd5a44e89bd47fea3b45028f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ColorCorrectionRamp
-  - hash:
-      serializedVersion: 2
-      Hash: f080a86a4a939dd08c0cc4f4f05e1e4e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Grayscale
-  - hash:
-      serializedVersion: 2
-      Hash: 172cfdd977ca8a6f32932932c2f0d2ee
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: SepiaTone
-  - hash:
-      serializedVersion: 2
-      Hash: 3bd301965190e77c3822602bd15d95bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Twirl
-  - hash:
-      serializedVersion: 2
-      Hash: 3bd301965190e77c3822602bd15d95bb
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Vortex
   - hash:
       serializedVersion: 2
       Hash: f336e086360abe49a3323e5f1583c35a
@@ -2012,34 +1187,16 @@ ScriptsOnlyBuild:
     className: ShootingTankBehaviour
   - hash:
       serializedVersion: 2
-      Hash: 8fcde507e053fc8c8bc5dd669ab43661
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: PathedProjectile
-  - hash:
-      serializedVersion: 2
       Hash: 528e9858840cb8370d93939fff6b42d9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: JoystickPlayerExample
   - hash:
       serializedVersion: 2
-      Hash: c5bbb5c4b020d95f6395b3448c0eddcc
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: CameraMotionBlur
-  - hash:
-      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
     className: BeforeAfterTestCommandState
-  - hash:
-      serializedVersion: 2
-      Hash: b3efa9c4cb2d5984ffcba4c4e57f3d19
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: CorgiController
   - hash:
       serializedVersion: 2
       Hash: c56a9426da8f5d94d45fd88dc881ef1b
@@ -2060,22 +1217,10 @@ ScriptsOnlyBuild:
     className: NetworkLogSettings
   - hash:
       serializedVersion: 2
-      Hash: cff865a73bc125a018756280745ca3d6
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: BonusBlock
-  - hash:
-      serializedVersion: 2
-      Hash: d67ddc6ac86d814c331dbf1446a5117a
+      Hash: 98f8fa62999bbacc135e7b790989565b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyNetworkPuppet
-  - hash:
-      serializedVersion: 2
-      Hash: cb669d2e08fa830f0657d9672feb3f9b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: WeaponUpgrade
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -2102,28 +1247,10 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
-      Hash: ec43dea1e92b972378dfcbf6838716ab
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Weapon
-  - hash:
-      serializedVersion: 2
       Hash: 9b5a106d716e10dbf0635b1180cc5e67
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.Chat
     className: Player
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: VisibleParticle
-  - hash:
-      serializedVersion: 2
-      Hash: 965eca3b626090eff3b7727c8a56ba7e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: RandomSprite
   - hash:
       serializedVersion: 2
       Hash: d791aa6007fa3640be1164ea75bb087d
@@ -2150,24 +1277,6 @@ ScriptsOnlyBuild:
     className: MultiSceneNetManager
   - hash:
       serializedVersion: 2
-      Hash: 34665528cf8da97e082a230c8afb96c6
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: DepthOfFieldDeprecated
-  - hash:
-      serializedVersion: 2
-      Hash: c8533c9804499b27f7c31b277d275f91
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Fisheye
-  - hash:
-      serializedVersion: 2
-      Hash: b4b76a8ad2ef692623c352b786ad5a6a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Ladder
-  - hash:
-      serializedVersion: 2
       Hash: 8cd1cbba27f3cb1717254f668e9e0d5a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -2192,12 +1301,6 @@ ScriptsOnlyBuild:
     className: NetworkDiscovery
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: PostEffectsBase
-  - hash:
-      serializedVersion: 2
       Hash: b2b4a4bf81317f3c08703a1773162a08
     assemblyName: Mirror.Examples.Cloud.GUI.dll
     namespaceName: Mirror.Cloud.Example
@@ -2210,22 +1313,10 @@ ScriptsOnlyBuild:
     className: PlayModeRunnerCallback
   - hash:
       serializedVersion: 2
-      Hash: 0696fc6f23e0774866e0dac430180ee3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: TimeModifier
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: BaseInput
-  - hash:
-      serializedVersion: 2
-      Hash: 4f804ac61ce7c46a7edd180248c862b1
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: MeleeWeapon
   - hash:
       serializedVersion: 2
       Hash: 216c4bcd126c22b93d86c49174ecd34d
@@ -2252,12 +1343,6 @@ ScriptsOnlyBuild:
     className: CameraFollower
   - hash:
       serializedVersion: 2
-      Hash: 8ccce45a027cfbb02441998345f2c121
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: EdgeDetection
-  - hash:
-      serializedVersion: 2
       Hash: 88e3b86c3ab08e02b94869c8fc5ce863
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
@@ -2282,28 +1367,10 @@ ScriptsOnlyBuild:
     className: TMP_SubMesh
   - hash:
       serializedVersion: 2
-      Hash: 83f2372925920a250903e7f934cc0d8e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Mushroom
-  - hash:
-      serializedVersion: 2
-      Hash: 10d40c4c007ed0fe1a397ef11ee530fa
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: ColorCorrectionLookup
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestRunner.Utils
     className: TestRunCallbackListener
-  - hash:
-      serializedVersion: 2
-      Hash: fa6817f12b587184c4081102a73d83b5
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: Teleporter
   - hash:
       serializedVersion: 2
       Hash: 4ef0f7d42cdb13479386e1f049c315aa
@@ -2316,12 +1383,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Dropdown
-  - hash:
-      serializedVersion: 2
-      Hash: fd7b3d6a138fbb99f83b446b5a85e187
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: MoreMountains.CorgiEngine
-    className: LevelSelectorGUI
   - hash:
       serializedVersion: 2
       Hash: e4fb2671f4e7782c0481d74d32ad6df2
@@ -2352,12 +1413,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MyDebug
-  - hash:
-      serializedVersion: 2
-      Hash: 83dffc789cd416ac4ef1fc44f3423e35
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: UnityStandardAssets.ImageEffects
-    className: Tonemapping
   - hash:
       serializedVersion: 2
       Hash: aa88ae22474df55295327e4ee99e5a24
@@ -2406,6 +1461,12 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DeathZone
   platform: 13
   scenePathNames:
   - Assets/_Game/Scenes/Login.unity

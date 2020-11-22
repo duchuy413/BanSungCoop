@@ -5,19 +5,20 @@ using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : NetworkBehaviour {
-    public static float SPEED = 10f;
+    public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
     public static float SHOOT_RATE = 0.2f;
 
     public string state = "";
     public string direction = "left";
     public Rigidbody2D rb2d;
+    public GameObject cameraPos;
     public Transform hand;
     public Weapon weapon;
     public WeaponStat weaponStat;
 
     bool isShooting = false;
-    bool isRunning = false;
+    bool isRunning = true;
     float nextShoot = 0f;
     int jumpCount;
     float scale = 1f;
@@ -34,10 +35,15 @@ public class Player : NetworkBehaviour {
 
     public override void OnStartLocalPlayer() {
         if (isLocalPlayer) {
+            //transform.position = Gameplay.Instance.startPos.position;
             NetworkSystem.player = gameObject;
-            CameraFollower.Instance.target = gameObject;
+            CameraFollower.Instance.target = cameraPos;
             InputSystem.Instance.player = this;
-        } 
+        }
+        //transform.position = Gameplay.Instance.startPos.position;
+        //NetworkSystem.player = gameObject;
+        //CameraFollower.Instance.target = cameraPos;
+        //InputSystem.Instance.player = this;
     }
 
     void Update() {
@@ -54,10 +60,11 @@ public class Player : NetworkBehaviour {
             }
 
             if (state != "jump" && state != "fall") {
-                if (isRunning)
+                if (isRunning) {
                     state = "run";
-                else
+                } else {
                     state = "go";
+                }
             }
 
         } else if (Joystick.Instance.Horizontal < 0 || Input.GetKeyDown(KeyCode.LeftArrow)) {
@@ -70,10 +77,11 @@ public class Player : NetworkBehaviour {
             }
 
             if (state != "jump" && state != "fall") {
-                if (isRunning)
+                if (isRunning) {
                     state = "run";
-                else
+                } else {
                     state = "go";
+                }
             }
         } else {
             rb2d.velocity = new Vector3(0, rb2d.velocity.y);

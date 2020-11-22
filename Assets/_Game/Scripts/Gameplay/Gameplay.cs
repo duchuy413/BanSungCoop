@@ -13,7 +13,7 @@ public class Gameplay : MonoBehaviour
 
     void Start()
     {
-        NetworkSystem.player.transform.position = startPos.position;
+        NetworkSystem.player.transform.position = Instance.startPos.position;
     }
 
 }
