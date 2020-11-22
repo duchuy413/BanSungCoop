@@ -6,6 +6,7 @@ using UnityEngine;
 public class HitParam
 {
     public float dame;
+    public Vector3 startPos;
     public GameObject owner;
     public string ownerTag;
     public List<string> targetTags;

@@ -23,8 +23,8 @@ public class Player : NetworkBehaviour {
     float scale = 1f;
 
     void Start() {
-        if (!isLocalPlayer)
-            return;
+        //if (!isLocalPlayer)
+        //    return;
 
         rb2d = GetComponent<Rigidbody2D>();
         jumpCount = 2;
@@ -101,6 +101,7 @@ public class Player : NetworkBehaviour {
             hit.direction = direction;
             hit.owner = gameObject;
             hit.ownerTag = tag;
+            hit.startPos = weapon.barrel.position;
             hit.targetTags = new List<string>() { "Player" };
             Attack(hit);
         }
@@ -173,18 +174,32 @@ public class Player : NetworkBehaviour {
     }
 
     public void LoadWeapon(string s) {
-        //weapon = GetComponent<Weapon>();
-        weaponStat = weapon.stat;
+        string path = "Weapon/" + s + "/" + s;
+        weaponStat = Resources.Load<WeaponStat>(path);
         weapon.Init();
     }
 
     public void Attack(HitParam hit) {
+        MyDebug.Log("Calling attack");
         CmdAttack(hit);
     }
 
     [Command]
     public void CmdAttack(HitParam hit) {
-        GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, weapon.barrel.position);
+        MyDebug.Log("Calling CMD Attack");
+        SpawnBullet(hit);
+        RpcAttack(hit);
+    }
+
+    [ClientRpc]
+    public void RpcAttack(HitParam hit) {
+        MyDebug.Log("Calling RPC Attack");
+        SpawnBullet(hit);
+    }
+
+    public void SpawnBullet(HitParam hit) {
+        MyDebug.Log("Calling Spawn Bullet");
+        GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
 
         bullet.GetComponent<Bullet>().hitParam = hit;
         bullet.GetComponent<TrailRenderer>().Clear();
@@ -197,7 +212,5 @@ public class Player : NetworkBehaviour {
             hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
             bullet.transform.localScale = new Vector3(-scale, scale);
         }
-
-        //NetworkClient. .spaw Spawn(bullet);
     }
 }

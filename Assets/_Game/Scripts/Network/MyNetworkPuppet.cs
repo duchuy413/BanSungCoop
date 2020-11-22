@@ -25,11 +25,11 @@ public class MyNetworkPuppet : MonoBehaviour {
     }
 
     private void Update() {
-        if (rb2d.velocity.x > 0) {
-            transform.localScale = new Vector3(-scale, scale);
-        } else if (rb2d.velocity.x < 0) {
-            transform.localScale = new Vector3(scale, scale);
-        }
+        //if (rb2d.velocity.x > 0) {
+        //    transform.localScale = new Vector3(-scale, scale);
+        //} else if (rb2d.velocity.x < 0) {
+        //    transform.localScale = new Vector3(scale, scale);
+        //}
     }
 
     void LateUpdate() {
@@ -60,9 +60,9 @@ public class MyNetworkPuppet : MonoBehaviour {
                 rb2d.velocity = vectorToTarget * speed * FAST_SPEED_2;
             }
 
-            if (showDebug) {
-                Debug.Log("DISTANCE: " + distanceToTarget);
-            }
+            //if (showDebug) {
+            //    Debug.Log("DISTANCE: " + distanceToTarget);
+            //}
             
         }
     }
