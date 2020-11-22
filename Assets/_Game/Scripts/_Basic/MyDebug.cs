@@ -14,10 +14,13 @@ public class MyDebug : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+        txt = GetComponent<TextMeshProUGUI>();
     }
 
     void Start() {
-        file = new StreamWriter(filePath);
+        if (File.Exists(filePath)) {
+            file = new StreamWriter(filePath);
+        }
     }
 
     public static void Log(string message) {
@@ -29,17 +32,19 @@ public class MyDebug : MonoBehaviour {
         }
 
         if (Instance.txt != null) {
-            Instance.txt.text += message;
+            Instance.txt.text += "\n" + message;
         }
 
         Debug.Log(message);
     }
 
     private void OnApplicationQuit() {
-        file.Close();
+        if (file != null) {
+            file.Close();
+        }
     }
 
-    public static void ClearScreen() {
+    public void ClearScreen() {
         Instance.txt.text = "";
     }
 }
