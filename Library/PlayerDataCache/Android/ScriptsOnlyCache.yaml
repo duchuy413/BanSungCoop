@@ -94,6 +94,7 @@ ScriptsOnlyBuild:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
     - Mirror.NetworkStartPosition
+    - Mirror.TelepathyTransport
     - kcp2k.KcpTransport
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
@@ -437,6 +438,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11422}
     - Class: 114
+      Script: {instanceID: 11448}
+    - Class: 114
       Script: {instanceID: 11452}
     - Class: 114
       Script: {instanceID: 11498}
@@ -628,8 +631,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15278}
     - Class: 114
       Script: {instanceID: 15338}
-    - Class: 114
-      Script: {instanceID: 15468}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -1645,7 +1646,7 @@ ScriptsOnlyBuild:
     className: Jumper
   - hash:
       serializedVersion: 2
-      Hash: aef9386513e10c2b58b4c2172faf4e3c
+      Hash: 041c384aaa49d0bac4d0563caab0a85c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: InputSystem

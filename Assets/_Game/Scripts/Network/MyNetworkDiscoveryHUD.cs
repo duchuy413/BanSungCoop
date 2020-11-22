@@ -44,8 +44,8 @@ namespace Mirror.Discovery
             GUILayout.BeginHorizontal();
 
             GUILayoutOption[] options = new GUILayoutOption[] { 
-                GUILayout.Width(100f),
-                GUILayout.Height(50f),
+                GUILayout.Width(400f),
+                GUILayout.Height(200f),
             };
 
             if (GUILayout.Button("Find Servers", options))

@@ -56,6 +56,8 @@ public class MySyncPosition : NetworkBehaviour {
 
             GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
             animUpdater = puppet.GetComponent<PlayerAnimationUpdate>();
+
+            InputSystem.listPuppet.Add(puppet);
         }
 
         InvokeRepeating("TransmitPosition", 0.1f, 0.1f);
