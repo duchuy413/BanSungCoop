@@ -8,10 +8,12 @@ public class Player : NetworkBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
     public static float SHOOT_RATE = 0.2f;
+    public static float DASH_FORCE = 5000f;
 
     public string state = "";
     public string direction = "left";
     public Rigidbody2D rb2d;
+    public PlayerCommand playerCommand;
     public GameObject cameraPos;
     public Transform hand;
     public Weapon weapon;
@@ -24,10 +26,8 @@ public class Player : NetworkBehaviour {
     float scale = 1f;
 
     void Start() {
-        //if (!isLocalPlayer)
-        //    return;
-
         rb2d = GetComponent<Rigidbody2D>();
+        playerCommand = GetComponent<PlayerCommand>();
         jumpCount = 2;
         scale = transform.localScale.x;
         LoadWeapon("longgun");
@@ -35,15 +35,10 @@ public class Player : NetworkBehaviour {
 
     public override void OnStartLocalPlayer() {
         if (isLocalPlayer) {
-            //transform.position = Gameplay.Instance.startPos.position;
             NetworkSystem.player = gameObject;
             CameraFollower.Instance.target = cameraPos;
             InputSystem.Instance.player = this;
         }
-        //transform.position = Gameplay.Instance.startPos.position;
-        //NetworkSystem.player = gameObject;
-        //CameraFollower.Instance.target = cameraPos;
-        //InputSystem.Instance.player = this;
     }
 
     void Update() {
@@ -103,7 +98,6 @@ public class Player : NetworkBehaviour {
         //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
-            //GameObject bullet = Gameplay.LoadPool("bullet", barrel.position);
             HitParam hit = new HitParam();
             hit.dame = 20f;
             hit.direction = direction;
@@ -133,7 +127,6 @@ public class Player : NetworkBehaviour {
 
         MyNetworkMessage mess = new MyNetworkMessage();
         mess.msg = "THIS IS JUMPING";
-        //NetworkClient.Send<MyNetworkMessage>(mess);
     }
 
     public IEnumerator Fall(int jumpId) {
@@ -163,6 +156,14 @@ public class Player : NetworkBehaviour {
         Debug.Log("USE SKILL!");
     }
 
+    public void Dash() {
+        if (direction == "left") {
+            playerCommand.Dash(new Vector2(-DASH_FORCE, 0));
+        } else if (direction == "right") {
+            playerCommand.Dash(new Vector2(DASH_FORCE, 0));
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Ground")) {
             if (Mathf.Abs(Joystick.Instance.Horizontal) > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
@@ -184,6 +185,7 @@ public class Player : NetworkBehaviour {
     public void LoadWeapon(string s) {
         string path = "Weapon/" + s + "/" + s;
         weaponStat = Resources.Load<WeaponStat>(path);
+        GetComponent<PlayerCommand>().weaponStat = weaponStat;
         weapon.Init();
     }
 

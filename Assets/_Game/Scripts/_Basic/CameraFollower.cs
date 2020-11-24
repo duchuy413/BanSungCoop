@@ -47,12 +47,19 @@ public class CameraFollower : MonoBehaviour
         {
             rb2d.velocity = new Vector3(0f, 0f);
             return;
-        }
+        } 
         else
         {
             vectorToTarget = target.transform.position - transform.position;
-            vectorToTarget = vectorToTarget * speed / distanceToTarget;
-            rb2d.velocity = vectorToTarget;
+            vectorToTarget = vectorToTarget / distanceToTarget;
+
+            if (distanceToTarget < 5f) {
+                rb2d.velocity = vectorToTarget * speed;
+            } else if (distanceToTarget < 10f) {
+                rb2d.velocity = vectorToTarget * 2 * speed;
+            } else {
+                rb2d.velocity = vectorToTarget * 5 * speed;
+            }
         }
     }
 

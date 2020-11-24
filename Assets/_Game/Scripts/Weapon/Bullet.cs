@@ -8,10 +8,13 @@ public class Bullet : MonoBehaviour {
 
     public float speed = 30f;
 
+    private void OnEnable() {
+        Invoke("SetActiveFalse", 2f);
+    }
+
     void Update() {
-        //float distance = Vector3.Distance(transform.position, DGameSystem.player.transform.position);
-        if (Mathf.Abs(transform.position.x) >20f)
-            gameObject.SetActive(false);
+        //if (Mathf.Abs(transform.position.x) >20f)
+        //    gameObject.SetActive(false);
 
         if (hitParam.direction == "left")
             transform.position -= new Vector3(speed * Time.deltaTime, 0);
@@ -22,8 +25,11 @@ public class Bullet : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if (hitParam.targetTags.Contains(collision.gameObject.tag)) {
             collision.gameObject.SendMessage("GetHit", hitParam);
-            //DGameSystem.LoadPool("HitParticle", transform.position);
             gameObject.SetActive(false);
         }
+    }
+
+    public void SetActiveFalse() {
+        gameObject.SetActive(false);
     }
 }

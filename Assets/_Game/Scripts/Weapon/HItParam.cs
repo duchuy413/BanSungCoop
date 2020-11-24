@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class HitParam
 {
+    public string objName;
     public float dame;
     public Vector3 startPos;
     public GameObject owner;

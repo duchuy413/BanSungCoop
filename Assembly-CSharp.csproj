@@ -75,6 +75,7 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\InputSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\Player.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\PlayerAnimationUpdate.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\PlayerCommand.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\ChatBehavior.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\MyNetworkDiscoveryHUD.cs" />
     <Compile Include="Assets\_Game\Scripts\Network\MyNetworkMessage.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\_Game\Scripts\Weapon\WeaponStat.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\CameraFollower.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\Debug1.cs" />
+    <Compile Include="Assets\_Game\Scripts\_Basic\DisableOnStart.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\FramesAnimator.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\GameSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\MyDebug.cs" />

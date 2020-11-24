@@ -41,6 +41,10 @@ public class InputSystem : MonoBehaviour
         NetworkSystem.player.GetComponent<Player>().UseSkill();
     }
 
+    public void Dash() {
+        NetworkSystem.player.GetComponent<Player>().Dash();
+    }
+
     public void UpdateSpeed() {
         float speed = float.Parse(baseSpeed.text);
         float fast1 = float.Parse(fastSpeed1.text);
