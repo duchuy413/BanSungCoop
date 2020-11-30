@@ -6,6 +6,11 @@ public class CameraFollower : MonoBehaviour
     public static float MAX_SHOOT_RADIUS = 150f;
     public static CameraFollower Instance;
 
+    public float TOP = 22f;
+    public float BOTTOM = -15f;
+    public float LEFT = -35f;
+    public float RIGHT = 30f;
+
     public GameObject target;
     public float maxDistance = 4f;
     public float speed = 25f;
@@ -15,8 +20,6 @@ public class CameraFollower : MonoBehaviour
 
     void Start()
     {
-        //var renderer = GetComponent<SpriteRenderer>();
-        //if (renderer != null) renderer.enabled = false;
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.isKinematic = true;
         rb2d.gravityScale = 0;
@@ -29,11 +32,6 @@ public class CameraFollower : MonoBehaviour
             return;
 
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-
-        //if (distanceToTarget < 3f)
-        //{
-        //    target = null;
-        //}
 
         if (target != null)
             GoToTargetPosition(maxDistance);
@@ -52,6 +50,14 @@ public class CameraFollower : MonoBehaviour
         {
             vectorToTarget = target.transform.position - transform.position;
             vectorToTarget = vectorToTarget / distanceToTarget;
+
+            if (target.transform.position.x < LEFT || target.transform.position.x > RIGHT) {
+                vectorToTarget = new Vector3(0, vectorToTarget.y);
+            }
+
+            if (target.transform.position.y < BOTTOM || target.transform.position.y > TOP) {
+                vectorToTarget = new Vector3(vectorToTarget.x, 0);
+            }
 
             if (distanceToTarget < 5f) {
                 rb2d.velocity = vectorToTarget * speed;

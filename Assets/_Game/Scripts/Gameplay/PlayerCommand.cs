@@ -18,12 +18,14 @@ public class PlayerCommand : NetworkBehaviour
     [Command]
     public void CmdDash(Vector2 force) {
         GetComponent<Rigidbody2D>().AddForce(force);
+        GameSystem.LoadPool("Effect/dash", transform.position);
         RpcDash(force);
     }
 
     [ClientRpc]
     public void RpcDash(Vector2 force) {
         GetComponent<Rigidbody2D>().AddForce(force);
+        GameSystem.LoadPool("Effect/dash", transform.position);
     }
 
     [Command]

@@ -24,6 +24,8 @@ public class Player : NetworkBehaviour {
     float nextShoot = 0f;
     int jumpCount;
     float scale = 1f;
+    float hp = 200f;
+    float dame = 20f;
 
     void Start() {
         rb2d = GetComponent<Rigidbody2D>();
@@ -84,15 +86,27 @@ public class Player : NetworkBehaviour {
                 state = "stand";
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            Joystick.Instance.input = new Vector3(-1, 0);
+        } 
+        else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            Joystick.Instance.input = new Vector3(1, 0);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)) {
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z)) {
-            isRunning = true;
+        if (Input.GetKeyDown(KeyCode.C)) {
+            ShootStart();
         }
-        if (Input.GetKeyUp(KeyCode.Z)) {
-            isRunning = false;
+
+        if (Input.GetKeyUp(KeyCode.C)) {
+            ShootEnd();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            Dash();
         }
 
         //check shooting
@@ -222,5 +236,9 @@ public class Player : NetworkBehaviour {
             hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
             bullet.transform.localScale = new Vector3(-scale, scale);
         }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision) {
+        
     }
 }
