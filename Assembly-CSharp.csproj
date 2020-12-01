@@ -91,9 +91,9 @@
     <Compile Include="Assets\_Game\Scripts\Weapon\IAttack.cs" />
     <Compile Include="Assets\_Game\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\_Game\Scripts\Weapon\WeaponStat.cs" />
+    <Compile Include="Assets\_Game\Scripts\_Basic\AudioSystem.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\CameraFollower.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\CountDown.cs" />
-    <Compile Include="Assets\_Game\Scripts\_Basic\Debug1.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\DisableOnStart.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\FramesAnimator.cs" />
     <Compile Include="Assets\_Game\Scripts\_Basic\GameSystem.cs" />

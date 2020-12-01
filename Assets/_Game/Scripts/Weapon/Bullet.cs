@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (hitParam.targetTags.Contains(collision.gameObject.tag)) {
-            collision.gameObject.SendMessage("GetHit", hitParam);
+            collision.gameObject.SendMessage("GetHit", hitParam, SendMessageOptions.DontRequireReceiver);
             gameObject.SetActive(false);
         }
     }

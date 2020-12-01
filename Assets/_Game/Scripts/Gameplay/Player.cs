@@ -7,7 +7,7 @@ using Mirror;
 public class Player : NetworkBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
-    public static float SHOOT_RATE = 0.2f;
+    public static float SHOOT_RATE = 0.05f;
     public static float DASH_FORCE = 5000f;
 
     public string state = "";
@@ -236,6 +236,8 @@ public class Player : NetworkBehaviour {
             hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
             bullet.transform.localScale = new Vector3(-scale, scale);
         }
+
+        AudioSystem.Instance.PlaySound("Sound/gunshot/gunshot1");
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {

@@ -14,6 +14,8 @@ public class Gameplay : MonoBehaviour
     void Start()
     {
         NetworkSystem.player.transform.position = Instance.startPos.position;
+        AudioSystem.Instance.PlaySound("Sound/background/gunnytheme",4);
+        AudioSystem.Instance.SetLooping(true, 4);
     }
 
 }
