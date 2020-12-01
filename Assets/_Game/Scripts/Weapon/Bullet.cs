@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnEnable() {
         Invoke("SetActiveFalse", 2f);
+        GetComponent<AudioSource>().Play();
     }
 
     void Update() {

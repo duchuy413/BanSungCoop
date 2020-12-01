@@ -271,6 +271,9 @@
     <Reference Include="Mono.CecilX.Rocks">
       <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/2019.4.10f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
     </Reference>

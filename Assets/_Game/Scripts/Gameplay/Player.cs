@@ -24,7 +24,7 @@ public class Player : NetworkBehaviour {
     float nextShoot = 0f;
     int jumpCount;
     float scale = 1f;
-    float hp = 200f;
+    float hp = 500f;
     float dame = 20f;
 
     void Start() {
@@ -119,7 +119,7 @@ public class Player : NetworkBehaviour {
             hit.ownerTag = tag;
             hit.startPos = weapon.barrel.position;
             hit.targetTags = new List<string>() { "Player" };
-            Attack(hit);
+            playerCommand.Attack(hit, direction);
         }
 
         if (direction == "left") {
@@ -139,8 +139,7 @@ public class Player : NetworkBehaviour {
         state = "jump";
         StartCoroutine(Fall(jumpCount));
 
-        MyNetworkMessage mess = new MyNetworkMessage();
-        mess.msg = "THIS IS JUMPING";
+        AudioSystem.Instance.PlaySound("Sound/player/dash");
     }
 
     public IEnumerator Fall(int jumpId) {
@@ -196,48 +195,29 @@ public class Player : NetworkBehaviour {
         }
     }
 
+    public void SetVisible(bool visible) {
+        GetComponent<SpriteRenderer>().enabled = visible;
+        hand.GetComponent<SpriteRenderer>().enabled = visible;
+        weapon.GetComponent<SpriteRenderer>().enabled = visible;
+    }
+
+    public void Die() {
+        StartCoroutine(DieCoroutine());
+
+    }
+
+    public IEnumerator DieCoroutine() {
+        SetVisible(false);
+        AudioSystem.Instance.PlaySound("Sound/player/dead");
+        yield return new WaitForSeconds(3f);
+        SetVisible(true);
+    }
+
     public void LoadWeapon(string s) {
         string path = "Weapon/" + s + "/" + s;
         weaponStat = Resources.Load<WeaponStat>(path);
         GetComponent<PlayerCommand>().weaponStat = weaponStat;
         weapon.Init();
-    }
-
-    public void Attack(HitParam hit) {
-        MyDebug.Log("Calling attack");
-        CmdAttack(hit);
-    }
-
-    [Command]
-    public void CmdAttack(HitParam hit) {
-        MyDebug.Log("Calling CMD Attack");
-        SpawnBullet(hit);
-        RpcAttack(hit);
-    }
-
-    [ClientRpc]
-    public void RpcAttack(HitParam hit) {
-        MyDebug.Log("Calling RPC Attack");
-        SpawnBullet(hit);
-    }
-
-    public void SpawnBullet(HitParam hit) {
-        MyDebug.Log("Calling Spawn Bullet");
-        GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
-
-        bullet.GetComponent<Bullet>().hitParam = hit;
-        bullet.GetComponent<TrailRenderer>().Clear();
-        float scale = bullet.transform.localScale.x;
-
-        if (hit.direction == "right") {
-            hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(-weaponStat.forceBack, 0));
-            bullet.transform.localScale = new Vector3(scale, scale);
-        } else if (hit.direction == "left") {
-            hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
-            bullet.transform.localScale = new Vector3(-scale, scale);
-        }
-
-        AudioSystem.Instance.PlaySound("Sound/gunshot/gunshot1");
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
@@ -249,7 +229,7 @@ public class Player : NetworkBehaviour {
             HitParam hit = collision.GetComponent<Bullet>().hitParam;
             hp -= hit.dame;
             if (hp < 0) {
-                gameObject.SetActive(false);
+                playerCommand.Die();
             }
         }
     }
