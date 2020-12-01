@@ -239,6 +239,16 @@ public class Player : NetworkBehaviour {
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
-        
+        if (!isLocalPlayer) {
+            return;
+        }
+
+        if (collision.CompareTag("Bullet")) {
+            HitParam hit = collision.GetComponent<Bullet>().hitParam;
+            hp -= hit.dame;
+            if (hp < 0) {
+                gameObject.SetActive(false);
+            }
+        }
     }
 }
