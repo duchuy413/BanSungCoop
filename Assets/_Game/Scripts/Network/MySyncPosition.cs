@@ -9,6 +9,7 @@ public class MySyncPosition : NetworkBehaviour {
         public Vector3 pos;
         public string state;
         public string direction;
+        public bool isShooting;
     }
 
     [SyncVar(hook = nameof(UpdateState))]
@@ -38,6 +39,7 @@ public class MySyncPosition : NetworkBehaviour {
             GameObject go = GameSystem.LoadPool("puppet", transform.position);
             puppet = go.GetComponent<MyNetworkPuppet>();
             puppet.target = gameObject;
+            puppet.player = GetComponent<Player>();
             puppet.LoadWeapon(player.weaponStat);
 
             GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
@@ -63,6 +65,7 @@ public class MySyncPosition : NetworkBehaviour {
         current = JsonUtility.FromJson<PlayerSnapshot>(jsonNew);
 
         player.state = current.state;
+        player.isShooting = current.isShooting;
         animUpdater.UpdateAnim(current.state);
         updateTime = Time.time;
     }
@@ -78,6 +81,7 @@ public class MySyncPosition : NetworkBehaviour {
             current.pos = transform.position;
             current.state = player.state;
             current.direction = player.direction;
+            current.isShooting = player.isShooting;
             CmdUpdatePos(JsonUtility.ToJson(current));
         }
     }

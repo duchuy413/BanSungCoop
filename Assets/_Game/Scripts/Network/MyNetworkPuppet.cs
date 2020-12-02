@@ -3,7 +3,10 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class MyNetworkPuppet : MonoBehaviour {
     public GameObject target;
+    public Player player;
     public SpriteRenderer weaponImg;
+
+    public Transform barrel;
 
     public float FAST_SPEED_1 = 2f;
     public float FAST_SPEED_2 = 5f;
@@ -14,11 +17,23 @@ public class MyNetworkPuppet : MonoBehaviour {
     private Vector3 vectorToTarget;
     private Rigidbody2D rb2d;
 
+    float nextShoot = 0f;
+
     void Start() {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.isKinematic = true;
         rb2d.gravityScale = 0;
         scale = Mathf.Abs(transform.localScale.x);
+    }
+
+    private void Update() {
+        //check shooting
+        if (player.isShooting && Time.time > nextShoot) {
+            nextShoot = Time.time + Player.SHOOT_RATE;
+            HitParam hit = player.GetHitParam();
+            hit.startPos = barrel.position;
+            player.GetComponent<PlayerCommand>().SpawnBullet(hit);
+        }
     }
 
     void LateUpdate() {

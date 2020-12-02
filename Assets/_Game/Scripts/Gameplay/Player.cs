@@ -12,6 +12,8 @@ public class Player : NetworkBehaviour {
 
     public string state = "";
     public string direction = "left";
+    public bool isShooting = false;
+
     public Rigidbody2D rb2d;
     public PlayerCommand playerCommand;
     public GameObject cameraPos;
@@ -19,7 +21,6 @@ public class Player : NetworkBehaviour {
     public Weapon weapon;
     public WeaponStat weaponStat;
 
-    bool isShooting = false;
     bool isRunning = true;
     float nextShoot = 0f;
     int jumpCount;
@@ -112,14 +113,7 @@ public class Player : NetworkBehaviour {
         //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
-            HitParam hit = new HitParam();
-            hit.dame = 20f;
-            hit.direction = direction;
-            hit.owner = gameObject;
-            hit.ownerTag = tag;
-            hit.startPos = weapon.barrel.position;
-            hit.targetTags = new List<string>() { "Player" };
-            playerCommand.Attack(hit);
+            playerCommand.Attack(GetHitParam());
         }
 
         if (direction == "left") {
@@ -127,6 +121,17 @@ public class Player : NetworkBehaviour {
         } else {
             transform.localScale = new Vector3(-scale, scale);
         }
+    }
+
+    public HitParam GetHitParam() {
+        HitParam hit = new HitParam();
+        hit.dame = 20f;
+        hit.direction = direction;
+        hit.owner = gameObject;
+        hit.ownerTag = tag;
+        hit.startPos = weapon.barrel.position;
+        hit.targetTags = new List<string>() { "Player" };
+        return hit;
     }
 
     public void Jump() {
