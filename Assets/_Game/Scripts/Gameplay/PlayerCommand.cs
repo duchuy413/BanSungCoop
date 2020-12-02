@@ -6,7 +6,6 @@ using Mirror;
 public class PlayerCommand : NetworkBehaviour {
     public WeaponStat weaponStat;
 
-    
     public void ShootButtonPress(string buttonType) {
         CmdShootButtonPress(buttonType);
     }
@@ -70,17 +69,25 @@ public class PlayerCommand : NetworkBehaviour {
 
     [Command]
     public void CmdDash(Vector2 force) {
-        GetComponent<Rigidbody2D>().AddForce(force);
-        GameSystem.LoadPool("Effect/dash", transform.position);
-        AudioSystem.Instance.PlaySound("Sound/player/dash");
+        DashFunction(force);
         RpcDash(force);
     }
 
     [ClientRpc]
     public void RpcDash(Vector2 force) {
-        GetComponent<Rigidbody2D>().AddForce(force);
+        DashFunction(force);
+    }
+
+    public void DashFunction(Vector2 force) {
         GameSystem.LoadPool("Effect/dash", transform.position);
         AudioSystem.Instance.PlaySound("Sound/player/dash");
+
+        GetComponent<Rigidbody2D>().AddForce(force);
+        if (!isLocalPlayer) {
+            MyNetworkPuppet puppet = GetComponent<MySyncPosition>().puppet;
+            puppet.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            puppet.gameObject.GetComponent<Rigidbody2D>().AddForce(force);
+        }
     }
 
     [Command]

@@ -210,14 +210,23 @@ public class Player : NetworkBehaviour {
 
     public void Die() {
         StartCoroutine(DieCoroutine());
-
     }
 
     public IEnumerator DieCoroutine() {
-        SetVisible(false);
+        if (isLocalPlayer) {
+            SetVisible(false);
+        } else {
+            GetComponent<MySyncPosition>().puppet.SetVisible(false);
+        }
+        
         AudioSystem.Instance.PlaySound("Sound/player/dead");
         yield return new WaitForSeconds(3f);
-        SetVisible(true);
+
+        if (isLocalPlayer) {
+            SetVisible(true);
+        } else {
+            GetComponent<MySyncPosition>().puppet.SetVisible(true);
+        }
     }
 
     public void LoadWeapon(string s) {
@@ -226,7 +235,10 @@ public class Player : NetworkBehaviour {
         GetComponent<PlayerCommand>().weaponStat = weaponStat;
         weapon.Init();
     }
-
+    /// <summary>
+    /// only call from local player
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision) {
         if (!isLocalPlayer) {
             return;

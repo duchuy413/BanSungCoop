@@ -6,6 +6,8 @@ public class MyNetworkPuppet : MonoBehaviour {
     public Player player;
     public SpriteRenderer weaponImg;
 
+    public Transform hand;
+    public Weapon weapon;
     public Transform barrel;
 
     public float FAST_SPEED_1 = 2f;
@@ -72,5 +74,11 @@ public class MyNetworkPuppet : MonoBehaviour {
 
     public void LoadWeapon(WeaponStat stat) {
         weaponImg.sprite = stat.sprite;
+    }
+
+    public void SetVisible(bool visible) {
+        GetComponent<SpriteRenderer>().enabled = visible;
+        hand.GetComponent<SpriteRenderer>().enabled = visible;
+        weapon.GetComponent<SpriteRenderer>().enabled = visible;
     }
 }
