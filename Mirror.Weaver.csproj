@@ -290,6 +290,9 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.CecilX">
       <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.dll</HintPath>
     </Reference>
@@ -301,9 +304,6 @@
     </Reference>
     <Reference Include="Mono.CecilX.Rocks">
       <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/Mirror/Plugins/Mono.Cecil/Mono.CecilX.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>D:/1. PERSONAL PROJECTS/MyProjects/BanSungCoop/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>

@@ -119,7 +119,7 @@ public class Player : NetworkBehaviour {
             hit.ownerTag = tag;
             hit.startPos = weapon.barrel.position;
             hit.targetTags = new List<string>() { "Player" };
-            playerCommand.Attack(hit, direction);
+            playerCommand.Attack(hit);
         }
 
         if (direction == "left") {

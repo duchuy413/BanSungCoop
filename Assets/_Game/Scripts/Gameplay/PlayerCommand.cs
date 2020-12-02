@@ -15,8 +15,8 @@ public class PlayerCommand : NetworkBehaviour
         CmdDash(force);
     }
 
-    public void Attack(HitParam hit, string direction) {
-        CmdAttack(hit, direction);
+    public void Attack(HitParam hit) {
+        CmdAttack(hit);
     }
 
     public void Die() {
@@ -61,19 +61,19 @@ public class PlayerCommand : NetworkBehaviour
     }
 
     [Command]
-    public void CmdAttack(HitParam hit, string direction) {
+    public void CmdAttack(HitParam hit) {
         MyDebug.Log("Calling CMD Attack");
-        SpawnBullet(hit, direction);
-        RpcAttack(hit, direction);
+        SpawnBullet(hit);
+        RpcAttack(hit);
     }
 
     [ClientRpc]
-    public void RpcAttack(HitParam hit, string direction) {
+    public void RpcAttack(HitParam hit) {
         MyDebug.Log("Calling RPC Attack");
-        SpawnBullet(hit, direction);
+        SpawnBullet(hit);
     }
 
-    public void SpawnBullet(HitParam hit, string direction) {
+    public void SpawnBullet(HitParam hit) {
         MyDebug.Log("Calling Spawn Bullet");
         GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
 
@@ -81,10 +81,10 @@ public class PlayerCommand : NetworkBehaviour
         bullet.GetComponent<TrailRenderer>().Clear();
         float scale = bullet.transform.localScale.x;
 
-        if (direction == "right") {
+        if (hit.direction == "right") {
             hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(-weaponStat.forceBack, 0));
             bullet.transform.localScale = new Vector3(scale, scale);
-        } else if (direction == "left") {
+        } else if (hit.direction == "left") {
             hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
             bullet.transform.localScale = new Vector3(-scale, scale);
         }
