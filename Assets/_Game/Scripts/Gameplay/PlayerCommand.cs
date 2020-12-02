@@ -3,12 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PlayerCommand : NetworkBehaviour
-{
+public class PlayerCommand : NetworkBehaviour {
     public WeaponStat weaponStat;
 
-    public void Jump() { 
     
+    public void ShootButtonPress(string buttonType) {
+        CmdShootButtonPress(buttonType);
+    }
+
+    [Command]
+    public void CmdShootButtonPress(string buttonType) {
+        ShootButtonPressFunction(buttonType);
+        RpcShootButtonPress(buttonType);
+    }
+
+    [ClientRpc]
+    public void RpcShootButtonPress(string buttonType) {
+        ShootButtonPressFunction(buttonType);
+    }
+
+    public void ShootButtonPressFunction(string buttonType) {
+        if (isLocalPlayer) {
+            return;
+        }
+
+        if (buttonType == "down") {
+            GetComponent<Player>().isShooting = true;
+        } else if (buttonType == "up") {
+            GetComponent<Player>().isShooting = false;
+        }
     }
 
     public void Dash(Vector2 force) {

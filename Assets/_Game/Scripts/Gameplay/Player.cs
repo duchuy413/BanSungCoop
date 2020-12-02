@@ -113,7 +113,7 @@ public class Player : NetworkBehaviour {
         //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
-            playerCommand.Attack(GetHitParam());
+            playerCommand.SpawnBullet(GetHitParam());
         }
 
         if (direction == "left") {
@@ -156,10 +156,12 @@ public class Player : NetworkBehaviour {
 
     public void ShootStart() {
         isShooting = true;
+        playerCommand.ShootButtonPress("down");
     }
 
     public void ShootEnd() {
         isShooting = false;
+        playerCommand.ShootButtonPress("up");
     }
 
     public void RunStart() {
