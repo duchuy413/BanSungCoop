@@ -7,7 +7,7 @@ using Mirror;
 public class Player : NetworkBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
-    public static float SHOOT_RATE = 0.05f;
+    public static float SHOOT_RATE = 0.1f;
     public static float DASH_FORCE = 5000f;
 
     public string state = "";
@@ -224,6 +224,7 @@ public class Player : NetworkBehaviour {
             SetVisible(true);
         } else {
             GetComponent<MySyncPosition>().puppet.SetVisible(true);
+            hp = 500f;
         }
     }
 
@@ -249,9 +250,9 @@ public class Player : NetworkBehaviour {
             }
 
             if (hit.direction == "right") {
-                body.AddForce(new Vector2(weaponStat.forceBack, 0));
+                body.AddForce(new Vector2(weaponStat.forceBack*2, 0));
             } else {
-                body.AddForce(new Vector2(-weaponStat.forceBack, 0));
+                body.AddForce(new Vector2(-weaponStat.forceBack*2, 0));
             }
 
             hp -= hit.dame;
