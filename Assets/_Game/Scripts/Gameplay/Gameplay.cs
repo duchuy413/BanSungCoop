@@ -6,9 +6,11 @@ public class Gameplay : MonoBehaviour
 {
     public static Gameplay Instance;
     public Transform startPos;
+    public GameObject gameplayCam;
 
     private void Awake() {
         Instance = this;
+        //gameplayCam.SetActive(true);
     }
 
     void Start()

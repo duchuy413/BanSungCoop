@@ -39,8 +39,10 @@ public class Player : NetworkBehaviour {
     public override void OnStartLocalPlayer() {
         if (isLocalPlayer) {
             NetworkSystem.player = gameObject;
-            CameraFollower.Instance.target = cameraPos;
-            InputSystem.Instance.player = this;
+            //CameraFollower.Instance.target = cameraPos;
+            //CameraFollower.Instance.transform.position = transform.position;
+            //InputSystem.Instance.player = this;
+            //Gameplay.Instance.gameplayCam.GetComponent<CameraFollower>().target = gameObject; 
         }
     }
 

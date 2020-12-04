@@ -28,8 +28,19 @@ public class CameraFollower : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null)
+        if (target == null && NetworkSystem.player != null) {
+            target = NetworkSystem.player;
+            Vector3 pos = target.transform.position;
+            transform.position = new Vector3(pos.x, pos.y, -10);
+            ParallelBackground[] list = GetComponentsInChildren<ParallelBackground>();
+            for (int i = 0; i < list.Length; i++) {
+                list[i].enabled = true;
+            }
+        }
+
+        if (target == null) {
             return;
+        }
 
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
