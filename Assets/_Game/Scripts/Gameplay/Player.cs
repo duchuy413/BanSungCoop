@@ -39,10 +39,6 @@ public class Player : NetworkBehaviour {
     public override void OnStartLocalPlayer() {
         if (isLocalPlayer) {
             NetworkSystem.player = gameObject;
-            //CameraFollower.Instance.target = cameraPos;
-            //CameraFollower.Instance.transform.position = transform.position;
-            //InputSystem.Instance.player = this;
-            //Gameplay.Instance.gameplayCam.GetComponent<CameraFollower>().target = gameObject; 
         }
     }
 
@@ -237,17 +233,27 @@ public class Player : NetworkBehaviour {
         GetComponent<PlayerCommand>().weaponStat = weaponStat;
         weapon.Init();
     }
+
     /// <summary>
     /// only call from local player
     /// </summary>
     /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision) {
-        if (!isLocalPlayer) {
-            return;
-        }
-
         if (collision.CompareTag("Bullet")) {
             HitParam hit = collision.GetComponent<Bullet>().hitParam;
+
+            Rigidbody2D body = rb2d;
+
+            if (!isLocalPlayer) {
+                body = GetComponent<MySyncPosition>().puppet.GetComponent<Rigidbody2D>();
+            }
+
+            if (hit.direction == "right") {
+                body.AddForce(new Vector2(weaponStat.forceBack, 0));
+            } else {
+                body.AddForce(new Vector2(-weaponStat.forceBack, 0));
+            }
+
             hp -= hit.dame;
             if (hp < 0) {
                 playerCommand.Die();
