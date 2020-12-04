@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class ParallelBackground : MonoBehaviour
 {
-    public float depth = 1f;
+    public float moveSpeed = 1f;
     public Transform pivot;
+    public float DEPTH = 0.001f;
 
-    Vector3 curPos;
+    Vector3 myStartPos;
+    Vector3 pivotStartPos;
 
-    private void Start() {
-        curPos = pivot.position;
+    private void OnEnable() {
+        pivotStartPos = pivot.position;
+        myStartPos = transform.localPosition;
     }
 
     public void Update() {
-        transform.position -= (pivot.position - curPos) * Time.deltaTime * depth;
-        curPos = pivot.position;
+        Vector3 delta = (pivot.position - pivotStartPos) * moveSpeed * DEPTH;
+        Vector3 newPos = myStartPos - delta;
+        transform.localPosition = new Vector3(newPos.x, newPos.y, transform.localPosition.z); // (pivot.position - curPos) * Time.deltaTime * depth;
     }
 }

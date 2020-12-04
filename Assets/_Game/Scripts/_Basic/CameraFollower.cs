@@ -4,6 +4,7 @@
 public class CameraFollower : MonoBehaviour
 {
     public static float MAX_SHOOT_RADIUS = 150f;
+    public static float Z_POSITION = -25f;
     public static CameraFollower Instance;
 
     public float TOP = 22f;
@@ -23,6 +24,7 @@ public class CameraFollower : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.isKinematic = true;
         rb2d.gravityScale = 0;
+
         Instance = this;
     }
 
@@ -31,7 +33,7 @@ public class CameraFollower : MonoBehaviour
         if (target == null && NetworkSystem.player != null) {
             target = NetworkSystem.player;
             Vector3 pos = target.transform.position;
-            transform.position = new Vector3(pos.x, pos.y, -10);
+            transform.position = new Vector3(pos.x, pos.y, Z_POSITION);
             ParallelBackground[] list = GetComponentsInChildren<ParallelBackground>();
             for (int i = 0; i < list.Length; i++) {
                 list[i].enabled = true;
