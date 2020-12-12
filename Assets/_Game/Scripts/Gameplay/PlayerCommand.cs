@@ -34,6 +34,7 @@ public class PlayerCommand : NetworkBehaviour {
     }
 
     public void Dash(Vector2 force) {
+        DashFunction(force);
         CmdDash(force);
     }
 
@@ -75,6 +76,9 @@ public class PlayerCommand : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcDash(Vector2 force) {
+        if (isLocalPlayer) {
+            return;
+        }
         DashFunction(force);
     }
 

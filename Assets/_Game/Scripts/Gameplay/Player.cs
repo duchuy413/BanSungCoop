@@ -22,6 +22,7 @@ public class Player : NetworkBehaviour {
     public WeaponStat weaponStat;
 
     bool isRunning = true;
+    bool isGrounding = true;
     float nextShoot = 0f;
     int jumpCount;
     float scale = 1f;
@@ -140,6 +141,7 @@ public class Player : NetworkBehaviour {
         rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
         rb2d.AddForce(new Vector2(0, JUMP_FORCE));
         state = "jump";
+        isGrounding = false;
         StartCoroutine(Fall(jumpCount));
 
         AudioSystem.Instance.PlaySound("Sound/player/dash");
@@ -147,7 +149,8 @@ public class Player : NetworkBehaviour {
 
     public IEnumerator Fall(int jumpId) {
         yield return new WaitForSeconds(0.35f);
-        if (jumpCount == jumpId) {
+
+        if (!isGrounding && jumpCount == jumpId) {
             state = "fall";
         }
     }
@@ -185,10 +188,13 @@ public class Player : NetworkBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Ground")) {
             if (Mathf.Abs(Joystick.Instance.Horizontal) > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
-                if (isRunning)
+                if (isRunning) {
                     state = "run";
-                else
+                } else {
                     state = "go";
+                }
+
+                isGrounding = true;
             } else {
                 state = "stand";
             }
@@ -250,9 +256,9 @@ public class Player : NetworkBehaviour {
             }
 
             if (hit.direction == "right") {
-                body.AddForce(new Vector2(weaponStat.forceBack*2, 0));
+                body.AddForce(new Vector2(weaponStat.forceBack*5, 0));
             } else {
-                body.AddForce(new Vector2(-weaponStat.forceBack*2, 0));
+                body.AddForce(new Vector2(-weaponStat.forceBack*5, 0));
             }
 
             hp -= hit.dame;
