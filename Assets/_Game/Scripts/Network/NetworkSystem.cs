@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
-[AddComponentMenu("Network/NetworkDiscoveryHUD")]
+//[AddComponentMenu("Network/NetworkDiscoveryHUD")]
 [HelpURL("https://mirror-networking.com/docs/Components/NetworkDiscovery.html")]
 [RequireComponent(typeof(NetworkDiscovery))]
 public class NetworkSystem : MonoBehaviour {
-    readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
+    public static Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
 
     public static NetworkSystem Instance;
     public static GameObject player;
