@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkSystem : MonoBehaviour
-{
-    public static GameObject player;
-}
+//public class NetworkSystem : MonoBehaviour
+//{
+//    public static GameObject player;
+//}

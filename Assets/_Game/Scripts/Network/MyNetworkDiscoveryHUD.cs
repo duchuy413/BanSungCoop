@@ -1,19 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using Mirror.Discovery;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Mirror.Discovery
-{
+//namespace Mirror.Discovery
+//{
     [DisallowMultipleComponent]
     [AddComponentMenu("Network/NetworkDiscoveryHUD")]
     [HelpURL("https://mirror-networking.com/docs/Components/NetworkDiscovery.html")]
     [RequireComponent(typeof(NetworkDiscovery))]
-    public class MyNetworkDiscoveryHUD : MonoBehaviour
+    public class NetworkSystem : MonoBehaviour
     {
         readonly Dictionary<long, ServerResponse> discoveredServers = new Dictionary<long, ServerResponse>();
+
+        public static NetworkSystem Instance;
+        public static GameObject player;
+        public NetworkDiscovery networkDiscovery;
+
         Vector2 scrollViewPos = Vector2.zero;
 
-        public NetworkDiscovery networkDiscovery;
+        private void Awake() {
+            if (!Instance) {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            } else {
+                Destroy(gameObject);
+            }
+        }
 
 #if UNITY_EDITOR
         void OnValidate()
@@ -27,69 +41,72 @@ namespace Mirror.Discovery
         }
 #endif
 
-        void OnGUI()
-        {
-            if (NetworkManager.singleton == null)
-                return;
+        //void OnGUI()
+        //{
+        //    if (NetworkManager.singleton == null)
+        //        return;
 
-            if (NetworkServer.active || NetworkClient.active)
-                return;
+        //    if (NetworkServer.active || NetworkClient.active)
+        //        return;
 
-            if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
-                DrawGUI();
+        //    if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
+        //        DrawGUI();
+        //}
+
+        public void StartHost() {
+            discoveredServers.Clear();
+            NetworkManager.singleton.StartHost();
+            networkDiscovery.AdvertiseServer();
+            //SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
         }
 
-        void DrawGUI()
-        {
-            GUILayout.BeginHorizontal();
+        //void DrawGUI() {
+        //    GUILayout.BeginHorizontal();
 
-            GUILayoutOption[] options = new GUILayoutOption[] { 
-                GUILayout.Width(400f),
-                GUILayout.Height(200f),
-            };
+        //    GUILayoutOption[] options = new GUILayoutOption[] {
+        //        GUILayout.Width(400f),
+        //        GUILayout.Height(200f),
+        //    };
 
-            if (GUILayout.Button("Find Servers", options))
-            {
-                discoveredServers.Clear();
-                networkDiscovery.StartDiscovery();
-            }
+        //    if (GUILayout.Button("Find Servers", options)) {
+        //        discoveredServers.Clear();
+        //        networkDiscovery.StartDiscovery();
+        //    }
 
-            // LAN Host
-            if (GUILayout.Button("Start Host", options))
-            {
-                discoveredServers.Clear();
-                NetworkManager.singleton.StartHost();
-                networkDiscovery.AdvertiseServer();
-                SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
-            }
+        //    // LAN Host
+        //    if (GUILayout.Button("Start Host", options)) {
+        //        discoveredServers.Clear();
+        //        NetworkManager.singleton.StartHost();
+        //        networkDiscovery.AdvertiseServer();
+        //        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        //    }
 
-            // Dedicated server
-            if (GUILayout.Button("Start Server", options))
-            {
-                discoveredServers.Clear();
-                NetworkManager.singleton.StartServer();
+        //    // Dedicated server
+        //    if (GUILayout.Button("Start Server", options)) {
+        //        discoveredServers.Clear();
+        //        NetworkManager.singleton.StartServer();
 
-                networkDiscovery.AdvertiseServer();
-            }
+        //        networkDiscovery.AdvertiseServer();
+        //    }
 
-            GUILayout.EndHorizontal();
+        //    GUILayout.EndHorizontal();
 
-            // show list of found server
+        //    // show list of found server
 
-            GUILayout.Label($"Discovered Servers [{discoveredServers.Count}]:");
+        //    GUILayout.Label($"Discovered Servers [{discoveredServers.Count}]:");
 
-            // servers
-            scrollViewPos = GUILayout.BeginScrollView(scrollViewPos);
+        //    // servers
+        //    scrollViewPos = GUILayout.BeginScrollView(scrollViewPos);
 
-            foreach (ServerResponse info in discoveredServers.Values) {
-                if (GUILayout.Button(info.EndPoint.Address.ToString(), options)) {
-                    Connect(info);
-                    SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
-                }
-            }
+        //    foreach (ServerResponse info in discoveredServers.Values) {
+        //        if (GUILayout.Button(info.EndPoint.Address.ToString(), options)) {
+        //            Connect(info);
+        //            SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        //        }
+        //    }
 
-            GUILayout.EndScrollView();
-        }
+        //    GUILayout.EndScrollView();
+        //}
 
         void Connect(ServerResponse info)
         {
@@ -102,4 +119,4 @@ namespace Mirror.Discovery
             discoveredServers[info.serverId] = info;
         }
     }
-}
+//}
