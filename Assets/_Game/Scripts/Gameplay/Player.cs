@@ -30,6 +30,7 @@ public class Player : NetworkBehaviour {
     float dame = 20f;
 
     void Start() {
+        transform.position = NetworkSystem.Instance.SpawnPosition;
         rb2d = GetComponent<Rigidbody2D>();
         playerCommand = GetComponent<PlayerCommand>();
         jumpCount = 2;
@@ -44,9 +45,9 @@ public class Player : NetworkBehaviour {
     }
 
     void Update() {
-        if (!isLocalPlayer)
+        if (!isLocalPlayer || !NetworkSystem.isPlaying)
             return;
-
+        
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
 
