@@ -24,6 +24,10 @@ public class MyDebug : MonoBehaviour {
     }
 
     public static void Log(string message) {
+        if (Instance == null) {
+            return;
+        }
+
         if (!Instance.showLog)
             return;
 

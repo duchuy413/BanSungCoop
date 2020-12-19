@@ -31,7 +31,7 @@ public class CameraFollower : MonoBehaviour
     void LateUpdate()
     {
         if (target == null && NetworkSystem.player != null) {
-            target = NetworkSystem.player;
+            target = NetworkSystem.player.GetComponent<Player>().cameraPos;
             Vector3 pos = target.transform.position;
             transform.position = new Vector3(pos.x, pos.y, Z_POSITION);
             ParallelBackground[] list = GetComponentsInChildren<ParallelBackground>();

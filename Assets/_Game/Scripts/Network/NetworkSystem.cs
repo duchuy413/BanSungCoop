@@ -63,7 +63,8 @@ public class NetworkSystem : MonoBehaviour {
         discoveredServers.Clear();
         NetworkManager.singleton.StartHost();
         networkDiscovery.AdvertiseServer();
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        GameManager.Instance.LoadScene("R1_01", false);
+        //SceneManager.LoadScene("R1_01", LoadSceneMode.Additive);
         isPlaying = true;
     }
 

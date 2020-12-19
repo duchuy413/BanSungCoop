@@ -49,6 +49,21 @@ public class OpenSceneEditor : MonoBehaviour
         OpenScene("_Main/Pvp");
     }
 
+    [MenuItem("Project/R1/R1_01", priority = 5000)]
+    public static void R1_01() {
+        OpenScene("Maps/Region1/R1_01");
+    }
+
+    [MenuItem("Project/R1/R1_02", priority = 5000)]
+    public static void R1_02() {
+        OpenScene("Maps/Region1/R1_02");
+    }
+
+    [MenuItem("Project/R1/R1_03", priority = 5000)]
+    public static void R1_03() {
+        OpenScene("Maps/Region1/R1_03");
+    }
+
     private static void OpenScene(string sceneName)
     {
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
