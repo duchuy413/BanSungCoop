@@ -8,6 +8,10 @@ public class HomeScene : MonoBehaviour
     public GameObject hostButton;
     public GameObject jointButton;
 
+    private void Start() {
+        panelHostInfo.SetActive(false);
+    }
+
     public void StartHost() {
         NetworkSystem.Instance.StartHost();
     }
