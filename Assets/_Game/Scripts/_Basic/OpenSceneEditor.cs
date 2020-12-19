@@ -12,7 +12,6 @@ public class OpenSceneEditor : MonoBehaviour
     public static void OpenLoading()
     {
         OpenScene("Login");
-        //EditorApplication.EnterPlaymode();
     }
 
     [MenuItem("Project/Open Scene Gameplay", false, 5000)]
@@ -20,29 +19,35 @@ public class OpenSceneEditor : MonoBehaviour
         OpenScene("Gameplay");
     }
 
-    //[MenuItem("Project/Open Scene - Gameplay %&w", false, 5000)]
-    //public static void OpenMain()
-    //{
-    //    OpenScene("Gameplay");
-    //}
+    [MenuItem("Project/Open Adventure", priority = 5000)]
+    public static void OpenAdventure() {
+        OpenScene("_Main/Adventure");
+    }
 
-    //[MenuItem("Project/Open Scene - Level Editor %&w", false, 5000)]
-    //public static void OpenEditor()
-    //{
-    //    OpenScene("LevelEditor");
-    //}
+    [MenuItem("Project/Open Home", priority = 5000)]
+    public static void OpenHome() {
+        OpenScene("_Main/Home");
+    }
 
-    //[MenuItem("Project/Open Scene - Genre List %&w", false, 5000)]
-    //public static void OpenGerneList()
-    //{
-    //    OpenScene("GenreList");
-    //}
+    [MenuItem("Project/Open Friend", priority = 5000)]
+    public static void OpenFriend() {
+        OpenScene("_Main/Friend");
+    }
 
-    //[MenuItem("Project/Open Scene - Level Recorder %&w", false, 5000)]
-    //public static void OpenRecorder()
-    //{
-    //    OpenScene("LevelRecorder");
-    //}
+    [MenuItem("Project/Open Inventory", priority = 5000)]
+    public static void OpenInventory() {
+        OpenScene("_Main/Inventory");
+    }
+
+    [MenuItem("Project/Open Market", priority = 5000)]
+    public static void OpenMarket() {
+        OpenScene("_Main/Market");
+    }
+
+    [MenuItem("Project/Open Pvp", priority = 5000)]
+    public static void OpenPvp() {
+        OpenScene("_Main/Pvp");
+    }
 
     private static void OpenScene(string sceneName)
     {
