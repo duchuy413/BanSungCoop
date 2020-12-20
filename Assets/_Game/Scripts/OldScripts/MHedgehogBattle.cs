@@ -13,7 +13,7 @@ public class MHedgehogBattle : DBattle
         hideInShield = false;
     }
 
-    public override void GetHit(DHitParam hit) {
+    public override void GetHit(HitParam hit) {
 
         float dameTake = CalculateDame(hit);
         GameObject flyingtext = GameSystem.LoadPool("TextDame", textName.transform.position);

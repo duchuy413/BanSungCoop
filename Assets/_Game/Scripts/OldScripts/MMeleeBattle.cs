@@ -54,7 +54,7 @@ public class MMeleeBattle : DBattle
         }
     }
 
-    public override void GetHit(DHitParam hit) {
+    public override void GetHit(HitParam hit) {
         base.GetHit(hit);
         getHit = true;
     }

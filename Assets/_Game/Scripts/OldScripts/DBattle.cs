@@ -5,7 +5,7 @@ using TMPro;
 using System;
 public class DBattle : MonoBehaviour
 {
-    public DStat stat;
+    public CharacterStat stat;
     public int level;
     public GameObject attackObj;
     //public DHealthBar healthBar;
@@ -14,15 +14,15 @@ public class DBattle : MonoBehaviour
     public bool isAnimating = false;
 
     [HideInInspector]
-    public DHitParam hitParam;
+    public HitParam hitParam;
     [HideInInspector]
-    public DBattleStat current;
+    public BattleStat current;
     [HideInInspector]
     public bool died;
 
     public virtual void OnEnable() {
         died = false;
-        current = new DBattleStat();
+        current = new BattleStat();
         LoadLevel(level);
         gameObject.layer = GameConstants.LAYER_GROUND;
 
@@ -51,7 +51,7 @@ public class DBattle : MonoBehaviour
         current.attackCountDown = stat.attackCountDown;
     }
 
-    public virtual void GetHit(DHitParam hit)
+    public virtual void GetHit(HitParam hit)
     {
         Debug.Log("this is direction get from get hit: " + hit.direction);
 
@@ -88,14 +88,14 @@ public class DBattle : MonoBehaviour
         }
     }
 
-    public float CalculateDame(DHitParam hit)
+    public float CalculateDame(HitParam hit)
     {
         return hit.dame;
     }
 
     public void ApplyDame(GameObject target)
     {
-        DHitParam hit = new DHitParam();
+        HitParam hit = new HitParam();
         hit.dame = current.dame;
         hit.owner = gameObject;
         hit.ownerTag = gameObject.tag;
@@ -103,7 +103,7 @@ public class DBattle : MonoBehaviour
         target.SendMessage("GetHit", hit,SendMessageOptions.DontRequireReceiver);
     }
 
-    public void Died(DHitParam hitParam) {
+    public void Died(HitParam hitParam) {
 
         DMovementExecutor executor = GetComponent<DMovementExecutor>();
             died = true;

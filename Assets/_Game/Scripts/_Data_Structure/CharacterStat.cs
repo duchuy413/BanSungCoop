@@ -27,7 +27,7 @@ using UnityEngine.UI;
 //}
 
 //[System.Serializable]
-//public class DHitParam
+//public class HitParam
 //{
 //    public float dame;
 //    public GameObject owner;

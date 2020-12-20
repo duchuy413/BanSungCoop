@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DBattleStat 
+public class BattleStat 
 {
     public float speed = 4f;
     public float baseExp = 200;

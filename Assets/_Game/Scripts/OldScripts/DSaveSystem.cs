@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DSaveSystem : MonoBehaviour
 {
-    public DSaveData data;
+    public DataSave data;
 
     public void SaveGame()
     {
