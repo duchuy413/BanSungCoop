@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DFlyingText : MonoBehaviour
+public class FlyingText : MonoBehaviour
 {
     public float ANIMATION_SPEED = 3f;
     public float COUNT_DOWN_TIME = 0.5f;
