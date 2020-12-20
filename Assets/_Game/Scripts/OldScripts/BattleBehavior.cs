@@ -8,27 +8,35 @@ public class BattleBehavior : MonoBehaviour {
     public int level;
     public GameObject attackObj;
     public TextMeshPro textName;
-
     public bool isAnimating = false;
 
-    [HideInInspector]
-    public HitParam hitParam;
+    protected MovementExecutor executor;
+    protected FramesAnimator animator;
+    protected Rigidbody2D rb2d;
+    protected SpriteRenderer spriteRenderer;
 
-    [HideInInspector]
-    public BattleStat current;
+    protected HitParam hitParam;
+    protected BattleStat current;
+    protected bool died;
 
-    [HideInInspector]
-    public bool died;
+    private void Awake() {
+        executor = GetComponent<MovementExecutor>();
+        executor = GetComponent<MovementExecutor>();
+        animator = GetComponent<FramesAnimator>();
+        rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        rb2d.gravityScale = GameManager.GRAVITY;
+    }
 
     public virtual void OnEnable() {
         died = false;
         current = new BattleStat();
         LoadLevel(level);
 
-        DMovementExecutor executor = GetComponent<DMovementExecutor>();
+        executor = GetComponent<MovementExecutor>();
         if (executor != null) {
             executor.enabled = true;
-            GetComponent<DMovement>().enabled = true;
             GetComponent<FramesAnimator>().enabled = true;
         }
     }
@@ -49,8 +57,6 @@ public class BattleBehavior : MonoBehaviour {
     }
 
     public virtual void GetHit(HitParam hit) {
-        Debug.Log("this is direction get from get hit: " + hit.direction);
-
         float dameTake = CalculateDame(hit);
         GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
         flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
@@ -59,24 +65,19 @@ public class BattleBehavior : MonoBehaviour {
 
         if (current.hp <= 0) {
             Died(hit);
-            Debug.Log("Player died");
             return;
         } else {
-            StartCoroutine(PauseMovement(GetComponent<DMovementExecutor>(), GetComponent<DMovement>()));
+            StartCoroutine(PauseMovement(0.1f));
         }
-
-        Debug.Log(gameObject.name + " get hit from " + hit.owner.name);
     }
 
-    IEnumerator PauseMovement(DMovementExecutor executor, DMovement movement) {
+    IEnumerator PauseMovement(float sec) {
         executor.enabled = false;
-        movement.enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(sec);
 
         if (!died) {
             executor.enabled = true;
-            movement.enabled = true;
         }
     }
 
@@ -94,11 +95,9 @@ public class BattleBehavior : MonoBehaviour {
     }
 
     public void Died(HitParam hitParam) {
-
-        DMovementExecutor executor = GetComponent<DMovementExecutor>();
         died = true;
         executor.enabled = false;
-        GetComponent<DMovement>().enabled = false;
+        GetComponent<MovementExecutor>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<FramesAnimator>().spritesheet = stat.die;
 

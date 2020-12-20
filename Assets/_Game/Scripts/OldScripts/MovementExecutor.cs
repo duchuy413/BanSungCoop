@@ -3,48 +3,182 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(DMovement))]
-public class DMovementExecutor : MonoBehaviour
-{
+[RequireComponent(typeof(FramesAnimator))]
+[RequireComponent(typeof(Rigidbody2D))]
+public class MovementExecutor : MonoBehaviour {
     public List<string> movements;
     public float[] durations;
+    public string state;
+    public string direction;
+    public CharacterStat data;
+    public bool changingState = true;
 
-    private float count = 0f;
-    [HideInInspector]
-    public int moveindex = 0;
+    private FramesAnimator animator;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer render;
+    private string stateStatus;
+    private float speedValue;
 
-    public float timeCheck;
+    float nextMovement = 9999f;
+    int moveIndex = -1;
 
-    private void Awake()
-    {
-        moveindex = -1;
-        timeCheck = durations[0] * UnityEngine.Random.Range(0.5f, 1.5f);
-    }
+    public virtual void Awake() {
+        animator = GetComponent<FramesAnimator>();
+        render = GetComponent<SpriteRenderer>();
+        rb2d = GetComponent<Rigidbody2D>();     
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-    public virtual void Update()
-    {
-        if (movements == null || durations == null) return;
-        if (movements.Count == 0) return;
-
-        count += Time.deltaTime;
-
-        if (moveindex == -1 || count > timeCheck) { count = 0; NextMovement(); }
-    }
-
-    public virtual void NextMovement()
-    {
-        if (movements.Count == 0) return;
-        moveindex++;
-        if (moveindex >= movements.Count) EndOfMovement();
-
-        if (moveindex != -1) {
-            timeCheck = durations[moveindex] * UnityEngine.Random.Range(0.5f, 1.5f);
-            GetComponent<DMovement>().state = movements[moveindex];
+        if (data.canFly) {
+            rb2d.gravityScale = 0;
+        } else {
+            rb2d.gravityScale = GameManager.GRAVITY;
         }
     }
 
-    public virtual void EndOfMovement()
-    {
-        moveindex = 0;
+    public void Update() {
+        CheckChangeMovement();
+
+        if (state == "") {
+            return;
+        }
+
+        stateStatus = state.Substring(0, state.IndexOf("_"));
+
+        speedValue = 0;
+
+        if (stateStatus == "run") {
+            animator.spritesheet = data.run;
+            speedValue = data.speed * 1.5f;
+        } else if (stateStatus == "go") {
+            speedValue = data.speed;
+            animator.spritesheet = data.go;
+
+        } else if (stateStatus == "stand") {
+            animator.spritesheet = data.stand;
+            speedValue = 0;
+        }
+
+        direction = state.Substring(state.IndexOf("_") + 1);
+        rb2d.velocity = GetVelocity(direction, speedValue);
+
+        if (rb2d.velocity.x > 0)
+            render.flipX = true;
+        else if (rb2d.velocity.x < 0)
+            render.flipX = false;
     }
+
+    public void CheckChangeMovement() {
+        if (!changingState) {
+            return;
+        }
+
+        if (moveIndex == -1 || Time.time > nextMovement) {
+            moveIndex++;
+            if (moveIndex > movements.Count) {
+                moveIndex = 0;
+            }
+            state = movements[moveIndex];
+            nextMovement = Time.time + durations[moveIndex];
+        }
+    }
+
+    public Vector3 GetVelocity(string direction, float speedvalue) {
+
+        Vector3 velocity;
+
+        switch (direction) {
+            case "up":
+                velocity = new Vector3(0, speedvalue);
+                break;
+            case "down":
+                velocity = new Vector3(0, -speedvalue);
+                break;
+            case "left":
+                velocity = new Vector3(-speedvalue, 0);
+                break;
+            case "right":
+                velocity = new Vector3(speedvalue, 0);
+                break;
+            case "upleft":
+                velocity = new Vector3(-speedvalue, speedvalue);
+                break;
+            case "leftup":
+                velocity = new Vector3(-speedvalue, speedvalue);
+                break;
+            case "upright":
+                velocity = new Vector3(speedvalue, speedvalue);
+                break;
+            case "rightup":
+                velocity = new Vector3(speedvalue, speedvalue);
+                break;
+            case "downleft":
+                velocity = new Vector3(-speedvalue, -speedvalue);
+                break;
+            case "leftdown":
+                velocity = new Vector3(-speedvalue, -speedvalue);
+                break;
+            case "downright":
+                velocity = new Vector3(speedvalue, -speedvalue);
+                break;
+            case "rightdown":
+                velocity = new Vector3(speedvalue, -speedvalue);
+                break;
+            default:
+                velocity = rb2d.velocity;
+                break;
+        }
+
+        if (!data.canFly) {
+            velocity.y = GetComponent<Rigidbody2D>().velocity.y;
+        }
+        return velocity;
+    }
+
+    public virtual Vector3 ConvertDirection(string state, float value) {
+        string direction = state.Substring(state.IndexOf("_") + 1);
+        if (direction == "up") return new Vector3(0f, value);
+        else if (direction == "down") return new Vector3(0f, -value);
+        else if (direction == "left") return new Vector3(-value, 0f);
+        else if (direction == "right") return new Vector3(value, 0f);
+        else return new Vector3(0f, 0f);
+    }
+
+    //public void FaceToGameObject(GameObject obj) {
+    //    float player_posx, player_posy, npc_posx, npc_posy;
+
+    //    player_posx = obj.transform.position.x;
+    //    player_posy = obj.transform.position.y;
+    //    npc_posx = transform.position.x;
+    //    npc_posy = transform.position.y;
+
+    //    float distance_x = Mathf.Abs(player_posx - npc_posx);
+    //    float distance_y = Mathf.Abs(player_posy - npc_posy);
+
+    //    //player and npc standing on vertical line
+    //    if (distance_x < distance_y) {
+    //        if (player_posy < npc_posy) {
+    //            //player is below the npc
+    //            obj.GetComponent<DMovement>().state = "stand_up";
+    //            state = "stand_down";
+    //        } else {
+    //            //player is above the npc
+    //            obj.GetComponent<DMovement>().state = "stand_down";
+    //            state = "stand_up";
+    //        }
+    //    } else {
+    //        //player and npc standing on horizontal line
+    //        if (player_posx < npc_posx) {
+    //            //player is on the left of npc
+    //            obj.GetComponent<DMovement>().state = "stand_right";
+    //            state = "stand_left";
+    //        } else {
+    //            //player is on the right of npc
+    //            obj.GetComponent<DMovement>().state = "stand_left";
+    //            state = "stand_right";
+    //        }
+    //    }
+    //    obj.GetComponent<DMovement>().Update();
+    //    Update();
+    //}
 }
+

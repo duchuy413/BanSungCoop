@@ -29,8 +29,8 @@ public class MobHedgehog : BattleBehavior
             if (hideInShield == false) {
                 hideInShield = true;
                 GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-                GetComponent<DMovementExecutor>().enabled = false;
-                GetComponent<DMovement>().enabled = false;
+                GetComponent<MovementExecutor>().enabled = false;
+                //GetComponent<DMovement>().enabled = false;
 
                 StartCoroutine(IncreaseStat());
             }

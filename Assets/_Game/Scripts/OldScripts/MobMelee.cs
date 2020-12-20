@@ -4,23 +4,7 @@ using UnityEngine;
 
 public class MobMelee : BattleBehavior
 {
-    private DMovement movement;
-    private DMovementExecutor executor;
-    private FramesAnimator animator;
-    private Rigidbody2D rb2d;
-    private SpriteRenderer spriteRenderer;
-
-    public bool getHit = false;
-
-    private void Start() {
-        movement = GetComponent<DMovement>();
-        executor = GetComponent<DMovementExecutor>();
-        animator = GetComponent<FramesAnimator>();
-        rb2d = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        rb2d.gravityScale = GameManager.GRAVITY;
-    }
+    bool getHit = false;
 
     public override void OnEnable() {
         base.OnEnable();
@@ -32,11 +16,9 @@ public class MobMelee : BattleBehavior
             return;
 
         if (GameSystem.GetPlayerDistance(transform) > stat.visionRange && getHit == false) {
-            movement.enabled = true;
             executor.enabled = true;
         }
         else if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
-            movement.enabled = false;
             executor.enabled = false;
             animator.spritesheet = stat.run;
 
@@ -51,10 +33,8 @@ public class MobMelee : BattleBehavior
                 spriteRenderer.flipX = true;
             else if (velocity.x < 0)
                 spriteRenderer.flipX = false;
-
         }
         else {
-            movement.enabled = false;
             executor.enabled = false;
             animator.spritesheet = stat.attack;
             rb2d.velocity = Vector2.zero;
@@ -63,8 +43,6 @@ public class MobMelee : BattleBehavior
                 spriteRenderer.flipX = false;
             else if (transform.position.x < NetworkSystem.player.transform.position.x)
                 spriteRenderer.flipX = true;
-
-            Debug.Log(gameObject.name + "is attacking!");
         }
     }
 
@@ -72,5 +50,4 @@ public class MobMelee : BattleBehavior
         base.GetHit(hit);
         getHit = true;
     }
-
 }
