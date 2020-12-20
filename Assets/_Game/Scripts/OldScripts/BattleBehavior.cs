@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-public class BattleBehavior : MonoBehaviour
-{
+public class BattleBehavior : MonoBehaviour {
     public CharacterStat stat;
     public int level;
     public GameObject attackObj;
-    //public DHealthBar healthBar;
     public TextMeshPro textName;
 
     public bool isAnimating = false;
@@ -26,7 +24,6 @@ public class BattleBehavior : MonoBehaviour
         died = false;
         current = new BattleStat();
         LoadLevel(level);
-        //gameObject.layer = GameConstants.LAYER_GROUND;
 
         DMovementExecutor executor = GetComponent<DMovementExecutor>();
         if (executor != null) {
@@ -36,9 +33,7 @@ public class BattleBehavior : MonoBehaviour
         }
     }
 
-    private void LoadLevel(int level)
-    {
-        //healthBar.SetValue(1);
+    private void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
         current.speed = stat.speed;
@@ -53,27 +48,22 @@ public class BattleBehavior : MonoBehaviour
         current.attackCountDown = stat.attackCountDown;
     }
 
-    public virtual void GetHit(HitParam hit)
-    {
+    public virtual void GetHit(HitParam hit) {
         Debug.Log("this is direction get from get hit: " + hit.direction);
 
         float dameTake = CalculateDame(hit);
-        GameObject flyingtext = GameSystem.LoadPool("TextDame", textName.transform.position);
+        GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
         flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
 
         current.hp -= dameTake;
-        //healthBar.SetValue(current.hp, current.maxhp);
 
         if (current.hp <= 0) {
             Died(hit);
             Debug.Log("Player died");
             return;
-        }
-        else {
+        } else {
             StartCoroutine(PauseMovement(GetComponent<DMovementExecutor>(), GetComponent<DMovement>()));
         }
-
-        //GetComponent<DAnimatorPrior>().StartPriorAnimation(stat.gethit);
 
         Debug.Log(gameObject.name + " get hit from " + hit.owner.name);
     }
@@ -90,36 +80,38 @@ public class BattleBehavior : MonoBehaviour
         }
     }
 
-    public float CalculateDame(HitParam hit)
-    {
+    public float CalculateDame(HitParam hit) {
         return hit.dame;
     }
 
-    public void ApplyDame(GameObject target)
-    {
+    public void ApplyDame(GameObject target) {
         HitParam hit = new HitParam();
         hit.dame = current.dame;
         hit.owner = gameObject;
         hit.ownerTag = gameObject.tag;
-        
-        target.SendMessage("GetHit", hit,SendMessageOptions.DontRequireReceiver);
+
+        target.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
     }
 
     public void Died(HitParam hitParam) {
 
         DMovementExecutor executor = GetComponent<DMovementExecutor>();
-            died = true;
-            executor.enabled = false;
-            GetComponent<DMovement>().enabled = false;
-            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            //GetComponent<DAnimatorPrior>().StartPriorAnimation(stat.die, false);
-            GetComponent<DVelocityCustom>().Throw(hitParam.direction, 2f, 2f);
+        died = true;
+        executor.enabled = false;
+        GetComponent<DMovement>().enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<FramesAnimator>().spritesheet = stat.die;
 
-            Invoke("Disappear", 2f);
+        if (hitParam.direction == "left") {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(-700f, 700f));
+        } else if (hitParam.direction == "right") {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(700f, 700f));
+        }
+
+        Invoke("Disappear", 2f);
     }
 
-    public void Disappear() 
-    {
+    public void Disappear() {
         gameObject.SetActive(false);
     }
 }

@@ -6,7 +6,7 @@ public class DeathZone : MonoBehaviour
 {
     public void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            collision.gameObject.transform.position = Gameplay.Instance.startPos.position;
+            collision.gameObject.transform.position = Gameplay.Instance.playerStartPosition.position;
         }
     }
 }

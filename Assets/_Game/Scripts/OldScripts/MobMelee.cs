@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MMeleeBattle : BattleBehavior
+public class MobMelee : BattleBehavior
 {
     private DMovement movement;
     private DMovementExecutor executor;
@@ -18,6 +18,8 @@ public class MMeleeBattle : BattleBehavior
         animator = GetComponent<FramesAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        rb2d.gravityScale = GameManager.GRAVITY;
     }
 
     public override void OnEnable() {
@@ -39,6 +41,10 @@ public class MMeleeBattle : BattleBehavior
             animator.spritesheet = stat.run;
 
             Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
+            if (!stat.canFly) {
+                velocity.y = rb2d.velocity.y;
+            }
+            
             rb2d.velocity = velocity;
 
             if (velocity.x > 0)

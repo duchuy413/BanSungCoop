@@ -92,4 +92,5 @@ public class CharacterStat : ScriptableObject
     public int jumpLimit = 2;
 
     public string attackObjectName;
+    public bool canFly = false;
 }

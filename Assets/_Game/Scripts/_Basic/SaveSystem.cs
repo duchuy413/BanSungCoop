@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DSaveSystem : MonoBehaviour
+public class SaveSystem : MonoBehaviour
 {
     public DataSave data;
 

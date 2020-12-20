@@ -5,8 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class DMovement : MonoBehaviour
-{
+public class DMovement : MonoBehaviour {
     public string state;
     public string direction;
     public CharacterStat data;
@@ -20,8 +19,7 @@ public class DMovement : MonoBehaviour
     public string stateStatus;
     public float speedValue;
 
-    public virtual void Awake()
-    {
+    public virtual void Awake() {
         animator = GetComponent<FramesAnimator>();
         renderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -29,27 +27,25 @@ public class DMovement : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    public void Update()
-    {
+    public void Update() {
         //float 
         //animator.spritesheet = ConvertStringToSprites(state, direction);
+        if (state == "") {
+            return;
+        }
 
         stateStatus = state.Substring(0, state.IndexOf("_"));
 
         speedValue = 0;
 
-        if (stateStatus == "run")
-        {
+        if (stateStatus == "run") {
             animator.spritesheet = data.run;
             speedValue = data.speed * 1.5f;
-        } 
-        else if (stateStatus == "go") 
-        {
+        } else if (stateStatus == "go") {
             speedValue = data.speed;
             animator.spritesheet = data.go;
-            
-        } 
-        else if (stateStatus == "stand") {
+
+        } else if (stateStatus == "stand") {
             animator.spritesheet = data.stand;
             speedValue = 0;
         }
@@ -93,7 +89,7 @@ public class DMovement : MonoBehaviour
                 velocity = new Vector3(speedvalue, speedvalue);
                 break;
             case "downleft":
-                velocity = new Vector3(-speedvalue,- speedvalue);
+                velocity = new Vector3(-speedvalue, -speedvalue);
                 break;
             case "leftdown":
                 velocity = new Vector3(-speedvalue, -speedvalue);
@@ -108,11 +104,14 @@ public class DMovement : MonoBehaviour
                 velocity = rb2d.velocity;
                 break;
         }
+
+        if (!data.canFly) {
+            velocity.y = GetComponent<Rigidbody2D>().velocity.y;
+        }
         return velocity;
     }
 
-    public virtual Vector3 ConvertDirection(string state, float value)
-    {
+    public virtual Vector3 ConvertDirection(string state, float value) {
         string direction = state.Substring(state.IndexOf("_") + 1);
         if (direction == "up") return new Vector3(0f, value);
         else if (direction == "down") return new Vector3(0f, -value);
@@ -121,8 +120,7 @@ public class DMovement : MonoBehaviour
         else return new Vector3(0f, 0f);
     }
 
-    public void FaceToGameObject(GameObject obj)
-    {
+    public void FaceToGameObject(GameObject obj) {
         float player_posx, player_posy, npc_posx, npc_posy;
 
         player_posx = obj.transform.position.x;
@@ -133,28 +131,25 @@ public class DMovement : MonoBehaviour
         float distance_x = Mathf.Abs(player_posx - npc_posx);
         float distance_y = Mathf.Abs(player_posy - npc_posy);
 
-        if (distance_x < distance_y) //player and npc standing on vertical line
-        {
-            if (player_posy < npc_posy) //player is below the npc
-            {
+        //player and npc standing on vertical line
+        if (distance_x < distance_y) {
+            if (player_posy < npc_posy) {
+                //player is below the npc
                 obj.GetComponent<DMovement>().state = "stand_up";
                 state = "stand_down";
-            }
-            else //player is above the npc
-            {
+            } else {
+                //player is above the npc
                 obj.GetComponent<DMovement>().state = "stand_down";
                 state = "stand_up";
             }
-        }
-        else //player and npc standing on horizontal line
-        {
-            if (player_posx < npc_posx) //player is on the left of npc
-            {
+        } else {
+            //player and npc standing on horizontal line
+            if (player_posx < npc_posx) {
+                //player is on the left of npc
                 obj.GetComponent<DMovement>().state = "stand_right";
                 state = "stand_left";
-            }
-            else //player is on the right of npc
-            {
+            } else {
+                //player is on the right of npc
                 obj.GetComponent<DMovement>().state = "stand_left";
                 state = "stand_right";
             }
@@ -162,61 +157,5 @@ public class DMovement : MonoBehaviour
         obj.GetComponent<DMovement>().Update();
         Update();
     }
-
-    //public void Attack(Vector3 position, CharacterStat data)
-    //{
-    //    string attackDirection = Facing;
-    //    Stand();
-    //    if (attackDirection == "up") animator.StartPriorAnimation(data.attack_up);
-    //    else if (attackDirection == "down") animator.StartPriorAnimation(data.attack_down);
-    //    else if (attackDirection == "left") animator.StartPriorAnimation(data.attack_left);
-    //    else if (attackDirection == "right") animator.StartPriorAnimation(data.attack_right);
-    //    else animator.StartPriorAnimation(data.attack_up);
-    //    Update();
-    //    //Pause(data.pauseTimeAfterAttack);
-    //}
-
-    //public virtual Sprite[] ConvertStringToSprites(string input)
-    //{
-    //    Sprite[] result = null;
-
-    //    if (input == "stand_up")
-    //        result = data.stand_up;
-    //    else if (input == "stand_down")
-    //        result = data.stand_down;
-    //    else if (input == "stand_left")
-    //        result = data.stand_left;
-    //    else if (input == "stand_right")
-    //        result = data.stand_right;
-
-    //    else if (input == "go_up")
-    //        result = data.go_up;
-    //    else if (input == "go_down")
-    //        result = data.go_down;
-    //    else if (input == "go_left")
-    //        result = data.go_left;
-    //    else if (input == "go_right")
-    //        result = data.go_right;
-
-    //    else if (input == "attack_up")
-    //        result = data.attack_up;
-    //    else if (input == "attack_down")
-    //        result = data.attack_down;
-    //    else if (input == "attack_left")
-    //        result = data.attack_left;
-    //    else if (input == "attack_right")
-    //        result = data.attack_right;
-
-    //    else if (input == "run_up")
-    //        result = data.run_up;
-    //    else if (input == "run_down")
-    //        result = data.run_down;
-    //    else if (input == "run_left")
-    //        result = data.run_left;
-    //    else if (input == "run_right")
-    //        result = data.run_right;
-
-    //    return result;
-    //}
 }
 

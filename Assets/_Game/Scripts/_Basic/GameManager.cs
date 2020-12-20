@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public static float GRAVITY = 2.5f;
+    public static bool isPlaying = false;
+
     public GameObject mainUICamera;
 
     private void Start() {
