@@ -130,7 +130,7 @@ public class Player : NetworkBehaviour {
         hit.owner = gameObject;
         hit.ownerTag = tag;
         hit.startPos = weapon.barrel.position;
-        hit.targetTags = new List<string>() { "Player" };
+        hit.targetTags = new List<string>() { "Monster" };
         return hit;
     }
 

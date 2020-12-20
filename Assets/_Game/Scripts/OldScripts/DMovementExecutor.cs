@@ -25,7 +25,9 @@ public class DMovementExecutor : MonoBehaviour
     {
         if (movements == null || durations == null) return;
         if (movements.Count == 0) return;
+
         count += Time.deltaTime;
+
         if (moveindex == -1 || count > timeCheck) { count = 0; NextMovement(); }
     }
 

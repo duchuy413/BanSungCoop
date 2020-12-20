@@ -25,7 +25,7 @@ public class DMovement : MonoBehaviour
         animator = GetComponent<FramesAnimator>();
         renderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 0f;
+        //rb2d.gravityScale = 0f;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 

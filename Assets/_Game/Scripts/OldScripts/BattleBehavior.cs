@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-public class DBattle : MonoBehaviour
+public class BattleBehavior : MonoBehaviour
 {
     public CharacterStat stat;
     public int level;
@@ -15,8 +15,10 @@ public class DBattle : MonoBehaviour
 
     [HideInInspector]
     public HitParam hitParam;
+
     [HideInInspector]
     public BattleStat current;
+
     [HideInInspector]
     public bool died;
 
@@ -24,7 +26,7 @@ public class DBattle : MonoBehaviour
         died = false;
         current = new BattleStat();
         LoadLevel(level);
-        gameObject.layer = GameConstants.LAYER_GROUND;
+        //gameObject.layer = GameConstants.LAYER_GROUND;
 
         DMovementExecutor executor = GetComponent<DMovementExecutor>();
         if (executor != null) {

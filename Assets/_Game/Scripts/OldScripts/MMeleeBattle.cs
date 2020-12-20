@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MMeleeBattle : DBattle
+public class MMeleeBattle : BattleBehavior
 {
-    public DMovement movement;
-    public DMovementExecutor executor;
-    public FramesAnimator animator;
-    public Rigidbody2D rigidbody2D;
-    public SpriteRenderer spriteRenderer;
+    private DMovement movement;
+    private DMovementExecutor executor;
+    private FramesAnimator animator;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer spriteRenderer;
 
     public bool getHit = false;
+
+    private void Start() {
+        movement = GetComponent<DMovement>();
+        executor = GetComponent<DMovementExecutor>();
+        animator = GetComponent<FramesAnimator>();
+        rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     public override void OnEnable() {
         base.OnEnable();
@@ -31,7 +39,7 @@ public class MMeleeBattle : DBattle
             animator.spritesheet = stat.run;
 
             Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
-            rigidbody2D.velocity = velocity;
+            rb2d.velocity = velocity;
 
             if (velocity.x > 0)
                 spriteRenderer.flipX = true;
@@ -43,7 +51,7 @@ public class MMeleeBattle : DBattle
             movement.enabled = false;
             executor.enabled = false;
             animator.spritesheet = stat.attack;
-            rigidbody2D.velocity = Vector2.zero;
+            rb2d.velocity = Vector2.zero;
 
             if (transform.position.x > NetworkSystem.player.transform.position.x)
                 spriteRenderer.flipX = false;

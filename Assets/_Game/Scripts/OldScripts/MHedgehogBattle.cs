@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class MHedgehogBattle : DBattle
+public class MHedgehogBattle : BattleBehavior
 {
     bool hideInShield = false;
 
