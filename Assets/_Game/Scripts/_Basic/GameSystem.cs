@@ -47,4 +47,23 @@ public class GameSystem : MonoBehaviour
         var timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
         return timestamp;
     }
+
+    public static int GetSortingOrder(Transform tf) {
+        return (int)(-tf.position.y * 100); ;
+    }
+
+    public static float GetPlayerDistance(Transform start) {
+        float distance = Vector3.Distance(start.position, NetworkSystem.player.transform.position);
+        return Mathf.Abs(distance);
+    }
+
+    public static Vector3 GoToTargetVector(Vector3 current, Vector3 target, float speed) {
+        float distanceToTarget = Vector3.Distance(current, target);
+        Vector3 vectorToTarget = target - current;
+        return vectorToTarget = vectorToTarget * speed / distanceToTarget;
+    }
+
+    public void FindEnemy() {
+
+    }
 }
