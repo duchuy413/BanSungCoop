@@ -5,6 +5,7 @@ using Mirror;
 
 public class PlayerCommand : NetworkBehaviour {
     public WeaponStat weaponStat;
+    public IAttack weapon;
 
     public void ShootButtonPress(string buttonType) {
         CmdShootButtonPress(buttonType);
@@ -27,9 +28,11 @@ public class PlayerCommand : NetworkBehaviour {
         }
 
         if (buttonType == "down") {
-            GetComponent<Player>().isShooting = true;
+            weapon.AttackButtonDown();
+            //GetComponent<Player>().isShooting = true;
         } else if (buttonType == "up") {
-            GetComponent<Player>().isShooting = false;
+            weapon.AttackButtonUp();
+            //GetComponent<Player>().isShooting = false;
         }
     }
 
