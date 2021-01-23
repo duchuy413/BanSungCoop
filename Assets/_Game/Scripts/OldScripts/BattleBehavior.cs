@@ -21,7 +21,6 @@ public class BattleBehavior : MonoBehaviour {
 
     private void Awake() {
         executor = GetComponent<MovementExecutor>();
-        executor = GetComponent<MovementExecutor>();
         animator = GetComponent<FramesAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
