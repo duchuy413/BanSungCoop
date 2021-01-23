@@ -113,6 +113,9 @@ public class Player : NetworkBehaviour {
         //check shooting
         if (isShooting && Time.time > nextShoot) {
             nextShoot = Time.time + SHOOT_RATE;
+            
+            // change attack here
+
             playerCommand.SpawnBullet(GetHitParam());
         }
 
@@ -143,6 +146,7 @@ public class Player : NetworkBehaviour {
         rb2d.AddForce(new Vector2(0, JUMP_FORCE));
         state = "jump";
         isGrounding = false;
+        gameObject.layer = LayerMask.NameToLayer("OnlyCollisionGround");
         StartCoroutine(Fall(jumpCount));
 
         AudioSystem.Instance.PlaySound("Sound/player/dash");
@@ -151,6 +155,7 @@ public class Player : NetworkBehaviour {
     public IEnumerator Fall(int jumpId) {
         yield return new WaitForSeconds(0.35f);
 
+        gameObject.layer = LayerMask.NameToLayer("Player");
         if (!isGrounding && jumpCount == jumpId) {
             state = "fall";
         }
