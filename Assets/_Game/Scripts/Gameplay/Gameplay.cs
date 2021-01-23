@@ -34,8 +34,8 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
 
         waveIndex = -1;
-        //StartCoroutine(RunGame());
-        //StartCoroutine(UpdateCountDown());
+        StartCoroutine(RunGame());
+        StartCoroutine(UpdateCountDown());
     }
 
     void Start() {

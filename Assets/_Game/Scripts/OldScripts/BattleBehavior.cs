@@ -29,6 +29,8 @@ public class BattleBehavior : MonoBehaviour {
     }
 
     public virtual void OnEnable() {
+        gameObject.layer = LayerMask.NameToLayer("Monster");
+
         died = false;
         current = new BattleStat();
         LoadLevel(level);
@@ -96,6 +98,7 @@ public class BattleBehavior : MonoBehaviour {
     public void Died(HitParam hitParam) {
         died = true;
         executor.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("OnlyCollisionGround");
         GetComponent<MovementExecutor>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<FramesAnimator>().spritesheet = stat.die;
