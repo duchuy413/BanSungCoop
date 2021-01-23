@@ -4,22 +4,26 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerCommand))]
 public class Player : NetworkBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
     public static float SHOOT_RATE = 0.1f;
     public static float DASH_FORCE = 5000f;
 
+    public CharacterStat characterStat;
+
     public string state = "";
     public string direction = "left";
     public bool isShooting = false;
 
-    public Rigidbody2D rb2d;
-    public PlayerCommand playerCommand;
     public GameObject cameraPos;
     public Transform t_hand;
     public Transform t_weapon;
-    public IAttack weapon;
+
+    private Rigidbody2D rb2d;
+    private PlayerCommand playerCommand;
+    private IAttack weapon;
     //public Weapon weapon;
     //public WeaponStat weaponStat;
 
@@ -35,6 +39,7 @@ public class Player : NetworkBehaviour {
         transform.position = NetworkSystem.Instance.SpawnPosition;
         rb2d = GetComponent<Rigidbody2D>();
         playerCommand = GetComponent<PlayerCommand>();
+
         jumpCount = 2;
         scale = transform.localScale.x;
         LoadWeapon("longgun");
@@ -243,9 +248,11 @@ public class Player : NetworkBehaviour {
 
     public void LoadWeapon(string s) {
         string path = "Weapon/" + s + "/" + s;
-        weapon = Resources.Load<GameObject>(path).GetComponent<IAttack>();
-        //GetComponent<PlayerCommand>().weaponStat = weaponStat;
+        GameObject go = Instantiate(Resources.Load<GameObject>(path), t_hand);
+        t_weapon = go.transform;
+        weapon = go.GetComponent<IAttack>();
         weapon.Init(this);
+        //GetComponent<PlayerCommand>().weaponStat = weaponStat;
     }
 
     /// <summary>
