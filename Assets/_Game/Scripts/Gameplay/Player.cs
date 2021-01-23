@@ -17,9 +17,11 @@ public class Player : NetworkBehaviour {
     public Rigidbody2D rb2d;
     public PlayerCommand playerCommand;
     public GameObject cameraPos;
-    public Transform hand;
-    public Weapon weapon;
-    public WeaponStat weaponStat;
+    public Transform t_hand;
+    public Transform t_weapon;
+    public IAttack weapon;
+    //public Weapon weapon;
+    //public WeaponStat weaponStat;
 
     bool isRunning = true;
     bool isGrounding = true;
@@ -47,7 +49,7 @@ public class Player : NetworkBehaviour {
     void Update() {
         if (!isLocalPlayer || !NetworkSystem.isPlaying)
             return;
-        
+
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
 
@@ -89,8 +91,7 @@ public class Player : NetworkBehaviour {
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             Joystick.Instance.input = new Vector3(-1, 0);
-        } 
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
             Joystick.Instance.input = new Vector3(1, 0);
         }
 
@@ -111,13 +112,13 @@ public class Player : NetworkBehaviour {
         }
 
         //check shooting
-        if (isShooting && Time.time > nextShoot) {
-            nextShoot = Time.time + SHOOT_RATE;
-            
-            // change attack here
+        //if (isShooting && Time.time > nextShoot) {
+        //    nextShoot = Time.time + SHOOT_RATE;
 
-            playerCommand.SpawnBullet(GetHitParam());
-        }
+        //    // change attack here
+
+        //    playerCommand.SpawnBullet(GetHitParam());
+        //}
 
         if (direction == "left") {
             transform.localScale = new Vector3(scale, scale);
@@ -126,16 +127,16 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    public HitParam GetHitParam() {
-        HitParam hit = new HitParam();
-        hit.dame = 20f;
-        hit.direction = direction;
-        hit.owner = gameObject;
-        hit.ownerTag = tag;
-        hit.startPos = weapon.barrel.position;
-        hit.targetTags = new List<string>() { "Monster" };
-        return hit;
-    }
+    //public HitParam GetHitParam() {
+    //    HitParam hit = new HitParam();
+    //    hit.dame = 20f;
+    //    hit.direction = direction;
+    //    hit.owner = gameObject;
+    //    hit.ownerTag = tag;
+    //    hit.startPos = weapon.barrel.position;
+    //    hit.targetTags = new List<string>() { "Monster" };
+    //    return hit;
+    //}
 
     public void Jump() {
         if (jumpCount <= 0)
@@ -214,8 +215,8 @@ public class Player : NetworkBehaviour {
 
     public void SetVisible(bool visible) {
         GetComponent<SpriteRenderer>().enabled = visible;
-        hand.GetComponent<SpriteRenderer>().enabled = visible;
-        weapon.GetComponent<SpriteRenderer>().enabled = visible;
+        t_hand.GetComponent<SpriteRenderer>().enabled = visible;
+        t_weapon.GetComponent<SpriteRenderer>().enabled = visible;
     }
 
     public void Die() {
@@ -228,7 +229,7 @@ public class Player : NetworkBehaviour {
         } else {
             GetComponent<MySyncPosition>().puppet.SetVisible(false);
         }
-        
+
         AudioSystem.Instance.PlaySound("Sound/player/dead");
         yield return new WaitForSeconds(3f);
 
@@ -242,9 +243,9 @@ public class Player : NetworkBehaviour {
 
     public void LoadWeapon(string s) {
         string path = "Weapon/" + s + "/" + s;
-        weaponStat = Resources.Load<WeaponStat>(path);
-        GetComponent<PlayerCommand>().weaponStat = weaponStat;
-        weapon.Init();
+        weapon = Resources.Load<GameObject>(path).GetComponent<IAttack>();
+        //GetComponent<PlayerCommand>().weaponStat = weaponStat;
+        weapon.Init(this);
     }
 
     /// <summary>
@@ -262,9 +263,9 @@ public class Player : NetworkBehaviour {
             }
 
             if (hit.direction == "right") {
-                body.AddForce(new Vector2(weaponStat.forceBack*5, 0));
+                body.AddForce(new Vector2(hit.forceBack * 5, 0));
             } else {
-                body.AddForce(new Vector2(-weaponStat.forceBack*5, 0));
+                body.AddForce(new Vector2(-hit.forceBack * 5, 0));
             }
 
             hp -= hit.dame;

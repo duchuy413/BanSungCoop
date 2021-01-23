@@ -13,5 +13,6 @@ public class HitParam
     public List<string> targetTags;
     public string type;
     public string direction;
+    public float forceBack;
 }
 

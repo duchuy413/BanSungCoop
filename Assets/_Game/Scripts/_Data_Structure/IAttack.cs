@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IAttack 
 {
+    void Init(Player player);
     void AttackButtonDown();
     void AttackButtonUp();
-    void Attack(HitParam hit);
+    void Attack();
 }

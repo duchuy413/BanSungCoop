@@ -5,12 +5,13 @@ using UnityEngine;
 public class WeaponLongGun : MonoBehaviour, IAttack
 {
     public WeaponStat weaponStat;
-    public HitParam hit;
+    public Transform barrel;
 
+    Player player;
     bool isAttacking = false;
     float nextAttack = 0;
 
-    public void Attack(HitParam hit) {
+    public void Attack() {
         throw new System.NotImplementedException();
     }
 
@@ -22,9 +23,24 @@ public class WeaponLongGun : MonoBehaviour, IAttack
         isAttacking = false;
     }
 
+    public void Init(Player player) {
+        this.player = player;
+    }
+
+    public HitParam GetHitParam() {
+        HitParam hit = new HitParam();
+        hit.dame = 20f;
+        hit.direction = player.direction;
+        hit.owner = gameObject;
+        hit.ownerTag = tag;
+        hit.startPos = barrel.position;
+        hit.targetTags = new List<string>() { "Monster" };
+        return hit;
+    }
+
     private void Update() {
         if (isAttacking && Time.time > nextAttack) {
-            MyDebug.Log("Calling Spawn Bullet");
+            HitParam hit = GetHitParam();
             GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
 
             bullet.GetComponent<Bullet>().hitParam = hit;

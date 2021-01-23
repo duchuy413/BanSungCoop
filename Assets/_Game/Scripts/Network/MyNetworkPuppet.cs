@@ -30,12 +30,14 @@ public class MyNetworkPuppet : MonoBehaviour {
 
     private void Update() {
         //check shooting
-        if (player.isShooting && Time.time > nextShoot) {
-            nextShoot = Time.time + Player.SHOOT_RATE;
-            HitParam hit = player.GetHitParam();
-            hit.startPos = barrel.position;
-            player.GetComponent<PlayerCommand>().SpawnBullet(hit);
-        }
+
+        // TODO: Add again this
+        //if (player.isShooting && Time.time > nextShoot) {
+        //    nextShoot = Time.time + Player.SHOOT_RATE;
+        //    HitParam hit = player.GetHitParam();
+        //    hit.startPos = barrel.position;
+        //    player.GetComponent<PlayerCommand>().SpawnBullet(hit);
+        //}
     }
 
     void LateUpdate() {
