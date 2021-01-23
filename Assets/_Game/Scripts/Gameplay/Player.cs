@@ -12,28 +12,29 @@ public class Player : NetworkBehaviour {
     public static float DASH_FORCE = 5000f;
 
     public CharacterStat characterStat;
+    public GameObject cameraPos;
+    public Transform t_hand;
+    public Transform t_weapon;
+
+    [HideInInspector]
+    public CharacterStatRuntime currentStat;
 
     public string state = "";
     public string direction = "left";
     public bool isShooting = false;
 
-    public GameObject cameraPos;
-    public Transform t_hand;
-    public Transform t_weapon;
-
     private Rigidbody2D rb2d;
     private PlayerCommand playerCommand;
     private IAttack weapon;
-    //public Weapon weapon;
-    //public WeaponStat weaponStat;
 
+    float scale = 1f;
     bool isRunning = true;
     bool isGrounding = true;
-    float nextShoot = 0f;
     int jumpCount;
-    float scale = 1f;
-    float hp = 500f;
-    float dame = 20f;
+
+    //float nextShoot = 0f;
+    //float hp = 500f;
+    //float dame = 20f;
 
     void Start() {
         transform.position = NetworkSystem.Instance.SpawnPosition;
@@ -43,6 +44,8 @@ public class Player : NetworkBehaviour {
         jumpCount = 2;
         scale = transform.localScale.x;
         LoadWeapon("longgun");
+        currentStat = new CharacterStatRuntime();
+        currentStat.ReadValue(characterStat);
     }
 
     public override void OnStartLocalPlayer() {
@@ -131,17 +134,6 @@ public class Player : NetworkBehaviour {
             transform.localScale = new Vector3(-scale, scale);
         }
     }
-
-    //public HitParam GetHitParam() {
-    //    HitParam hit = new HitParam();
-    //    hit.dame = 20f;
-    //    hit.direction = direction;
-    //    hit.owner = gameObject;
-    //    hit.ownerTag = tag;
-    //    hit.startPos = weapon.barrel.position;
-    //    hit.targetTags = new List<string>() { "Monster" };
-    //    return hit;
-    //}
 
     public void Jump() {
         if (jumpCount <= 0)
@@ -242,7 +234,7 @@ public class Player : NetworkBehaviour {
             SetVisible(true);
         } else {
             GetComponent<MySyncPosition>().puppet.SetVisible(true);
-            hp = 500f;
+            currentStat.hp = 500f;
         }
     }
 
@@ -252,7 +244,6 @@ public class Player : NetworkBehaviour {
         t_weapon = go.transform;
         weapon = go.GetComponent<IAttack>();
         weapon.Init(this);
-        //GetComponent<PlayerCommand>().weaponStat = weaponStat;
     }
 
     /// <summary>
@@ -275,8 +266,8 @@ public class Player : NetworkBehaviour {
                 body.AddForce(new Vector2(-hit.forceBack * 5, 0));
             }
 
-            hp -= hit.dame;
-            if (hp < 0) {
+            currentStat.hp -= hit.dame;
+            if (currentStat.hp < 0) {
                 playerCommand.Die();
             }
         }
