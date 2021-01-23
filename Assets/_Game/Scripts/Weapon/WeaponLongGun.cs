@@ -25,6 +25,7 @@ public class WeaponLongGun : MonoBehaviour, IAttack
 
     public void Init(Player player) {
         this.player = player;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponStat.sprite;
     }
 
     public HitParam GetHitParam() {

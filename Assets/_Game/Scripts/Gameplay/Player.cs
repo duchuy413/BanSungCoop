@@ -43,7 +43,7 @@ public class Player : NetworkBehaviour {
 
         jumpCount = 2;
         scale = transform.localScale.x;
-        LoadWeapon("longgun");
+        LoadWeapon("hammer");
         currentStat = new CharacterStatRuntime();
         currentStat.ReadValue(characterStat);
     }
