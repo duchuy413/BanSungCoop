@@ -34,8 +34,14 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
 
         waveIndex = -1;
-        StartCoroutine(RunGame());
-        StartCoroutine(UpdateCountDown());
+        //StartCoroutine(RunGame());
+        //StartCoroutine(UpdateCountDown());
+
+        //test
+        GameObject flyingtext = GameSystem.LoadPool("textdame", transform.position);
+        flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(123123).ToString();
+
+        Debug.Log("FLYUTING TESTSSR" + flyingtext);
     }
 
     void Start() {

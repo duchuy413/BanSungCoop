@@ -98,6 +98,8 @@ public class MobWorf : MonoBehaviour
 
     public virtual void GetHit(HitParam hit) {
         getHit = true;
+        Debug.Log(current);
+        Debug.Log(current.hp);
 
         float dameTake = CalculateDame(hit);
         GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);

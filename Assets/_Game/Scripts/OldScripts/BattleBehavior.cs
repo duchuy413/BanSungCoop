@@ -10,14 +10,14 @@ public class BattleBehavior : MonoBehaviour {
     public TextMeshPro textName;
     public bool isAnimating = false;
 
-    protected MovementExecutor executor;
-    protected FramesAnimator animator;
-    protected Rigidbody2D rb2d;
-    protected SpriteRenderer spriteRenderer;
+    private MovementExecutor executor;
+    private FramesAnimator animator;
+    private Rigidbody2D rb2d;
+    private SpriteRenderer spriteRenderer;
 
-    protected HitParam hitParam;
-    protected BattleStat current;
-    protected bool died;
+    private HitParam hitParam;
+    private BattleStat current;
+    private bool died;
 
     private void Awake() {
         executor = GetComponent<MovementExecutor>();
@@ -43,6 +43,8 @@ public class BattleBehavior : MonoBehaviour {
     }
 
     private void LoadLevel(int level) {
+        Debug.Log("THIS IS LOAD LEVEL");
+
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
         current.speed = stat.speed;
@@ -55,12 +57,18 @@ public class BattleBehavior : MonoBehaviour {
         current.attackRange = stat.attackRange;
         current.visionRange = stat.visionRange;
         current.attackCountDown = stat.attackCountDown;
+
+        Debug.Log("CURRENT HP: " + current.hp);
     }
 
     public virtual void GetHit(HitParam hit) {
         float dameTake = CalculateDame(hit);
         GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
         flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
+
+        Debug.Log("CURRENT: " + current);
+        Debug.Log("CURRENT HP: " + current.hp);
+        Debug.Log(dameTake);
 
         current.hp -= dameTake;
 

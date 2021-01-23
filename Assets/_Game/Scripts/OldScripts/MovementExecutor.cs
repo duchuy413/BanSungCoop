@@ -11,7 +11,7 @@ public class MovementExecutor : MonoBehaviour {
     public string state;
     public string direction;
     public CharacterStat data;
-    public bool changingState = true;
+    //public bool changingState = true;
 
     private FramesAnimator animator;
     private Rigidbody2D rb2d;
@@ -68,13 +68,13 @@ public class MovementExecutor : MonoBehaviour {
     }
 
     public void CheckChangeMovement() {
-        if (!changingState) {
-            return;
-        }
+        //if (!changingState) {
+        //    return;
+        //}
 
         if (moveIndex == -1 || Time.time > nextMovement) {
             moveIndex++;
-            if (moveIndex > movements.Count) {
+            if (moveIndex >= movements.Count) {
                 moveIndex = 0;
             }
             state = movements[moveIndex];

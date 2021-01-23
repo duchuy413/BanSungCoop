@@ -8,7 +8,7 @@ using UnityEngine;
 public class OpenSceneEditor : MonoBehaviour
 {
 
-    [MenuItem("Project/Open Login #a", priority = 5000)]
+    [MenuItem("Project/Open Login", priority = 5000)]
     public static void OpenLoading()
     {
         OpenScene("Login");
@@ -24,7 +24,7 @@ public class OpenSceneEditor : MonoBehaviour
         OpenScene("_Main/Adventure");
     }
 
-    [MenuItem("Project/Open Home", priority = 5000)]
+    [MenuItem("Project/Open Home #a", priority = 5000)]
     public static void OpenHome() {
         OpenScene("_Main/Home");
     }
