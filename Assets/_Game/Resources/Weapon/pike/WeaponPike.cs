@@ -17,12 +17,12 @@ public class WeaponPike : MonoBehaviour, IAttack {
     public WeaponStat weaponStat;
 
     Player player;
-    bool isAttacking = false;
-    float nextAttack = 0;
     Vector3 attackPos;
     Vector3 originalHand;
+
+    bool isAttacking = false;
+    float nextAttack = 0;
     int attackCount;
-    int attackId;
 
     public void Attack() {
         throw new System.NotImplementedException();
@@ -58,7 +58,6 @@ public class WeaponPike : MonoBehaviour, IAttack {
     private void Update() {
         if (isAttacking && Time.time > nextAttack) {
             attackCount++;
-            attackId = Random.Range(0, 10000);
 
             if (transform.parent.localPosition != originalHand) {
                 transform.parent.localPosition = originalHand;
