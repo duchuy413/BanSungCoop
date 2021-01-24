@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponPike : MonoBehaviour, IAttack {
-    public static float ATTACK_RANGE_CHANGE = -0.3f;
-    public static float RETURN_TIME = 0.2f;
+    public static float ATTACK_RANGE_CHANGE = -0.6f;
+
+    public static float ATTACK_RANGE_CHANGE_BIG = -0.9f;
+    public static float DELAY_TIME_BIG_RATE = 1.5f;
+
+    public static float ATTACK_RANGE_CHANGE_BIGGEST = -1.2f;
+    public static float DELAY_TIME_BIGGEST_RATE = 2.5f;
+
+    public static float RETURN_TIME = 0.1f;
+    public static float RETURN_TIME_SPEED = 0.5f; //between 0 and 1, lower is faster
 
     public WeaponStat weaponStat;
-    //public Transform barrel;
 
     Player player;
     bool isAttacking = false;
     float nextAttack = 0;
     Vector3 attackPos;
-    Vector3 originalPos;
+    Vector3 originalHand;
+    int attackCount;
+    int attackId;
 
     public void Attack() {
         throw new System.NotImplementedException();
@@ -25,13 +34,15 @@ public class WeaponPike : MonoBehaviour, IAttack {
 
     public void AttackButtonUp() {
         isAttacking = false;
+        attackCount = 0;
+        nextAttack = 0;
     }
 
     public void Init(Player player) {
         this.player = player;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponStat.sprite;
-        //originalPos = transform.localPosition;
-        //attackPos = transform.localPosition + new Vector3(5f, 0); 
+        originalHand = transform.parent.localPosition;
+        RETURN_TIME = weaponStat.attackCountDown * RETURN_TIME_SPEED;
     }
 
     public HitParam GetHitParam() {
@@ -40,37 +51,58 @@ public class WeaponPike : MonoBehaviour, IAttack {
         hit.direction = player.direction;
         hit.owner = player.gameObject;
         hit.ownerTag = player.tag;
-        //hit.startPos = barrel.position;
         hit.targetTags = new List<string>() { "Monster" };
         return hit;
     }
 
     private void Update() {
         if (isAttacking && Time.time > nextAttack) {
-            nextAttack = Time.time + weaponStat.attackCountDown;
+            attackCount++;
+            attackId = Random.Range(0, 10000);
 
-            originalPos = transform.parent.localPosition;
-            attackPos = transform.parent.localPosition + new Vector3(ATTACK_RANGE_CHANGE, 0);
+            if (transform.parent.localPosition != originalHand) {
+                transform.parent.localPosition = originalHand;
+            }
 
-            transform.parent.localPosition = attackPos;
-            LeanTween.moveLocalX(transform.parent.gameObject, originalPos.x, RETURN_TIME);
+            if (attackCount > 3) {
+                attackCount = 0;
+            }
 
-            
+            bool isBigAttack = attackCount == 3;
+            bool isBiggestAttack = attackCount == 0;
 
-            //HitParam hit = GetHitParam();
-            //GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
+            if (isBigAttack) {
+                isBigAttack = true;
+                nextAttack = Time.time + weaponStat.attackCountDown * DELAY_TIME_BIG_RATE;
+            } else if (isBiggestAttack) {
+                nextAttack = Time.time + weaponStat.attackCountDown * DELAY_TIME_BIGGEST_RATE;
+            } else {
+                nextAttack = Time.time + weaponStat.attackCountDown;
+            }
 
-            //bullet.GetComponent<Bullet>().hitParam = hit;
-            //bullet.GetComponent<TrailRenderer>().Clear();
-            //float scale = bullet.transform.localScale.x;
+            if (isBigAttack) {
+                attackPos = originalHand + new Vector3(ATTACK_RANGE_CHANGE_BIG, 0);
+                transform.parent.localPosition = attackPos;
 
-            //if (hit.direction == "right") {
-            //    hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(-weaponStat.forceBack, 0));
-            //    bullet.transform.localScale = new Vector3(scale, scale);
-            //} else if (hit.direction == "left") {
-            //    hit.owner.GetComponent<Rigidbody2D>().AddForce(new Vector2(weaponStat.forceBack, 0));
-            //    bullet.transform.localScale = new Vector3(-scale, scale);
-            //}
+                float delay = weaponStat.attackCountDown * (DELAY_TIME_BIG_RATE - 1f);
+
+                LeanTween.delayedCall(delay, () => {
+                    LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
+                });
+            } else if (isBiggestAttack) {
+                attackPos = originalHand + new Vector3(ATTACK_RANGE_CHANGE_BIGGEST, 0);
+                transform.parent.localPosition = attackPos;
+
+                float delay = weaponStat.attackCountDown * (DELAY_TIME_BIGGEST_RATE - 1f);
+
+                LeanTween.delayedCall(delay, () => {
+                    LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
+                });
+            } else {
+                attackPos = originalHand + new Vector3(ATTACK_RANGE_CHANGE, 0);
+                transform.parent.localPosition = attackPos;
+                LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
+            }
         }
     }
 
