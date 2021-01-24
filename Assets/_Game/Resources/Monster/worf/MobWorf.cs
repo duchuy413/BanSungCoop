@@ -46,6 +46,7 @@ public class MobWorf : MonoBehaviour
             executor.enabled = true;
             GetComponent<FramesAnimator>().enabled = true;
         }
+        LeanTween.scale(gameObject, new Vector3(10f, 10f), 3f).setLoopPingPong();
     }
 
     private void Update() {
