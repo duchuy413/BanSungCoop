@@ -8,4 +8,5 @@ public class WeaponStat : ScriptableObject {
     public string bulletName = "Bullet";
     public float forceBack = 50f;
     public float dame = 20f;
+    public float attackCountDown = 0.2f;
 }

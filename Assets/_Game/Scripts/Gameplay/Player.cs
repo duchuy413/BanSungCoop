@@ -18,9 +18,11 @@ public class Player : NetworkBehaviour {
 
     [HideInInspector]
     public CharacterStatRuntime currentStat;
-
+    [HideInInspector]
     public string state = "";
+    [HideInInspector]
     public string direction = "left";
+    [HideInInspector]
     public bool isShooting = false;
 
     private Rigidbody2D rb2d;
@@ -38,14 +40,16 @@ public class Player : NetworkBehaviour {
 
     void Start() {
         transform.position = NetworkSystem.Instance.SpawnPosition;
-        rb2d = GetComponent<Rigidbody2D>();
+        
         playerCommand = GetComponent<PlayerCommand>();
+        rb2d = GetComponent<Rigidbody2D>();
+        currentStat = new CharacterStatRuntime();
+        currentStat.ReadValue(characterStat);
 
         jumpCount = 2;
         scale = transform.localScale.x;
-        LoadWeapon("hammer");
-        currentStat = new CharacterStatRuntime();
-        currentStat.ReadValue(characterStat);
+
+        LoadWeapon("longgun");
     }
 
     public override void OnStartLocalPlayer() {
@@ -244,6 +248,8 @@ public class Player : NetworkBehaviour {
         t_weapon = go.transform;
         weapon = go.GetComponent<IAttack>();
         weapon.Init(this);
+        playerCommand.weapon = weapon;
+        playerCommand.weaponStat = weapon.GetWeaponStat();
     }
 
     /// <summary>

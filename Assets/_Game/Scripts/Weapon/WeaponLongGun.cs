@@ -32,8 +32,8 @@ public class WeaponLongGun : MonoBehaviour, IAttack
         HitParam hit = new HitParam();
         hit.dame = 20f;
         hit.direction = player.direction;
-        hit.owner = gameObject;
-        hit.ownerTag = tag;
+        hit.owner = player.gameObject;
+        hit.ownerTag = player.tag;
         hit.startPos = barrel.position;
         hit.targetTags = new List<string>() { "Monster" };
         return hit;
@@ -41,6 +41,8 @@ public class WeaponLongGun : MonoBehaviour, IAttack
 
     private void Update() {
         if (isAttacking && Time.time > nextAttack) {
+            nextAttack = Time.time + weaponStat.attackCountDown;
+
             HitParam hit = GetHitParam();
             GameObject bullet = GameSystem.LoadPool(weaponStat.bulletName, hit.startPos);
 
@@ -56,5 +58,9 @@ public class WeaponLongGun : MonoBehaviour, IAttack
                 bullet.transform.localScale = new Vector3(-scale, scale);
             }
         }
+    }
+
+    public WeaponStat GetWeaponStat() {
+        return weaponStat;
     }
 }

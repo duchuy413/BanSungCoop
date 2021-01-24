@@ -23,9 +23,9 @@ public class PlayerCommand : NetworkBehaviour {
     }
 
     public void ShootButtonPressFunction(string buttonType) {
-        if (isLocalPlayer) {
-            return;
-        }
+        //if (isLocalPlayer) {
+        //    return;
+        //}
 
         if (buttonType == "down") {
             weapon.AttackButtonDown();
