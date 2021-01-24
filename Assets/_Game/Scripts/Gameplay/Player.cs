@@ -148,7 +148,7 @@ public class Player : NetworkBehaviour {
         rb2d.AddForce(new Vector2(0, JUMP_FORCE));
         state = "jump";
         isGrounding = false;
-        gameObject.layer = LayerMask.NameToLayer("OnlyCollisionGround");
+        gameObject.layer = LayerMask.NameToLayer("Jumping");
         StartCoroutine(Fall(jumpCount));
 
         AudioSystem.Instance.PlaySound("Sound/player/dash");
