@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WeaponPike : MonoBehaviour, IAttack {
     public static float ATTACK_RANGE_CHANGE = -0.6f;
+    public static float DELAY_TIME_FAST_RATE = 0.5f;
 
-    public static float ATTACK_RANGE_CHANGE_BIG = -0.9f;
+    public static float ATTACK_RANGE_CHANGE_BIG = -0.75f;
     public static float DELAY_TIME_BIG_RATE = 1.5f;
 
     public static float ATTACK_RANGE_CHANGE_BIGGEST = -1.2f;
@@ -63,16 +64,21 @@ public class WeaponPike : MonoBehaviour, IAttack {
                 transform.parent.localPosition = originalHand;
             }
 
-            if (attackCount > 3) {
+            if (attackCount > 7) {
                 attackCount = 0;
             }
 
-            bool isBigAttack = attackCount == 3;
+            bool isBigAttack = attackCount == 7;
+            bool isFastAttack = attackCount == 4 || attackCount == 5 || attackCount == 6;
             bool isBiggestAttack = attackCount == 0;
+
+            Debug.Log(attackCount);
 
             if (isBigAttack) {
                 isBigAttack = true;
                 nextAttack = Time.time + weaponStat.attackCountDown * DELAY_TIME_BIG_RATE;
+            } else if (isFastAttack) {
+                nextAttack = Time.time + weaponStat.attackCountDown * DELAY_TIME_FAST_RATE;
             } else if (isBiggestAttack) {
                 nextAttack = Time.time + weaponStat.attackCountDown * DELAY_TIME_BIGGEST_RATE;
             } else {

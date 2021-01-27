@@ -49,7 +49,7 @@ public class Player : NetworkBehaviour {
         jumpCount = 2;
         scale = transform.localScale.x;
 
-        LoadWeapon("hammer");
+        LoadWeapon("pike");
     }
 
     public override void OnStartLocalPlayer() {
