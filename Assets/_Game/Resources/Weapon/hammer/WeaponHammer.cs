@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHammer : MonoBehaviour, IAttack {
-    public static float ATTACK_TIME_RATE = 0.2f; //between 0 and 1, lower is faster
+    public static float PREPARE_TIME_RATE = 0.3f;
+    public static float ATTACK_TIME_RATE = 0.1f; //between 0 and 1, lower is faster
     public static float DELAY_AFTER_ATTACK = 0.6f;
     public static float ANTICIPATE_HAND_RANGE = 0.2f;
 
@@ -18,6 +19,7 @@ public class WeaponHammer : MonoBehaviour, IAttack {
     bool isAttacking = false;
     float nextAttack = 0;
     float attackTime;
+    float prepareTime;
 
     public void Attack() {
         throw new System.NotImplementedException();
@@ -36,6 +38,7 @@ public class WeaponHammer : MonoBehaviour, IAttack {
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponStat.sprite;
         originalHand = transform.parent.localPosition;
         attackTime = weaponStat.attackCountDown * ATTACK_TIME_RATE;
+        prepareTime = weaponStat.attackCountDown * PREPARE_TIME_RATE;
         gameObject.transform.localRotation = Quaternion.Euler(0, 0, ROTATE_ORIGINAL);
     }
 
@@ -55,16 +58,18 @@ public class WeaponHammer : MonoBehaviour, IAttack {
 
             transform.localRotation = Quaternion.Euler(0, 0, ROTATE_START_ATTACK);
             transform.parent.localPosition = originalHand + new Vector3(ANTICIPATE_HAND_RANGE, 0);
-            Vector3 targetHandPosition = originalHand + new Vector3(- ANTICIPATE_HAND_RANGE, 0);
+            Vector3 targetHandPosition = originalHand + new Vector3(-ANTICIPATE_HAND_RANGE, 0);
 
-            if (isAttacking) {
-                LeanTween.rotateZ(gameObject, 0, attackTime).setEaseInExpo();
-                LeanTween.moveLocalX(transform.parent.gameObject, targetHandPosition.x, attackTime);
-                LeanTween.delayedCall(attackTime + DELAY_AFTER_ATTACK, () => {
-                    transform.localRotation = Quaternion.Euler(0, 0, ROTATE_ORIGINAL);
-                    transform.parent.localPosition = originalHand;
-                });
-            }
+            LeanTween.delayedCall(prepareTime, () => {
+                if (isAttacking) {
+                    LeanTween.rotateZ(gameObject, 0, attackTime).setEaseInExpo();
+                    LeanTween.moveLocalX(transform.parent.gameObject, targetHandPosition.x, attackTime);
+                    LeanTween.delayedCall(attackTime + DELAY_AFTER_ATTACK, () => {
+                        transform.localRotation = Quaternion.Euler(0, 0, ROTATE_ORIGINAL);
+                        transform.parent.localPosition = originalHand;
+                    });
+                }
+            });
         }
     }
 
