@@ -8,7 +8,7 @@ using UnityEngine;
 public class WebsocketServer : MonoBehaviour {
     public static WebsocketServer Instance;
 
-    public static string SERVER_URL = "ws://fishtankserver.herokuapp.com/ws";
+    public static string SERVER_URL = "ws://chatgolang.herokuapp.com/ws/main/1";
 
     WebSocket websocket;
 

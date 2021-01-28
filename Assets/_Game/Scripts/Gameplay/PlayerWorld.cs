@@ -4,17 +4,11 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-//[RequireComponent(typeof(PlayerCommand))]
 public class PlayerWorld : MonoBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
     public static float SHOOT_RATE = 0.1f;
     public static float DASH_FORCE = 5000f;
-
-    //public CharacterStat characterStat;
-    //public GameObject cameraPos;
-    //public Transform t_hand;
-    //public Transform t_weapon;
 
     [HideInInspector]
     public CharacterStatRuntime currentStat;
@@ -34,52 +28,24 @@ public class PlayerWorld : MonoBehaviour {
     bool isGrounding = true;
     int jumpCount;
 
-    //float nextShoot = 0f;
-    //float hp = 500f;
-    //float dame = 20f;
     private void Awake() {
         transform.position = GameManager.startPosition;
     }
 
     void Start() {
-        //transform.position = NetworkSystem.Instance.SpawnPosition;
-
         playerCommand = GetComponent<PlayerCommand>();
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 0f;
-        //currentStat = new CharacterStatRuntime();
-        //currentStat.ReadValue(characterStat);
 
         jumpCount = 2;
         scale = transform.localScale.x;
-
         transform.position = new Vector3(0, -17f);
-
         CameraFollower.Instance.target = gameObject;
-
-        //if (isLocalPlayer) {
-        //    LoadWeapon(GameManager.weapon);
-        //}
     }
 
-    //public override void OnStartLocalPlayer() {
-    //    if (isLocalPlayer) {
-    //        NetworkSystem.player = gameObject;
-    //    }
-    //}
-
     void Update() {
-        //if (!isLocalPlayer || !NetworkSystem.isPlaying)
-        //    return;
-
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
-
-            //if (isRunning) {
-            //    rb2d.velocity = new Vector3(SPEED * 1.5f, rb2d.velocity.y);
-            //} else {
-            //    rb2d.velocity = new Vector3(SPEED, rb2d.velocity.y);
-            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
@@ -91,12 +57,6 @@ public class PlayerWorld : MonoBehaviour {
 
         } else if (Joystick.Instance.Horizontal < 0 || Input.GetKeyDown(KeyCode.LeftArrow)) {
             direction = "left";
-
-            //if (isRunning) {
-            //    rb2d.velocity = new Vector3(-SPEED * 1.5f, rb2d.velocity.y);
-            //} else {
-            //    rb2d.velocity = new Vector3(-SPEED, rb2d.velocity.y);
-            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
@@ -117,36 +77,13 @@ public class PlayerWorld : MonoBehaviour {
             rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical);
         }
 
-        //if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-        //    Joystick.Instance.input = new Vector3(-1, 0);
-        //} else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-        //    Joystick.Instance.input = new Vector3(1, 0);
-        //}
-
         if (Input.GetKeyDown(KeyCode.Space)) {
             Jump();
         }
 
-        //if (Input.GetKeyDown(KeyCode.C)) {
-        //    ShootStart();
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.C)) {
-        //    ShootEnd();
-        //}
-
         if (Input.GetKeyDown(KeyCode.Z)) {
             Dash();
         }
-
-        //check shooting
-        //if (isShooting && Time.time > nextShoot) {
-        //    nextShoot = Time.time + SHOOT_RATE;
-
-        //    // change attack here
-
-        //    playerCommand.SpawnBullet(GetHitParam());
-        //}
 
         if (direction == "left") {
             transform.localScale = new Vector3(scale, scale);
@@ -229,69 +166,4 @@ public class PlayerWorld : MonoBehaviour {
             GetComponent<SpriteRenderer>().sprite = GetComponent<FramesAnimator>().spritesheet[0];
         }
     }
-
-    //public void SetVisible(bool visible) {
-    //    GetComponent<SpriteRenderer>().enabled = visible;
-    //    t_hand.GetComponent<SpriteRenderer>().enabled = visible;
-    //    t_weapon.GetComponent<SpriteRenderer>().enabled = visible;
-    //}
-
-    //public void Die() {
-    //    StartCoroutine(DieCoroutine());
-    //}
-
-    //public IEnumerator DieCoroutine() {
-    //    if (isLocalPlayer) {
-    //        SetVisible(false);
-    //    } else {
-    //        GetComponent<MySyncPosition>().puppet.SetVisible(false);
-    //    }
-
-    //    AudioSystem.Instance.PlaySound("Sound/player/dead");
-    //    yield return new WaitForSeconds(3f);
-
-    //    if (isLocalPlayer) {
-    //        SetVisible(true);
-    //    } else {
-    //        GetComponent<MySyncPosition>().puppet.SetVisible(true);
-    //        currentStat.hp = 500f;
-    //    }
-    //}
-
-    //public void LoadWeapon(string s) {
-    //    string path = "Weapon/" + s + "/" + s;
-    //    GameObject go = Instantiate(Resources.Load<GameObject>(path), t_hand);
-    //    t_weapon = go.transform;
-    //    weapon = go.GetComponent<IAttack>();
-    //    weapon.Init(this);
-    //    playerCommand.weapon = weapon;
-    //    playerCommand.weaponStat = weapon.GetWeaponStat();
-    //}
-
-    /// <summary>
-    /// only call from local player
-    /// </summary>
-    /// <param name="collision"></param>
-    //public void OnTriggerEnter2D(Collider2D collision) {
-    //    if (collision.CompareTag("Bullet")) {
-    //        HitParam hit = collision.GetComponent<Bullet>().hitParam;
-
-    //        Rigidbody2D body = rb2d;
-
-    //        if (!isLocalPlayer) {
-    //            body = GetComponent<MySyncPosition>().puppet.GetComponent<Rigidbody2D>();
-    //        }
-
-    //        if (hit.direction == "right") {
-    //            body.AddForce(new Vector2(hit.forceBack * 5, 0));
-    //        } else {
-    //            body.AddForce(new Vector2(-hit.forceBack * 5, 0));
-    //        }
-
-    //        currentStat.hp -= hit.dame;
-    //        if (currentStat.hp < 0) {
-    //            playerCommand.Die();
-    //        }
-    //    }
-    //}
 }
