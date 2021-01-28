@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static bool isPlaying = false;
     public static string sceneName = "R1_01";
     public static string weapon = "pike";
+    public static Vector3 startPosition = new Vector3(0, 0);
 
     public GameObject mainUICamera;
 

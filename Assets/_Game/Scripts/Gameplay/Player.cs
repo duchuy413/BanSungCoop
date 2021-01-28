@@ -37,9 +37,12 @@ public class Player : NetworkBehaviour {
     //float nextShoot = 0f;
     //float hp = 500f;
     //float dame = 20f;
+    private void Awake() {
+        transform.position = GameManager.startPosition;
+    }
 
     void Start() {
-        transform.position = NetworkSystem.Instance.SpawnPosition;
+        //transform.position = NetworkSystem.Instance.SpawnPosition;
         
         playerCommand = GetComponent<PlayerCommand>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -49,7 +52,9 @@ public class Player : NetworkBehaviour {
         jumpCount = 2;
         scale = transform.localScale.x;
 
-        LoadWeapon(GameManager.weapon);
+        if (isLocalPlayer) {
+            LoadWeapon(GameManager.weapon);
+        }
     }
 
     public override void OnStartLocalPlayer() {

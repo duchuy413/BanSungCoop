@@ -23,6 +23,10 @@ public class MySyncPosition : NetworkBehaviour {
     float updateTime;
     float scale = 1f;
 
+    //private void Awake() {
+    //    transform.position = GameManager.startPosition;
+    //}
+
     void Start() {
         player = GetComponent<Player>();
         animUpdater = GetComponent<PlayerAnimationUpdate>();
@@ -38,6 +42,7 @@ public class MySyncPosition : NetworkBehaviour {
             //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
 
             GameObject go = GameSystem.LoadPool("puppet", transform.position);
+            
             puppet = go.GetComponent<MyNetworkPuppet>();
             puppet.target = gameObject;
             puppet.player = GetComponent<Player>();
