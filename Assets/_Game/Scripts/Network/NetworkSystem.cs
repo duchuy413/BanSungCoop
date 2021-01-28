@@ -50,8 +50,8 @@ public class NetworkSystem : MonoBehaviour {
         discoveredServers.Clear();
         NetworkManager.singleton.StartHost();
         networkDiscovery.AdvertiseServer();
-        GameManager.Instance.LoadScene("R1_01", false);
         isPlaying = true;
+        GameManager.Instance.LoadScene(GameManager.sceneName, false);
     }
 
     public void StartClient(){

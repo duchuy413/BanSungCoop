@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public static float GRAVITY = 2.5f;
     public static bool isPlaying = false;
+    public static string sceneName = "R1_01";
+    public static string weapon = "pike";
 
     public GameObject mainUICamera;
 

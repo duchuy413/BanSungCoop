@@ -43,13 +43,13 @@ public class Player : NetworkBehaviour {
         
         playerCommand = GetComponent<PlayerCommand>();
         rb2d = GetComponent<Rigidbody2D>();
-        currentStat = new CharacterStatRuntime();
-        currentStat.ReadValue(characterStat);
+        //currentStat = new CharacterStatRuntime();
+        //currentStat.ReadValue(characterStat);
 
         jumpCount = 2;
         scale = transform.localScale.x;
 
-        LoadWeapon(GameSystem.weapon);
+        LoadWeapon(GameManager.weapon);
     }
 
     public override void OnStartLocalPlayer() {

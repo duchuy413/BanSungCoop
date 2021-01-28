@@ -29,18 +29,19 @@ public class MySyncPosition : NetworkBehaviour {
         current = new PlayerSnapshot();
         scale = Mathf.Abs(transform.localScale.x);
 
+        //TODO: Restore puppet script
         if (!isLocalPlayer) {
             GetComponent<Rigidbody2D>().isKinematic = true;
 
             GetComponent<SpriteRenderer>().enabled = false;
-            player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
-            player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
+            //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
+            //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
 
             GameObject go = GameSystem.LoadPool("puppet", transform.position);
             puppet = go.GetComponent<MyNetworkPuppet>();
             puppet.target = gameObject;
             puppet.player = GetComponent<Player>();
-            puppet.LoadWeapon(GameSystem.weapon);
+            puppet.LoadWeapon(GameManager.weapon);
 
             //TODO: Add again this
             //puppet.LoadWeapon(player.weaponStat);
