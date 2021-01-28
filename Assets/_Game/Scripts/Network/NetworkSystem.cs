@@ -28,6 +28,10 @@ public class NetworkSystem : MonoBehaviour {
         }
     }
 
+    //public void Update() {
+    //    Debug.Log(discoveredServers.Count);
+    //}
+
     private void Awake() {
         if (!Instance) {
             Instance = this;
@@ -35,6 +39,8 @@ public class NetworkSystem : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
+
+        //StartClient();
     }
 
 #if UNITY_EDITOR
@@ -47,17 +53,17 @@ public class NetworkSystem : MonoBehaviour {
     }
 #endif
 
-    //void OnGUI()
-    //{
-    //    if (NetworkManager.singleton == null)
-    //        return;
+    void OnGUI() {
+        //if (NetworkManager.singleton == null)
+        //    return;
 
-    //    if (NetworkServer.active || NetworkClient.active)
-    //        return;
+        //if (NetworkServer.active || NetworkClient.active)
+        //    return;
 
-    //    if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
-    //        DrawGUI();
-    //}
+        //if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
+        //    DrawGUI();
+        Debug.Log(discoveredServers.Count);
+    }
 
     public void StartHost() {
         discoveredServers.Clear();
@@ -66,6 +72,11 @@ public class NetworkSystem : MonoBehaviour {
         GameManager.Instance.LoadScene("R1_01", false);
         //SceneManager.LoadScene("R1_01", LoadSceneMode.Additive);
         isPlaying = true;
+    }
+
+    public void StartClient(){
+        discoveredServers.Clear();
+        networkDiscovery.StartDiscovery();
     }
 
     //void DrawGUI() {
@@ -121,6 +132,7 @@ public class NetworkSystem : MonoBehaviour {
     }
 
     public void OnDiscoveredServer(ServerResponse info) {
+        Debug.Log("AAAAAAAAAAAAAAAAAAA");
         // Note that you can check the versioning to decide if you can connect to the server or not using this method
         discoveredServers[info.serverId] = info;
     }

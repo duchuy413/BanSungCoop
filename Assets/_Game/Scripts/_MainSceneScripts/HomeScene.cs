@@ -15,6 +15,11 @@ public class HomeScene : MonoBehaviour
     public void StartHost() {
         NetworkSystem.Instance.StartHost();
     }
+    
+    public void StartClient() {
+        ShowHostInfoPanel();
+        NetworkSystem.Instance.StartClient();
+    }
 
     public void ShowHostInfoPanel() {
         panelHostInfo.SetActive(true);
