@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
-//[AddComponentMenu("Network/NetworkDiscoveryHUD")]
 [HelpURL("https://mirror-networking.com/docs/Components/NetworkDiscovery.html")]
 [RequireComponent(typeof(NetworkDiscovery))]
 public class NetworkSystem : MonoBehaviour {
@@ -28,10 +27,6 @@ public class NetworkSystem : MonoBehaviour {
         }
     }
 
-    //public void Update() {
-    //    Debug.Log(discoveredServers.Count);
-    //}
-
     private void Awake() {
         if (!Instance) {
             Instance = this;
@@ -39,8 +34,6 @@ public class NetworkSystem : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
-
-        //StartClient();
     }
 
 #if UNITY_EDITOR
@@ -53,24 +46,11 @@ public class NetworkSystem : MonoBehaviour {
     }
 #endif
 
-    void OnGUI() {
-        //if (NetworkManager.singleton == null)
-        //    return;
-
-        //if (NetworkServer.active || NetworkClient.active)
-        //    return;
-
-        //if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
-        //    DrawGUI();
-        Debug.Log(discoveredServers.Count);
-    }
-
     public void StartHost() {
         discoveredServers.Clear();
         NetworkManager.singleton.StartHost();
         networkDiscovery.AdvertiseServer();
         GameManager.Instance.LoadScene("R1_01", false);
-        //SceneManager.LoadScene("R1_01", LoadSceneMode.Additive);
         isPlaying = true;
     }
 
@@ -79,61 +59,11 @@ public class NetworkSystem : MonoBehaviour {
         networkDiscovery.StartDiscovery();
     }
 
-    //void DrawGUI() {
-    //    GUILayout.BeginHorizontal();
-
-    //    GUILayoutOption[] options = new GUILayoutOption[] {
-    //        GUILayout.Width(400f),
-    //        GUILayout.Height(200f),
-    //    };
-
-    //    if (GUILayout.Button("Find Servers", options)) {
-    //        discoveredServers.Clear();
-    //        networkDiscovery.StartDiscovery();
-    //    }
-
-    //    // LAN Host
-    //    if (GUILayout.Button("Start Host", options)) {
-    //        discoveredServers.Clear();
-    //        NetworkManager.singleton.StartHost();
-    //        networkDiscovery.AdvertiseServer();
-    //        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
-    //    }
-
-    //    // Dedicated server
-    //    if (GUILayout.Button("Start Server", options)) {
-    //        discoveredServers.Clear();
-    //        NetworkManager.singleton.StartServer();
-
-    //        networkDiscovery.AdvertiseServer();
-    //    }
-
-    //    GUILayout.EndHorizontal();
-
-    //    // show list of found server
-
-    //    GUILayout.Label($"Discovered Servers [{discoveredServers.Count}]:");
-
-    //    // servers
-    //    scrollViewPos = GUILayout.BeginScrollView(scrollViewPos);
-
-    //    foreach (ServerResponse info in discoveredServers.Values) {
-    //        if (GUILayout.Button(info.EndPoint.Address.ToString(), options)) {
-    //            Connect(info);
-    //            SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
-    //        }
-    //    }
-
-    //    GUILayout.EndScrollView();
-    //}
-
     void Connect(ServerResponse info) {
         NetworkManager.singleton.StartClient(info.uri);
     }
 
     public void OnDiscoveredServer(ServerResponse info) {
-        Debug.Log("AAAAAAAAAAAAAAAAAAA");
-        // Note that you can check the versioning to decide if you can connect to the server or not using this method
         discoveredServers[info.serverId] = info;
     }
 }
