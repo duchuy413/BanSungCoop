@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-[RequireComponent(typeof(Player))]
+//[RequireComponent(typeof(Player))]
 [RequireComponent(typeof(FramesAnimator))]
 public class PlayerAnimationUpdate : NetworkBehaviour{
     public Sprite[] go;

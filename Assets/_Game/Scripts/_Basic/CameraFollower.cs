@@ -19,13 +19,15 @@ public class CameraFollower : MonoBehaviour
     private Vector3 vectorToTarget;
     private Rigidbody2D rb2d;
 
+    private void Awake() {
+        Instance = this;
+    }
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.isKinematic = true;
         rb2d.gravityScale = 0;
-
-        Instance = this;
     }
 
     void LateUpdate()
