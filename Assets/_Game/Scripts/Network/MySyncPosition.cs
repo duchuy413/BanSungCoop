@@ -40,6 +40,7 @@ public class MySyncPosition : NetworkBehaviour {
             puppet = go.GetComponent<MyNetworkPuppet>();
             puppet.target = gameObject;
             puppet.player = GetComponent<Player>();
+            puppet.LoadWeapon(GameSystem.weapon);
 
             //TODO: Add again this
             //puppet.LoadWeapon(player.weaponStat);

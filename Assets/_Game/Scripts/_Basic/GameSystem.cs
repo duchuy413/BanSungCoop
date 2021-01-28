@@ -8,6 +8,8 @@ public class GameSystem : MonoBehaviour
 
     public static List<GameObject> poolObjects;
     public static List<string> poolNames;
+
+    public static string weapon = "pike";
     
     private void Awake() {
         Instance = this;

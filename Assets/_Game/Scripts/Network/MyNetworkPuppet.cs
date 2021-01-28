@@ -4,10 +4,10 @@
 public class MyNetworkPuppet : MonoBehaviour {
     public GameObject target;
     public Player player;
-    public SpriteRenderer weaponImg;
+    //public SpriteRenderer weaponImg;
 
     public Transform hand;
-    public Weapon weapon;
+    public IAttack weapon;
     public Transform barrel;
 
     public float FAST_SPEED_1 = 2f;
@@ -74,13 +74,18 @@ public class MyNetworkPuppet : MonoBehaviour {
         transform.position = pos;
     }
 
-    public void LoadWeapon(WeaponStat stat) {
-        weaponImg.sprite = stat.sprite;
+    public void LoadWeapon(string s) {
+        //weaponImg.sprite = stat.sprite;
+        string path = "Weapon/" + s + "/" + s;
+        GameObject go = Instantiate(Resources.Load<GameObject>(path), hand);
+        //t_weapon = go.transform;
+        weapon = go.GetComponent<IAttack>();
+        weapon.Init(player);
     }
 
     public void SetVisible(bool visible) {
         GetComponent<SpriteRenderer>().enabled = visible;
         hand.GetComponent<SpriteRenderer>().enabled = visible;
-        weapon.GetComponent<SpriteRenderer>().enabled = visible;
+        //weapon.GetComponent<SpriteRenderer>().enabled = visible;
     }
 }

@@ -49,7 +49,7 @@ public class Player : NetworkBehaviour {
         jumpCount = 2;
         scale = transform.localScale.x;
 
-        LoadWeapon("pike");
+        LoadWeapon(GameSystem.weapon);
     }
 
     public override void OnStartLocalPlayer() {
