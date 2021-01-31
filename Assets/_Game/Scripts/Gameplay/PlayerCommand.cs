@@ -9,17 +9,22 @@ public class PlayerCommand : NetworkBehaviour {
 
     public void ShootButtonPress(string buttonType) {
         CmdShootButtonPress(buttonType);
+        ShootButtonPressFunction(buttonType);
     }
 
     [Command]
     public void CmdShootButtonPress(string buttonType) {
-        ShootButtonPressFunction(buttonType);
         RpcShootButtonPress(buttonType);
+        if (!isLocalPlayer) {
+            ShootButtonPressFunction(buttonType);
+        }
     }
 
     [ClientRpc]
     public void RpcShootButtonPress(string buttonType) {
-        ShootButtonPressFunction(buttonType);
+        if (!isLocalPlayer) {
+            ShootButtonPressFunction(buttonType);
+        }
     }
 
     public void ShootButtonPressFunction(string buttonType) {
