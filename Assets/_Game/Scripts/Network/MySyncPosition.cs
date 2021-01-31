@@ -33,29 +33,25 @@ public class MySyncPosition : NetworkBehaviour {
         current = new PlayerSnapshot();
         scale = Mathf.Abs(transform.localScale.x);
 
-        //TODO: Restore puppet script
-        if (!isLocalPlayer) {
-            GetComponent<Rigidbody2D>().isKinematic = true;
+        //if (!isLocalPlayer) {
+        //    GetComponent<Rigidbody2D>().isKinematic = true;
 
-            GetComponent<SpriteRenderer>().enabled = false;
-            //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
-            //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
+        //    GetComponent<SpriteRenderer>().enabled = false;
+        //    //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
+        //    //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
 
-            GameObject go = GameSystem.LoadPool("puppet", transform.position);
+        //    GameObject go = GameSystem.LoadPool("puppet", transform.position);
             
-            puppet = go.GetComponent<MyNetworkPuppet>();
-            puppet.target = gameObject;
-            puppet.player = GetComponent<Player>();
-            puppet.LoadWeapon(GameManager.weapon);
+        //    puppet = go.GetComponent<MyNetworkPuppet>();
+        //    puppet.target = gameObject;
+        //    puppet.player = GetComponent<Player>();
+        //    puppet.LoadWeapon(GameManager.weapon);
 
-            //TODO: Add again this
-            //puppet.LoadWeapon(player.weaponStat);
+        //    GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
+        //    animUpdater = puppet.GetComponent<PlayerAnimationUpdate>();
 
-            GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
-            animUpdater = puppet.GetComponent<PlayerAnimationUpdate>();
-
-            InputSystem.listPuppet.Add(puppet);
-        }
+        //    InputSystem.listPuppet.Add(puppet);
+        //}
 
         InvokeRepeating("TransmitPosition", 0.1f, 0.1f);
     }
