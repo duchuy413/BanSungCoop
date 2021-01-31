@@ -37,7 +37,7 @@ public class MySyncPosition : NetworkBehaviour {
         if (!isLocalPlayer) {
             GetComponent<Rigidbody2D>().isKinematic = true;
 
-            GetComponent<SpriteRenderer>().enabled = false;
+            //GetComponent<SpriteRenderer>().enabled = false;
             //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
             //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
 

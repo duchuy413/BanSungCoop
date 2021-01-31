@@ -12,7 +12,7 @@ public class MyNetworkPuppet : MonoBehaviour {
 
     public float FAST_SPEED_1 = 2f;
     public float FAST_SPEED_2 = 5f;
-    public float maxDistance = 4f;
+    public float maxDistance = 2f;
     public float speed = 25f;
 
     private float scale;

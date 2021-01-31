@@ -17,6 +17,7 @@ public class Player : NetworkBehaviour {
     public GameObject cameraPos;
     public Transform t_hand;
     public Transform t_weapon;
+    public MyNetworkPuppet puppet;
 
     [HideInInspector]
     public CharacterStatRuntime currentStat;
@@ -60,6 +61,27 @@ public class Player : NetworkBehaviour {
 
         if (isLocalPlayer) {
             LoadWeapon(GameManager.weapon);
+        }
+
+
+        if (!isLocalPlayer) {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+
+            //GetComponent<SpriteRenderer>().enabled = false;
+            //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
+            //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
+
+            GameObject go = GameSystem.LoadPool("puppet", transform.position);
+
+            puppet = go.GetComponent<MyNetworkPuppet>();
+            puppet.target = gameObject;
+            puppet.player = GetComponent<Player>();
+            puppet.LoadWeapon(GameManager.weapon);
+
+            GameSystem.CopyComponent(GetComponent<PlayerAnimationUpdate>(), go);
+            //animUpdater = puppet.GetComponent<PlayerAnimationUpdate>();
+
+            InputSystem.listPuppet.Add(puppet);
         }
     }
 
