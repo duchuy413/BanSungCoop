@@ -29,7 +29,7 @@ public class HostInfoPanel : MonoBehaviour
         }
 
         for (int i = 0; i < discovered.Count; i++) {
-            Debug.Log(discovered[i].EndPoint.Address.ToString());
+            //Debug.Log(discovered[i].EndPoint.Address.ToString());
             if (!displayHosts.Contains(discovered[i])) {
                 displayHosts.Add(discovered[i]);
                 GameObject go = Instantiate(hostInfoButton, content);
