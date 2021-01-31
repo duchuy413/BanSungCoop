@@ -5,6 +5,8 @@ using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerCommand))]
+[RequireComponent(typeof(FramesAnimator))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Player : NetworkBehaviour {
     public static float SPEED = 8f;
     public static float JUMP_FORCE = 1500f;
@@ -27,6 +29,8 @@ public class Player : NetworkBehaviour {
 
     private Rigidbody2D rb2d;
     private PlayerCommand playerCommand;
+    private FramesAnimator framesAnimator;
+    private SpriteRenderer spriteRenderer;
     private IAttack weapon;
 
     float scale = 1f;
@@ -45,6 +49,8 @@ public class Player : NetworkBehaviour {
         //transform.position = NetworkSystem.Instance.SpawnPosition;
         
         playerCommand = GetComponent<PlayerCommand>();
+        framesAnimator = GetComponent<FramesAnimator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
         //currentStat = new CharacterStatRuntime();
         //currentStat.ReadValue(characterStat);
@@ -215,7 +221,9 @@ public class Player : NetworkBehaviour {
 
             //change sprite imediately after hit ground
             GetComponent<PlayerAnimationUpdate>().Update();
-            GetComponent<SpriteRenderer>().sprite = GetComponent<FramesAnimator>().spritesheet[0];
+            if (framesAnimator.spritesheet.Length > 0) {
+                spriteRenderer.sprite = framesAnimator.spritesheet[0];
+            }
         }
     }
 
