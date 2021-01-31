@@ -16,6 +16,7 @@ public class HostInfoButton : MonoBehaviour
 
     public void OnClick() {
         NetworkManager.singleton.StartClient(info.uri);
+        NetworkSystem.isPlaying = true;
         GameManager.Instance.LoadScene(GameManager.sceneName, false);
     }
 
