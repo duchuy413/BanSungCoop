@@ -5,6 +5,7 @@ using Mirror;
 using System;
 
 public class MySyncPosition : NetworkBehaviour {
+    [System.Serializable]
     class PlayerSnapshot {
         public Vector3 pos;
         public string state;
@@ -12,8 +13,8 @@ public class MySyncPosition : NetworkBehaviour {
         //public bool isShooting;
     }
 
-    [SyncVar(hook = nameof(UpdateState))]
-    private string json;
+    //[SyncVar(hook = nameof(UpdateState))]
+    //private string json;
 
     public MyNetworkPuppet puppet;
     PlayerSnapshot current;
@@ -53,7 +54,7 @@ public class MySyncPosition : NetworkBehaviour {
             InputSystem.listPuppet.Add(puppet);
         }
 
-        InvokeRepeating("TransmitPosition", 0.1f, 0.1f);
+        //InvokeRepeating("TransmitPosition", 0.1f, 0.1f);
     }
 
     void Update() {
@@ -66,28 +67,31 @@ public class MySyncPosition : NetworkBehaviour {
         }
     }
 
-    public void UpdateState(string jsonOld, string jsonNew) {
-        current = JsonUtility.FromJson<PlayerSnapshot>(jsonNew);
+    //public void UpdateState(string jsonOld, string jsonNew) {
+    //    if (isLocalPlayer) {
+    //        return;
+    //    }
 
-        player.state = current.state;
-        player.direction = current.direction;
-        animUpdater.UpdateAnim(current.state);
-        updateTime = Time.time;
-    }
+    //    current = JsonUtility.FromJson<PlayerSnapshot>(jsonNew);
 
-    [Command]
-    public void CmdUpdatePos(string newJson) {
-        json = newJson;
-    }
+    //    player.state = current.state;
+    //    player.direction = current.direction;
+    //    animUpdater.UpdateAnim(current.state);
+    //    updateTime = Time.time;
+    //}
 
-    [ClientCallback]
-    public void TransmitPosition() {
-        if (isLocalPlayer) {
-            current.pos = transform.position;
-            current.state = player.state;
-            current.direction = player.direction;
-            //current.isShooting = player.isShooting;
-            CmdUpdatePos(JsonUtility.ToJson(current));
-        }
-    }
+    //[Command]
+    //public void CmdUpdatePos(string newJson) {
+    //    json = newJson;
+    //}
+
+    //[ClientCallback]
+    //public void TransmitPosition() {
+    //    if (isLocalPlayer) {
+    //        current.pos = transform.position;
+    //        current.state = player.state;
+    //        current.direction = player.direction;
+    //        CmdUpdatePos(JsonUtility.ToJson(current));
+    //    }
+    //}
 }
