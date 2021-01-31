@@ -10,11 +10,10 @@ public class MySyncPosition : NetworkBehaviour {
         public Vector3 pos;
         public string state;
         public string direction;
-        //public bool isShooting;
     }
 
-    //[SyncVar(hook = nameof(UpdateState))]
-    //private string json;
+    [SyncVar(hook = nameof(UpdateState))]
+    private string json;
 
     public MyNetworkPuppet puppet;
     PlayerSnapshot current;
@@ -23,10 +22,6 @@ public class MySyncPosition : NetworkBehaviour {
     Player player;
     float updateTime;
     float scale = 1f;
-
-    //private void Awake() {
-    //    transform.position = GameManager.startPosition;
-    //}
 
     void Start() {
         player = GetComponent<Player>();
@@ -37,7 +32,7 @@ public class MySyncPosition : NetworkBehaviour {
         if (!isLocalPlayer) {
             GetComponent<Rigidbody2D>().isKinematic = true;
 
-            //GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
             //player.t_hand.GetComponent<SpriteRenderer>().enabled = false;
             //player.t_weapon.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -54,7 +49,7 @@ public class MySyncPosition : NetworkBehaviour {
             InputSystem.listPuppet.Add(puppet);
         }
 
-        //InvokeRepeating("TransmitPosition", 0.1f, 0.1f);
+        InvokeRepeating("TransmitPosition", 0.2f, 0.2f);
     }
 
     void Update() {
@@ -67,31 +62,31 @@ public class MySyncPosition : NetworkBehaviour {
         }
     }
 
-    //public void UpdateState(string jsonOld, string jsonNew) {
-    //    if (isLocalPlayer) {
-    //        return;
-    //    }
+    public void UpdateState(string jsonOld, string jsonNew) {
+        if (isLocalPlayer) {
+            return;
+        }
 
-    //    current = JsonUtility.FromJson<PlayerSnapshot>(jsonNew);
+        current = JsonUtility.FromJson<PlayerSnapshot>(jsonNew);
 
-    //    player.state = current.state;
-    //    player.direction = current.direction;
-    //    animUpdater.UpdateAnim(current.state);
-    //    updateTime = Time.time;
-    //}
+        player.state = current.state;
+        player.direction = current.direction;
+        animUpdater.UpdateAnim(current.state);
+        updateTime = Time.time;
+    }
 
-    //[Command]
-    //public void CmdUpdatePos(string newJson) {
-    //    json = newJson;
-    //}
+    [Command]
+    public void CmdUpdatePos(string newJson) {
+        json = newJson;
+    }
 
-    //[ClientCallback]
-    //public void TransmitPosition() {
-    //    if (isLocalPlayer) {
-    //        current.pos = transform.position;
-    //        current.state = player.state;
-    //        current.direction = player.direction;
-    //        CmdUpdatePos(JsonUtility.ToJson(current));
-    //    }
-    //}
+    [ClientCallback]
+    public void TransmitPosition() {
+        if (isLocalPlayer) {
+            current.pos = transform.position;
+            current.state = player.state;
+            current.direction = player.direction;
+            CmdUpdatePos(JsonUtility.ToJson(current));
+        }
+    }
 }
