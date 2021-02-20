@@ -29,6 +29,11 @@ public class OpenSceneEditor : MonoBehaviour
         OpenScene("_Main/Home");
     }
 
+    [MenuItem("Project/Open WorldRandom #w", priority = 5000)]
+    public static void OpenWorldRandom() {
+        OpenScene("_Main/WorldRandom");
+    }
+
     [MenuItem("Project/Open Friend", priority = 5000)]
     public static void OpenFriend() {
         OpenScene("_Main/Friend");

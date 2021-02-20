@@ -66,13 +66,13 @@ public class CameraFollower : MonoBehaviour
             vectorToTarget = target.transform.position - transform.position;
             vectorToTarget = vectorToTarget / distanceToTarget;
 
-            if (target.transform.position.x < LEFT || target.transform.position.x > RIGHT) {
-                vectorToTarget = new Vector3(0, vectorToTarget.y);
-            }
+            //if (target.transform.position.x < LEFT || target.transform.position.x > RIGHT) {
+            //    vectorToTarget = new Vector3(0, vectorToTarget.y);
+            //}
 
-            if (target.transform.position.y < BOTTOM || target.transform.position.y > TOP) {
-                vectorToTarget = new Vector3(vectorToTarget.x, 0);
-            }
+            //if (target.transform.position.y < BOTTOM || target.transform.position.y > TOP) {
+            //    vectorToTarget = new Vector3(vectorToTarget.x, 0);
+            //}
 
             if (distanceToTarget < 5f) {
                 rb2d.velocity = vectorToTarget * speed;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using Random = UnityEngine.Random;
 
 public class Gameplay : MonoBehaviour {
     [System.Serializable]
@@ -38,8 +39,10 @@ public class Gameplay : MonoBehaviour {
         //StartCoroutine(UpdateCountDown());
 
         //test
-        GameObject flyingtext = GameSystem.LoadPool("textdame", transform.position);
-        flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(123123).ToString();
+        //GameObject flyingtext = GameSystem.LoadPool("textdame", transform.position);
+        //flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(123123).ToString();
+
+        GenerateWorld();
 
         //Debug.Log("FLYUTING TESTSSR" + flyingtext);
     }
@@ -99,5 +102,11 @@ public class Gameplay : MonoBehaviour {
     IEnumerator SpawnInRandomTime(string mobName, Vector3 pos) {
         yield return new WaitForSeconds(UnityEngine.Random.Range(0, currentWave.time / 2));
         GameSystem.LoadPool(mobName, pos);
+    }
+
+    public void GenerateWorld() {
+        for (int i = 0; i < 100; i++) {
+            GameSystem.LoadPool("tree", new Vector3(Random.Range(-400f, 400f), Random.Range(-400f, 400f)));
+        }
     }
 }

@@ -95,14 +95,20 @@ public class Player : NetworkBehaviour {
         if (!isLocalPlayer || !NetworkSystem.isPlaying)
             return;
 
+        if (isRunning) {
+            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical)*SPEED;
+        } else {
+            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED;
+        }
+
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
 
-            if (isRunning) {
-                rb2d.velocity = new Vector3(SPEED * 1.5f, rb2d.velocity.y);
-            } else {
-                rb2d.velocity = new Vector3(SPEED, rb2d.velocity.y);
-            }
+            //if (isRunning) {
+            //    rb2d.velocity = new Vector3(SPEED * 1.5f, rb2d.velocity.y);
+            //} else {
+            //    rb2d.velocity = new Vector3(SPEED, rb2d.velocity.y);
+            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
@@ -115,11 +121,11 @@ public class Player : NetworkBehaviour {
         } else if (Joystick.Instance.Horizontal < 0 || Input.GetKeyDown(KeyCode.LeftArrow)) {
             direction = "left";
 
-            if (isRunning) {
-                rb2d.velocity = new Vector3(-SPEED * 1.5f, rb2d.velocity.y);
-            } else {
-                rb2d.velocity = new Vector3(-SPEED, rb2d.velocity.y);
-            }
+            //if (isRunning) {
+            //    rb2d.velocity = new Vector3(-SPEED * 1.5f, rb2d.velocity.y);
+            //} else {
+            //    rb2d.velocity = new Vector3(-SPEED, rb2d.velocity.y);
+            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
