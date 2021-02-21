@@ -46,7 +46,7 @@ public class MobWorf : MonoBehaviour
             executor.enabled = true;
             GetComponent<FramesAnimator>().enabled = true;
         }
-        LeanTween.scale(gameObject, new Vector3(10f, 10f), 3f).setLoopPingPong();
+        //LeanTween.scale(gameObject, new Vector3(10f, 10f), 3f).setLoopPingPong();
     }
 
     private void Update() {
@@ -60,9 +60,9 @@ public class MobWorf : MonoBehaviour
             animator.spritesheet = stat.run;
 
             Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
-            if (!stat.canFly) {
-                velocity.y = rb2d.velocity.y;
-            }
+            //if (!stat.canFly) {
+            //    velocity.y = rb2d.velocity.y;
+            //}
 
             rb2d.velocity = velocity;
 

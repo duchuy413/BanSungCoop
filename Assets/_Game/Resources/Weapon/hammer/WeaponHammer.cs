@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHammer : MonoBehaviour, IAttack {
-    public static float PREPARE_TIME_RATE = 0.3f;
+    public static float PREPARE_TIME_RATE = 0f;
     public static float ATTACK_TIME_RATE = 0.1f; //between 0 and 1, lower is faster
     public static float DELAY_AFTER_ATTACK = 0.6f;
     public static float ANTICIPATE_HAND_RANGE = 0.2f;

@@ -67,9 +67,9 @@ public class GameSystem : MonoBehaviour
 
         vectorToTarget = vectorToTarget * speed / distanceToTarget;
 
-        if (!isFlying) {
-            vectorToTarget.y = 0;
-        }
+        //if (!isFlying) {
+        //    vectorToTarget.y = 0;
+        //}
 
         return vectorToTarget;
     }

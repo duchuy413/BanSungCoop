@@ -8,7 +8,7 @@ using Mirror;
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class Player : NetworkBehaviour {
-    public static float SPEED = 8f;
+    public static float SPEED = 6f;
     public static float JUMP_FORCE = 1500f;
     public static float SHOOT_RATE = 0.1f;
     public static float DASH_FORCE = 5000f;
@@ -35,7 +35,7 @@ public class Player : NetworkBehaviour {
     private IAttack weapon;
 
     float scale = 1f;
-    bool isRunning = true;
+    bool isRunning = false;
     bool isGrounding = true;
     int jumpCount;
 
@@ -96,19 +96,13 @@ public class Player : NetworkBehaviour {
             return;
 
         if (isRunning) {
-            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical)*SPEED;
+            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical)*SPEED*1.5f;
         } else {
             rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED;
         }
 
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {
             direction = "right";
-
-            //if (isRunning) {
-            //    rb2d.velocity = new Vector3(SPEED * 1.5f, rb2d.velocity.y);
-            //} else {
-            //    rb2d.velocity = new Vector3(SPEED, rb2d.velocity.y);
-            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
@@ -120,12 +114,6 @@ public class Player : NetworkBehaviour {
 
         } else if (Joystick.Instance.Horizontal < 0 || Input.GetKeyDown(KeyCode.LeftArrow)) {
             direction = "left";
-
-            //if (isRunning) {
-            //    rb2d.velocity = new Vector3(-SPEED * 1.5f, rb2d.velocity.y);
-            //} else {
-            //    rb2d.velocity = new Vector3(-SPEED, rb2d.velocity.y);
-            //}
 
             if (state != "jump" && state != "fall") {
                 if (isRunning) {
@@ -146,9 +134,9 @@ public class Player : NetworkBehaviour {
             Joystick.Instance.input = new Vector3(1, 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Jump();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space)) {
+        //    Jump();
+        //}
 
         if (Input.GetKeyDown(KeyCode.C)) {
             ShootStart();
@@ -156,6 +144,14 @@ public class Player : NetworkBehaviour {
 
         if (Input.GetKeyUp(KeyCode.C)) {
             ShootEnd();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X)) {
+            RunStart();
+        }
+
+        if (Input.GetKeyUp(KeyCode.X)) {
+            RunEnd();
         }
 
         if (Input.GetKeyDown(KeyCode.Z)) {
@@ -291,6 +287,7 @@ public class Player : NetworkBehaviour {
         weapon.Init(this);
         playerCommand.weapon = weapon;
         playerCommand.weaponStat = weapon.GetWeaponStat();
+        GetComponent<OrderFixer>().layer2 = new SpriteRenderer[] { go.transform.GetChild(0).GetComponent<SpriteRenderer>() };
     }
 
     /// <summary>

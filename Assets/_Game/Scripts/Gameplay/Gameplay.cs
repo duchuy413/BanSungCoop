@@ -106,7 +106,23 @@ public class Gameplay : MonoBehaviour {
 
     public void GenerateWorld() {
         for (int i = 0; i < 100; i++) {
-            GameSystem.LoadPool("tree", new Vector3(Random.Range(-400f, 400f), Random.Range(-400f, 400f)));
+            GameSystem.LoadPool("tree", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameSystem.LoadPool("carrot", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
+
+        for (int i = 0; i < 500; i++) {
+            GameSystem.LoadPool("grass", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameSystem.LoadPool("grassbig", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
+
+        for (int i = 0; i < 100; i++) {
+            GameSystem.LoadPool("Monster/worf/worf", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
     }
 }

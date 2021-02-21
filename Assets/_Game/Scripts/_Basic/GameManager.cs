@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public static float GRAVITY = 2.5f;
+    public static float GRAVITY = 0f;
+    public static float MAP_SIZE = 100f;
     public static bool isPlaying = false;
     public static string sceneName = "WorldRandom";
     public static string weapon = "hammer";
