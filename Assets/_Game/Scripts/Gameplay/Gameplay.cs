@@ -27,24 +27,17 @@ public class Gameplay : MonoBehaviour {
     public TextMeshProUGUI txtCountDown;
     public GameObject btnSkip;
 
+    List<Vector3> pivots = new List<Vector3>();
+    List<Vector3> areaPivots = new List<Vector3>();
+
     MonsterWave currentWave;
     int waveIndex;
     float nextWaveTime = -1f;
 
     private void Awake() {
         Instance = this;
-
         waveIndex = -1;
-        //StartCoroutine(RunGame());
-        //StartCoroutine(UpdateCountDown());
-
-        //test
-        //GameObject flyingtext = GameSystem.LoadPool("textdame", transform.position);
-        //flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(123123).ToString();
-
         GenerateWorld();
-
-        //Debug.Log("FLYUTING TESTSSR" + flyingtext);
     }
 
     void Start() {
@@ -106,23 +99,54 @@ public class Gameplay : MonoBehaviour {
 
     public void GenerateWorld() {
         for (int i = 0; i < 100; i++) {
-            GameSystem.LoadPool("tree", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            pivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 20; i++) {
-            GameSystem.LoadPool("carrot", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        for (int i = 0; i < 10; i++) {
+            areaPivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 500; i++) {
-            GameSystem.LoadPool("grass", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        for (int i = 0; i < pivots.Count; i++) {
+            int nearest = NearestAreaPivot(i);
+            if (nearest < 5) {
+                GameSystem.LoadPool("tree", pivots[i]);
+            } else {
+                GameSystem.LoadPool("grass", pivots[i]);
+            }
         }
 
-        for (int i = 0; i < 20; i++) {
-            GameSystem.LoadPool("grassbig", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        for (int i = 0; i < 10; i++) {
+            GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 100; i++) {
-            GameSystem.LoadPool("Monster/worf/worf", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //for (int i = 0; i < 100; i++) {
+        //    GameSystem.LoadPool("tree", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
+
+        //for (int i = 0; i < 20; i++) {
+        //    GameSystem.LoadPool("carrot", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
+
+        //for (int i = 0; i < 500; i++) {
+        //    GameSystem.LoadPool("grass", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
+
+        //for (int i = 0; i < 20; i++) {
+        //    GameSystem.LoadPool("grassbig", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
+
+        //for (int i = 0; i < 100; i++) {
+        //    GameSystem.LoadPool("Monster/worf/worf", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
+    }
+
+    int NearestAreaPivot(int pivotIndex) {
+        int nearest = 0;
+        for (int i = 0; i < areaPivots.Count; i++) {
+            if (Vector3.Distance(areaPivots[i], pivots[pivotIndex]) < Vector3.Distance(areaPivots[nearest], pivots[pivotIndex])) {
+                nearest = i;
+            }
         }
+        return nearest;
     }
 }

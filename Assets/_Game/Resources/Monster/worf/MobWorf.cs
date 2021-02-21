@@ -13,6 +13,7 @@ public class MobWorf : MonoBehaviour
     public CharacterStat stat;
     public int level;
     public TextMeshPro textName;
+    public Transform hpValue;
 
     private MovementExecutor executor;
     private FramesAnimator animator;
@@ -23,6 +24,7 @@ public class MobWorf : MonoBehaviour
     private BattleStat current;
     private bool died;
     private bool getHit = false;
+    private float nextAttack = 0f;
 
     private void Awake() {
         executor = GetComponent<MovementExecutor>();
@@ -38,7 +40,6 @@ public class MobWorf : MonoBehaviour
 
         died = false;
         getHit = false;
-        current = new BattleStat();
         LoadLevel(level);
 
         executor = GetComponent<MovementExecutor>();
@@ -79,12 +80,23 @@ public class MobWorf : MonoBehaviour
                 spriteRenderer.flipX = false;
             else if (transform.position.x < NetworkSystem.player.transform.position.x)
                 spriteRenderer.flipX = true;
+
+            if (Time.time > nextAttack) {
+                nextAttack = Time.time + stat.attackCountDown;
+                HitParam hit = new HitParam {
+                    targetTags = new List<string> { "Player" },
+                    dame = current.dame,
+                };
+
+                NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
+            }
         }
     }
 
     private void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
+        current = new BattleStat();
         current.speed = stat.speed;
         current.baseExp = stat.baseExp;
         current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
@@ -99,21 +111,26 @@ public class MobWorf : MonoBehaviour
 
     public virtual void GetHit(HitParam hit) {
         getHit = true;
-        Debug.Log(current);
-        Debug.Log(current.hp);
+        //Debug.Log(current);
+        //Debug.Log(current.hp);
 
         float dameTake = CalculateDame(hit);
-        GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
-        flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
+        GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), transform.position);
+
+        //GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
+        //flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
 
         current.hp -= dameTake;
 
         if (current.hp <= 0) {
+            current.hp = 0;
             Died(hit);
             return;
         } else {
             StartCoroutine(PauseMovement(0.1f));
         }
+
+        hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
     }
 
     IEnumerator PauseMovement(float sec) {
@@ -153,10 +170,19 @@ public class MobWorf : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(new Vector2(700f, 700f));
         }
 
+        GameSystem.TextFly(current.baseExp.ToString(), transform.position, "blue");
+
         Invoke("Disappear", 2f);
     }
 
     public void Disappear() {
         gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        DameOnContact dame = collision.GetComponentInChildren<DameOnContact>();
+        if (dame != null && dame.hit.targetTags.Contains(gameObject.tag)) {
+            GetHit(dame.hit);
+        }
     }
 }

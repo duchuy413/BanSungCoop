@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerCommand))]
@@ -13,14 +14,18 @@ public class Player : NetworkBehaviour {
     public static float SHOOT_RATE = 0.1f;
     public static float DASH_FORCE = 5000f;
 
-    public CharacterStat characterStat;
+    public CharacterStat stat;
     public GameObject cameraPos;
     public Transform t_hand;
     public Transform t_weapon;
+    public Transform hpValue;
+    public TextMeshPro textName;
     public MyNetworkPuppet puppet;
 
+    public int level = 1;
+
     [HideInInspector]
-    public CharacterStatRuntime currentStat;
+    public BattleStat current;
     [HideInInspector]
     public string state = "";
     [HideInInspector]
@@ -48,7 +53,7 @@ public class Player : NetworkBehaviour {
 
     void Start() {
         //transform.position = NetworkSystem.Instance.SpawnPosition;
-        
+
         playerCommand = GetComponent<PlayerCommand>();
         framesAnimator = GetComponent<FramesAnimator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -62,6 +67,10 @@ public class Player : NetworkBehaviour {
         if (isLocalPlayer) {
             LoadWeapon(GameManager.weapon);
         }
+
+        LoadLevel(level);
+
+        //currentStat.hp = currentStat.maxhp;
 
 
         //if (!isLocalPlayer) {
@@ -91,12 +100,28 @@ public class Player : NetworkBehaviour {
         }
     }
 
+    private void LoadLevel(int level) {
+        textName.text = "lv" + level.ToString() + "." + stat.characterName;
+
+        current = new BattleStat();
+        current.speed = stat.speed;
+        current.baseExp = stat.baseExp;
+        current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
+        current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
+        current.hp = stat.hp * Mathf.Pow(1.1f, level);
+        current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
+        current.dame = stat.dame * Mathf.Pow(1.1f, level);
+        current.attackRange = stat.attackRange;
+        current.visionRange = stat.visionRange;
+        current.attackCountDown = stat.attackCountDown;
+    }
+
     void Update() {
         if (!isLocalPlayer || !NetworkSystem.isPlaying)
             return;
 
         if (isRunning) {
-            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical)*SPEED*1.5f;
+            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED * 1.5f;
         } else {
             rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED;
         }
@@ -275,7 +300,7 @@ public class Player : NetworkBehaviour {
             SetVisible(true);
         } else {
             GetComponent<MySyncPosition>().puppet.SetVisible(true);
-            currentStat.hp = 500f;
+            current.hp = current.maxhp;
         }
     }
 
@@ -290,30 +315,33 @@ public class Player : NetworkBehaviour {
         GetComponent<OrderFixer>().layer2 = new SpriteRenderer[] { go.transform.GetChild(0).GetComponent<SpriteRenderer>() };
     }
 
-    /// <summary>
-    /// only call from local player
-    /// </summary>
-    /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Bullet")) {
             HitParam hit = collision.GetComponent<Bullet>().hitParam;
-
-            Rigidbody2D body = rb2d;
-
-            if (!isLocalPlayer) {
-                body = GetComponent<MySyncPosition>().puppet.GetComponent<Rigidbody2D>();
-            }
-
-            if (hit.direction == "right") {
-                body.AddForce(new Vector2(hit.forceBack * 5, 0));
-            } else {
-                body.AddForce(new Vector2(-hit.forceBack * 5, 0));
-            }
-
-            currentStat.hp -= hit.dame;
-            if (currentStat.hp < 0) {
-                playerCommand.Die();
-            }
+            GetHit(hit);
         }
+    }
+
+    public void GetHit(HitParam hit){
+        Rigidbody2D body = rb2d;
+
+        if (!isLocalPlayer) {
+            body = GetComponent<MySyncPosition>().puppet.GetComponent<Rigidbody2D>();
+        }
+
+        if (hit.direction == "right") {
+            body.AddForce(new Vector2(hit.forceBack * 5, 0));
+        } else {
+            body.AddForce(new Vector2(-hit.forceBack * 5, 0));
+        }
+
+        current.hp -= hit.dame;
+
+        if (current.hp < 0) {
+            current.hp = 0;
+            playerCommand.Die();
+        }
+
+        hpValue.transform.localScale = new Vector3((current.hp / current.maxhp), 1);
     }
 }

@@ -68,17 +68,13 @@ public class MovementExecutor : MonoBehaviour {
     }
 
     public void CheckChangeMovement() {
-        //if (!changingState) {
-        //    return;
-        //}
-
         if (moveIndex == -1 || Time.time > nextMovement) {
             moveIndex++;
             if (moveIndex >= movements.Count) {
                 moveIndex = 0;
             }
             state = movements[moveIndex];
-            nextMovement = Time.time + durations[moveIndex];
+            nextMovement = Time.time + durations[moveIndex] * UnityEngine.Random.Range(0.75f,1.25f);
         }
     }
 
@@ -181,4 +177,5 @@ public class MovementExecutor : MonoBehaviour {
     //    Update();
     //}
 }
+
 

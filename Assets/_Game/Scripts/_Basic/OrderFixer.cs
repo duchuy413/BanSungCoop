@@ -13,7 +13,7 @@ public class OrderFixer : MonoBehaviour
     public SpriteRenderer[] layer3;
 
     private float UPDATE_RATE = 0.1f;
-    private int DEPTH = 100;
+    private int DEPTH = 10;
     private int PLAYER_FIX = 3;
 
     float count;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameSystem : MonoBehaviour
@@ -74,7 +75,13 @@ public class GameSystem : MonoBehaviour
         return vectorToTarget;
     }
 
-    public void FindEnemy() {
-
+    public static void TextFly(string text, Vector3 pos, string color = "red") {
+        GameObject flyingtext = GameSystem.LoadPool("textdame",pos);
+        flyingtext.GetComponent<TextMeshPro>().text = text;
+        if (color == "blue") {
+            flyingtext.GetComponent<TextMeshPro>().color = new Color32(0, 0, 255, 255);
+        } else {
+            flyingtext.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
+        }
     }
 }

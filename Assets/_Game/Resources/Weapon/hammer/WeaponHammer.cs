@@ -40,6 +40,7 @@ public class WeaponHammer : MonoBehaviour, IAttack {
         attackTime = weaponStat.attackCountDown * ATTACK_TIME_RATE;
         prepareTime = weaponStat.attackCountDown * PREPARE_TIME_RATE;
         gameObject.transform.localRotation = Quaternion.Euler(0, 0, ROTATE_ORIGINAL);
+        transform.GetComponentInChildren<DameOnContact>().hit = GetHitParam();
     }
 
     public HitParam GetHitParam() {
