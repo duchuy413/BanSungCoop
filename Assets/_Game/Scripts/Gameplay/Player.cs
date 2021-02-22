@@ -22,7 +22,7 @@ public class Player : NetworkBehaviour {
     public TextMeshPro textName;
     public MyNetworkPuppet puppet;
 
-    public int level = 1;
+    public int level = 20;
 
     [HideInInspector]
     public BattleStat current;
@@ -53,6 +53,7 @@ public class Player : NetworkBehaviour {
 
     void Start() {
         //transform.position = NetworkSystem.Instance.SpawnPosition;
+        LoadLevel(20);
 
         playerCommand = GetComponent<PlayerCommand>();
         framesAnimator = GetComponent<FramesAnimator>();
@@ -67,8 +68,6 @@ public class Player : NetworkBehaviour {
         if (isLocalPlayer) {
             LoadWeapon(GameManager.weapon);
         }
-
-        LoadLevel(level);
 
         //currentStat.hp = currentStat.maxhp;
 

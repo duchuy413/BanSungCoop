@@ -23,6 +23,8 @@ public class HouseHeal : MonoBehaviour
                 player.current.hp += healAmount;
                 GameObject flyingtext = GameSystem.LoadPool("textdame", NetworkSystem.player.transform.position + new Vector3(0,1f));
                 flyingtext.GetComponent<TextMeshPro>().text = "+" + Convert.ToInt32(healAmount + 1).ToString();
+
+                Debug.Log("Heall amount: " + healAmount);
             }
         }
     }

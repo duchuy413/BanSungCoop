@@ -45,7 +45,7 @@ public class WeaponHammer : MonoBehaviour, IAttack {
 
     public HitParam GetHitParam() {
         HitParam hit = new HitParam();
-        hit.dame = 20f;
+        hit.dame = player.current.dame;
         hit.direction = player.direction;
         hit.owner = player.gameObject;
         hit.ownerTag = player.tag;

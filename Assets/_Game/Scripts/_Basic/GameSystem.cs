@@ -76,7 +76,7 @@ public class GameSystem : MonoBehaviour
     }
 
     public static void TextFly(string text, Vector3 pos, string color = "red") {
-        GameObject flyingtext = GameSystem.LoadPool("textdame",pos);
+        GameObject flyingtext = GameSystem.LoadPool("textdame",pos + new Vector3(0f,4f));
         flyingtext.GetComponent<TextMeshPro>().text = text;
         if (color == "blue") {
             flyingtext.GetComponent<TextMeshPro>().color = new Color32(0, 0, 255, 255);

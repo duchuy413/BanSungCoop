@@ -170,7 +170,9 @@ public class MobWorf : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(new Vector2(700f, 700f));
         }
 
-        GameSystem.TextFly(current.baseExp.ToString(), transform.position, "blue");
+        LeanTween.delayedCall(1f, () => {
+            GameSystem.TextFly(current.baseExp.ToString(), NetworkSystem.player.transform.position, "blue");
+        });
 
         Invoke("Disappear", 2f);
     }
