@@ -304,6 +304,9 @@ public class Player : NetworkBehaviour {
     }
 
     public void LoadWeapon(string s) {
+        foreach (Transform child in t_hand) {
+            Destroy(child.gameObject);
+        }
         string path = "Weapon/" + s + "/" + s;
         GameObject go = Instantiate(Resources.Load<GameObject>(path), t_hand);
         t_weapon = go.transform;

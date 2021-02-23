@@ -6,19 +6,19 @@ using System;
 using Random = UnityEngine.Random;
 
 public class Gameplay : MonoBehaviour {
-    [System.Serializable]
-    public class MonsterWave {
-        public List<int> numbers;
-        public List<string> mobs;
-        public float time;
-    }
+    //[System.Serializable]
+    //public class MonsterWave {
+    //    public List<int> numbers;
+    //    public List<string> mobs;
+    //    public float time;
+    //}
 
     public static Gameplay Instance;
 
     [Header("SceneSetting \n")]
     public string sceneName;
     public Transform playerStartPosition;
-    public List<MonsterWave> waves;
+    //public List<MonsterWave> waves;
     public List<Transform> mobPositions;
     public GameObject gameplayCam;
 
@@ -26,11 +26,12 @@ public class Gameplay : MonoBehaviour {
     public TextMeshProUGUI txtWaveName;
     public TextMeshProUGUI txtCountDown;
     public GameObject btnSkip;
+    public GameObject popupWeapon;
 
     List<Vector3> pivots = new List<Vector3>();
     List<Vector3> areaPivots = new List<Vector3>();
 
-    MonsterWave currentWave;
+    //MonsterWave currentWave;
     int waveIndex;
     float nextWaveTime = -1f;
 
@@ -56,24 +57,24 @@ public class Gameplay : MonoBehaviour {
         }
     }
 
-    IEnumerator RunGame() {
-        GameManager.isPlaying = true;
+    //IEnumerator RunGame() {
+    //    GameManager.isPlaying = true;
 
-        while (waveIndex < waves.Count) {
-            waveIndex++;
-            currentWave = waves[waveIndex];
-            nextWaveTime = Time.time + currentWave.time;
+    //    while (waveIndex < waves.Count) {
+    //        waveIndex++;
+    //        currentWave = waves[waveIndex];
+    //        nextWaveTime = Time.time + currentWave.time;
 
-            for (int i = 0; i < currentWave.mobs.Count; i++) {
-                for (int j = 0; j < currentWave.numbers[i]; j++) {
-                    string mobName = currentWave.mobs[i];
-                    Vector3 spawnPos = GetRandomMobSpawnPosition();
-                    StartCoroutine(SpawnInRandomTime(mobName, spawnPos));
-                }
-            }
-            yield return new WaitForSeconds(currentWave.time);
-        }
-    }
+    //        for (int i = 0; i < currentWave.mobs.Count; i++) {
+    //            for (int j = 0; j < currentWave.numbers[i]; j++) {
+    //                string mobName = currentWave.mobs[i];
+    //                Vector3 spawnPos = GetRandomMobSpawnPosition();
+    //                StartCoroutine(SpawnInRandomTime(mobName, spawnPos));
+    //            }
+    //        }
+    //        yield return new WaitForSeconds(currentWave.time);
+    //    }
+    //}
 
     private void Update() {
 
@@ -92,10 +93,10 @@ public class Gameplay : MonoBehaviour {
         return mobPositions[rand].position;
     }
 
-    IEnumerator SpawnInRandomTime(string mobName, Vector3 pos) {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(0, currentWave.time / 2));
-        GameSystem.LoadPool(mobName, pos);
-    }
+    //IEnumerator SpawnInRandomTime(string mobName, Vector3 pos) {
+    //    yield return new WaitForSeconds(UnityEngine.Random.Range(0, currentWave.time / 2));
+    //    GameSystem.LoadPool(mobName, pos);
+    //}
 
     public void GenerateWorld() {
         for (int i = 0; i < 100; i++) {
@@ -118,26 +119,6 @@ public class Gameplay : MonoBehaviour {
         for (int i = 0; i < 10; i++) {
             GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
-
-        //for (int i = 0; i < 100; i++) {
-        //    GameSystem.LoadPool("tree", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameSystem.LoadPool("carrot", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //}
-
-        //for (int i = 0; i < 500; i++) {
-        //    GameSystem.LoadPool("grass", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameSystem.LoadPool("grassbig", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //}
-
-        //for (int i = 0; i < 100; i++) {
-        //    GameSystem.LoadPool("Monster/worf/worf", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //}
     }
 
     int NearestAreaPivot(int pivotIndex) {
@@ -148,5 +129,11 @@ public class Gameplay : MonoBehaviour {
             }
         }
         return nearest;
+    }
+
+    public void ShowPopupWeapon() {
+        if (!popupWeapon.activeSelf) {
+            popupWeapon.SetActive(true);
+        }
     }
 }

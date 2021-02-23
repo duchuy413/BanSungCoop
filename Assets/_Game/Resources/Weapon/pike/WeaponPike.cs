@@ -42,13 +42,14 @@ public class WeaponPike : MonoBehaviour, IAttack {
     public void Init(Player player) {
         this.player = player;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponStat.sprite;
+        transform.GetChild(0).GetComponent<DameOnContact>().hit = GetHitParam();
         originalHand = transform.parent.localPosition;
         RETURN_TIME = weaponStat.attackCountDown * RETURN_TIME_SPEED;
     }
 
     public HitParam GetHitParam() {
         HitParam hit = new HitParam();
-        hit.dame = 20f;
+        hit.dame = player.current.dame;
         hit.direction = player.direction;
         hit.owner = player.gameObject;
         hit.ownerTag = player.tag;
