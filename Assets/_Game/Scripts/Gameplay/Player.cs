@@ -321,7 +321,7 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    public void GetHit(HitParam hit){
+    public void GetHit(HitParam hit) {
         Rigidbody2D body = rb2d;
 
         if (!isLocalPlayer) {
@@ -341,6 +341,10 @@ public class Player : NetworkBehaviour {
             playerCommand.Die();
         }
 
+        UpdateHPBar();
+    }
+
+    public void UpdateHPBar() {
         hpValue.transform.localScale = new Vector3((current.hp / current.maxhp), 1);
     }
 }
