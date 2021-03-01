@@ -36,7 +36,9 @@ public class MobWorf : MonoBehaviour
     private float nextAttack = 0f;
     //private Vector3 currentVelocity;
 
-    //private float nextChangeMovement;
+    private float nextChangeMovement;
+    private Vector3 targetFreeMovement;
+
 
     private void Awake() {
         executor = GetComponent<MovementExecutor>();
@@ -107,7 +109,22 @@ public class MobWorf : MonoBehaviour
         }
 
         if (state == MobState.Free) {
-            executor.enabled = true;
+            executor.enabled = false;
+
+            if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
+                nextChangeMovement = Time.time + Random.Range(2f, 5f);
+                targetFreeMovement = movingPivot.position +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.5f);
+            }
+
+            rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed;
+            executor.enabled = false;
+            getHit = false;
+            animator.spritesheet = stat.go;
+
+            if (rb2d.velocity.x > 0)
+                spriteRenderer.flipX = true;
+            else if (rb2d.velocity.x < 0)
+                spriteRenderer.flipX = false;
         }
 
         if (state == MobState.Chasing) {
@@ -148,55 +165,6 @@ public class MobWorf : MonoBehaviour
 
             return;
         }
-
-
-        //if (Vector3.Distance(transform.position, movingPivot.position) > 5f) {
-        //    rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed;
-        //    executor.enabled = false;
-        //    getHit = false;
-        //    animator.spritesheet = stat.go;
-        //    return;
-        //}
-
-        //executor.enabled = true;
-
-        //if (GameSystem.GetPlayerDistance(transform) > stat.visionRange && getHit == false) {
-        //    executor.enabled = true;
-        //} else if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
-        //    executor.enabled = false;
-        //    animator.spritesheet = stat.run;
-
-        //    Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
-        //    //if (!stat.canFly) {
-        //    //    velocity.y = rb2d.velocity.y;
-        //    //}
-
-        //    rb2d.velocity = velocity;
-
-        //    if (velocity.x > 0)
-        //        spriteRenderer.flipX = true;
-        //    else if (velocity.x < 0)
-        //        spriteRenderer.flipX = false;
-        //} else {
-        //    executor.enabled = false;
-        //    animator.spritesheet = stat.attack;
-        //    rb2d.velocity = Vector2.zero;
-
-        //    if (transform.position.x > NetworkSystem.player.transform.position.x)
-        //        spriteRenderer.flipX = false;
-        //    else if (transform.position.x < NetworkSystem.player.transform.position.x)
-        //        spriteRenderer.flipX = true;
-
-        //    if (Time.time > nextAttack) {
-        //        nextAttack = Time.time + stat.attackCountDown;
-        //        HitParam hit = new HitParam {
-        //            targetTags = new List<string> { "Player" },
-        //            dame = current.dame,
-        //        };
-
-        //        NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
-        //    }
-        //}
     }
 
     private void LoadLevel(int level) {
@@ -216,19 +184,27 @@ public class MobWorf : MonoBehaviour
     }
 
     public virtual void GetHit(HitParam hit) {
-        if (hit.targetTags.Contains(gameObject.tag)) {
+        Debug.Log("THIS IS GET HIT, Game Object tags: " + gameObject.tag);
+
+        foreach (var item in hit.targetTags) {
+            Debug.Log(item);
+        }
+
+        if (!hit.targetTags.Contains(gameObject.tag)) {
             return;
         }
 
+        //foreach (var item in hit.targetTags) {
+        //    Debug.Log(item);
+        //}
+        //Debug.Log(hit.targetTags);
+
+        Debug.Log("THIS IS GET HIT");
+
         getHit = true;
-        //Debug.Log(current);
-        //Debug.Log(current.hp);
 
         float dameTake = CalculateDame(hit);
         GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), transform.position);
-
-        //GameObject flyingtext = GameSystem.LoadPool("textdame", textName.transform.position);
-        //flyingtext.GetComponent<TextMeshPro>().text = Convert.ToInt32(dameTake).ToString();
 
         current.hp -= dameTake;
 
