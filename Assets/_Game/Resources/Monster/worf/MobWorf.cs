@@ -95,7 +95,7 @@ public class MobWorf : MonoBehaviour
             }
         }
 
-        if (state == MobState.Attack && (attackTarget.activeSelf == false || attackTarget == null)) {
+        if ((state == MobState.Attack || state == MobState.Chasing) && (attackTarget == null || attackTarget.activeSelf == false)) {
             state = MobState.Returning;
             getHit = false;
             attackTarget = null;

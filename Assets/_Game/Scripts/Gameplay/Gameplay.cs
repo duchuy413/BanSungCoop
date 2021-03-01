@@ -39,6 +39,7 @@ public class Gameplay : MonoBehaviour {
     void Start() {
         StartCoroutine(SpawnPlayerAtStartPosition());
         StartCoroutine(GoldMineGeneratingGold());
+        StartCoroutine(UpdatePetFormation());
         AudioSystem.Instance.PlaySound("Sound/background/gunnytheme", 4);
         AudioSystem.Instance.SetLooping(true, 4);
     }
@@ -57,6 +58,16 @@ public class Gameplay : MonoBehaviour {
         while (true) {
             gold += 7f;
             txtGold.text = gold.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    IEnumerator UpdatePetFormation() {
+        while (true) {
+            for (int i = 0; i < pets.Count; i++) {
+                pets[i].maxMovePivotRange = 5f + (i + 1) * 2;
+                pets[i].minMovePivotRange = 2f + i + 1;
+            }
             yield return new WaitForSeconds(1f);
         }
     }
