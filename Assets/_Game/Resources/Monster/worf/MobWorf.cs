@@ -25,6 +25,7 @@ public class MobWorf : MonoBehaviour
     public int level;
     public TextMeshPro textName;
     public Transform hpValue;
+    public GameObject attackTarget;
 
     private MovementExecutor executor;
     private FramesAnimator animator;
@@ -72,6 +73,7 @@ public class MobWorf : MonoBehaviour
         if (Vector3.Distance(transform.position, movingPivot.position) > maxMovePivotRange) {
             state = MobState.Returning;
             getHit = false;
+            attackTarget = null;
         }
 
         if (state == MobState.Returning) {
@@ -85,12 +87,21 @@ public class MobWorf : MonoBehaviour
             }
         }
 
-        if (getHit && state != MobState.Returning) {
-            if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
+        if (getHit && state != MobState.Returning || attackTarget != null && attackTarget.activeSelf == true) {
+            if (Vector3.Distance(transform.position, attackTarget.transform.position) > stat.attackRange) {
                 state = MobState.Chasing;
             } else {
                 state = MobState.Attack;
             }
+        }
+
+        if (state == MobState.Attack && (attackTarget.activeSelf == false || attackTarget == null)) {
+            state = MobState.Returning;
+            getHit = false;
+            attackTarget = null;
+            //nextChangeMovement = Time.time + Random.Range(2f, 5f);
+            //targetFreeMovement = movingPivot.position + new Vector3(Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
+            //action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
         }
 
         // update base on state
@@ -138,7 +149,7 @@ public class MobWorf : MonoBehaviour
             executor.enabled = false;
             animator.spritesheet = stat.run;
 
-            Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed) * 1.5f;
+            Vector3 velocity = GameSystem.GoToTargetVector(transform.position, attackTarget.transform.position, stat.speed) * 1.5f;
 
             rb2d.velocity = velocity;
 
@@ -155,17 +166,17 @@ public class MobWorf : MonoBehaviour
             animator.spritesheet = stat.attack;
             rb2d.velocity = Vector2.zero;
 
-            if (transform.position.x > NetworkSystem.player.transform.position.x)
+            if (transform.position.x > attackTarget.transform.position.x)
                 spriteRenderer.flipX = false;
-            else if (transform.position.x < NetworkSystem.player.transform.position.x)
+            else if (transform.position.x < attackTarget.transform.position.x)
                 spriteRenderer.flipX = true;
 
             if (Time.time > nextAttack) {
                 nextAttack = Time.time + stat.attackCountDown;
-                HitParam hit = new HitParam {
-                    targetTags = new List<string> { "Player" },
-                    dame = current.dame,
-                };
+                List<string> targetTags = gameObject.tag == "Pet" ? new List<string> { "Monster" } : new List<string> { "Player", "Pet" };
+                HitParam hit = new HitParam();
+                hit.targetTags = targetTags;
+                hit.dame = current.dame;
 
                 NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
             }
@@ -196,6 +207,12 @@ public class MobWorf : MonoBehaviour
         }
 
         getHit = true;
+        attackTarget = hit.owner;
+
+        MonsterSpawner spawner = movingPivot.GetComponent<MonsterSpawner>();
+        if (spawner != null) {
+            Gameplay.Instance.AddAttackTargets(spawner);
+        }
 
         float dameTake = CalculateDame(hit);
         GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), transform.position);

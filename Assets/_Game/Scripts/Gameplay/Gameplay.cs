@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class Gameplay : MonoBehaviour {
     public static Gameplay Instance;
+    public static Dictionary<GameObject, int> indexes;
+
     public static float gold;
     public static float hungry;
 
@@ -23,12 +25,14 @@ public class Gameplay : MonoBehaviour {
 
     List<Vector3> pivots = new List<Vector3>();
     List<Vector3> areaPivots = new List<Vector3>();
+    List<MobWorf> pets;
 
     int petCount = 0;
 
     private void Awake() {
         Instance = this;
-        //waveIndex = -1;
+        indexes = new Dictionary<GameObject, int>();
+        pets = new List<MobWorf>();
         GenerateWorld();
     }
 
@@ -110,8 +114,26 @@ public class Gameplay : MonoBehaviour {
         gold -= 200;
         GameObject go = GameSystem.LoadPool("Monster/worf/worf", NetworkSystem.player.transform.position);
         go.tag = "Pet";
-        go.GetComponent<MobWorf>().movingPivot = NetworkSystem.player.transform;
-        go.GetComponent<MobWorf>().maxMovePivotRange = 10f + petCount*2;
-        go.GetComponent<MobWorf>().minMovePivotRange = 5f + petCount;
+        MobWorf pet = go.GetComponent<MobWorf>();
+        pet.movingPivot = NetworkSystem.player.transform;
+        pet.maxMovePivotRange = 10f + petCount*2;
+        pet.minMovePivotRange = 5f + petCount;
+        pets.Add(pet);
+    }
+
+    public void AddAttackTargets(MonsterSpawner spawner) {
+        for (int i = 0; i < pets.Count; i++) {
+            int rand = Random.Range(0,spawner.monsters.Count);
+            if (pets[i].attackTarget == null || pets[i].attackTarget.activeSelf == false) {
+                pets[i].attackTarget = spawner.monsters[rand].gameObject;
+            }
+        }
+    }
+
+    public int TranslateToIndex(GameObject obj) {
+        if (!indexes.ContainsKey(obj)) {
+            indexes.Add(obj, indexes.Count);
+        }
+        return indexes[obj];
     }
 }
