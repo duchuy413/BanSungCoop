@@ -34,12 +34,13 @@ public class Gameplay : MonoBehaviour {
     List<Vector3> areaPivots = new List<Vector3>();
 
     //MonsterWave currentWave;
-    int waveIndex;
-    float nextWaveTime = -1f;
+    //int waveIndex;
+    //float nextWaveTime = -1f;
+    int petCount = 0;
 
     private void Awake() {
         Instance = this;
-        waveIndex = -1;
+        //waveIndex = -1;
         GenerateWorld();
     }
 
@@ -76,13 +77,13 @@ public class Gameplay : MonoBehaviour {
 
     }
 
-    IEnumerator UpdateCountDown() {
-        while (GameManager.isPlaying) {
-            TimeSpan remain = TimeSpan.FromSeconds((double)(nextWaveTime - Time.time));
-            //txtCountDown.text = remain.ToString(@"mm\:ss");
-            yield return new WaitForSeconds(1f);
-        }
-    }
+    //IEnumerator UpdateCountDown() {
+    //    while (GameManager.isPlaying) {
+    //        TimeSpan remain = TimeSpan.FromSeconds((double)(nextWaveTime - Time.time));
+    //        //txtCountDown.text = remain.ToString(@"mm\:ss");
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //}
 
     public Vector3 GetRandomMobSpawnPosition() {
         int rand = UnityEngine.Random.Range(0, mobPositions.Count);
@@ -134,11 +135,12 @@ public class Gameplay : MonoBehaviour {
     }
 
     public void CreatePet() {
+        petCount++;
         gold -= 200;
         GameObject go = GameSystem.LoadPool("Monster/worf/worf", NetworkSystem.player.transform.position);
         go.tag = "Pet";
         go.GetComponent<MobWorf>().movingPivot = NetworkSystem.player.transform;
-        go.GetComponent<MobWorf>().maxMovePivotRange = 14f;
-        go.GetComponent<MobWorf>().minMovePivotRange = 7f;
+        go.GetComponent<MobWorf>().maxMovePivotRange = 10f + petCount*2;
+        go.GetComponent<MobWorf>().minMovePivotRange = 5f + petCount;
     }
 }
