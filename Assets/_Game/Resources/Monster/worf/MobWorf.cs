@@ -53,7 +53,7 @@ public class MobWorf : MonoBehaviour
 
     public virtual void OnEnable() {
         gameObject.layer = LayerMask.NameToLayer("Monster");
-
+        attackTarget = null;
         died = false;
         getHit = false;
         LoadLevel(level);
@@ -177,8 +177,9 @@ public class MobWorf : MonoBehaviour
                 HitParam hit = new HitParam();
                 hit.targetTags = targetTags;
                 hit.dame = current.dame;
+                hit.owner = gameObject;
 
-                NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
+                attackTarget.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
             }
 
             return;
@@ -206,6 +207,7 @@ public class MobWorf : MonoBehaviour
             return;
         }
 
+        Debug.Log("Get hit from " + hit.owner.name);
         getHit = true;
         attackTarget = hit.owner;
 

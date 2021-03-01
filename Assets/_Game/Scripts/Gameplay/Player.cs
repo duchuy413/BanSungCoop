@@ -331,6 +331,11 @@ public class Player : NetworkBehaviour {
             body = GetComponent<MySyncPosition>().puppet.GetComponent<Rigidbody2D>();
         }
 
+        MonsterSpawner spawner = hit.owner.GetComponent<MobWorf>().movingPivot.GetComponent<MonsterSpawner>();
+        if (spawner != null) {
+            Gameplay.Instance.AddAttackTargets(spawner);
+        }
+
         if (hit.direction == "right") {
             body.AddForce(new Vector2(hit.forceBack * 5, 0));
         } else {
