@@ -18,4 +18,13 @@ public class MonsterSpawner : MonoBehaviour
             monsters.Add(go.GetComponent<MobWorf>());
         }
     }
+
+    public void AddAttackTargets(List<MobWorf> targets) {
+        for (int i = 0; i < monsters.Count; i++) {
+            int rand = Random.Range(0, targets.Count);
+            if (monsters[i].attackTarget == null || monsters[i].attackTarget.activeSelf == false) {
+                monsters[i].attackTarget = targets[rand].gameObject;
+            }
+        }
+    }
 }

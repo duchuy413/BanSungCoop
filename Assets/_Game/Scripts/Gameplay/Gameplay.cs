@@ -13,6 +13,7 @@ public class Gameplay : MonoBehaviour {
     public static float hungry;
 
     public List<Transform> mobPositions;
+    public List<MobWorf> pets;
 
     public string sceneName;
     public Transform playerStartPosition;
@@ -25,7 +26,6 @@ public class Gameplay : MonoBehaviour {
 
     List<Vector3> pivots = new List<Vector3>();
     List<Vector3> areaPivots = new List<Vector3>();
-    List<MobWorf> pets;
 
     int petCount = 0;
 

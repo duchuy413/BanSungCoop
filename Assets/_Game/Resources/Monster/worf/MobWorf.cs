@@ -216,6 +216,13 @@ public class MobWorf : MonoBehaviour
             Gameplay.Instance.AddAttackTargets(spawner);
         }
 
+        if (hit.owner.tag == "Player") {
+            MonsterSpawner spawner1 = movingPivot.GetComponent<MonsterSpawner>();
+            if (spawner1 != null) {
+                spawner1.AddAttackTargets(Gameplay.Instance.pets);
+            }
+        }
+
         float dameTake = CalculateDame(hit);
         GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), transform.position);
 
