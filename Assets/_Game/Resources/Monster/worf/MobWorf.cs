@@ -36,7 +36,6 @@ public class MobWorf : MonoBehaviour
     private bool died;
     private bool getHit = false;
     private float nextAttack = 0f;
-    //private Vector3 currentVelocity;
 
     private float nextChangeMovement;
     private Vector3 targetFreeMovement;
@@ -63,14 +62,13 @@ public class MobWorf : MonoBehaviour
             executor.enabled = true;
             GetComponent<FramesAnimator>().enabled = true;
         }
-        //LeanTween.scale(gameObject, new Vector3(10f, 10f), 3f).setLoopPingPong();
     }
 
     private void Update() {
         if (died)
             return;
 
-        // check state
+        // check change state
         if (Vector3.Distance(transform.position, movingPivot.position) > maxMovePivotRange) {
             state = MobState.Returning;
             getHit = false;
@@ -193,22 +191,9 @@ public class MobWorf : MonoBehaviour
     }
 
     public virtual void GetHit(HitParam hit) {
-        Debug.Log("THIS IS GET HIT, Game Object tags: " + gameObject.tag);
-
-        foreach (var item in hit.targetTags) {
-            Debug.Log(item);
-        }
-
         if (!hit.targetTags.Contains(gameObject.tag)) {
             return;
         }
-
-        //foreach (var item in hit.targetTags) {
-        //    Debug.Log(item);
-        //}
-        //Debug.Log(hit.targetTags);
-
-        Debug.Log("THIS IS GET HIT");
 
         getHit = true;
 

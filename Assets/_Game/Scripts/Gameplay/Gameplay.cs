@@ -6,36 +6,24 @@ using System;
 using Random = UnityEngine.Random;
 
 public class Gameplay : MonoBehaviour {
-    //[System.Serializable]
-    //public class MonsterWave {
-    //    public List<int> numbers;
-    //    public List<string> mobs;
-    //    public float time;
-    //}
-
     public static Gameplay Instance;
     public static float gold;
     public static float hungry;
 
-    [Header("SceneSetting \n")]
+    public List<Transform> mobPositions;
+
     public string sceneName;
     public Transform playerStartPosition;
-    //public List<MonsterWave> waves;
-    public List<Transform> mobPositions;
-    public GameObject gameplayCam;
 
-    [Header("Do not change these var's preferences \n")]
-    public TextMeshProUGUI txtHungry;
-    public TextMeshProUGUI txtGold;
+    public GameObject gameplayCam;
     public GameObject btnSkip;
     public GameObject popupWeapon;
+    public TextMeshProUGUI txtHungry;
+    public TextMeshProUGUI txtGold;
 
     List<Vector3> pivots = new List<Vector3>();
     List<Vector3> areaPivots = new List<Vector3>();
 
-    //MonsterWave currentWave;
-    //int waveIndex;
-    //float nextWaveTime = -1f;
     int petCount = 0;
 
     private void Awake() {
@@ -65,10 +53,6 @@ public class Gameplay : MonoBehaviour {
         while (true) {
             gold += 7f;
             txtGold.text = gold.ToString();
-            //if (NetworkSystem.player != null) {
-            //    NetworkSystem.player.transform.position = playerStartPosition.position;
-            //    break;
-            //}
             yield return new WaitForSeconds(1f);
         }
     }
@@ -77,23 +61,10 @@ public class Gameplay : MonoBehaviour {
 
     }
 
-    //IEnumerator UpdateCountDown() {
-    //    while (GameManager.isPlaying) {
-    //        TimeSpan remain = TimeSpan.FromSeconds((double)(nextWaveTime - Time.time));
-    //        //txtCountDown.text = remain.ToString(@"mm\:ss");
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //}
-
     public Vector3 GetRandomMobSpawnPosition() {
         int rand = UnityEngine.Random.Range(0, mobPositions.Count);
         return mobPositions[rand].position;
     }
-
-    //IEnumerator SpawnInRandomTime(string mobName, Vector3 pos) {
-    //    yield return new WaitForSeconds(UnityEngine.Random.Range(0, currentWave.time / 2));
-    //    GameSystem.LoadPool(mobName, pos);
-    //}
 
     public void GenerateWorld() {
         for (int i = 0; i < 100; i++) {
