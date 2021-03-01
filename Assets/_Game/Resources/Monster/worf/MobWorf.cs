@@ -14,6 +14,8 @@ public enum MobState { Free, Returning, Chasing, Attack }
 public class MobWorf : MonoBehaviour
 {
     public Transform movingPivot;
+    public float maxMovePivotRange = 25f;
+    public float minMovePivotRange = 5f;
 
     public MobState state = MobState.Free;
 
@@ -65,7 +67,7 @@ public class MobWorf : MonoBehaviour
             return;
 
         // check state
-        if (Vector3.Distance(transform.position, movingPivot.position) > 25f) {
+        if (Vector3.Distance(transform.position, movingPivot.position) > maxMovePivotRange) {
             state = MobState.Returning;
             getHit = false;
         }
@@ -75,7 +77,7 @@ public class MobWorf : MonoBehaviour
             if (getHit) {
                 state = MobState.Chasing;
             }
-            else if (Vector3.Distance(transform.position, movingPivot.position) < 5f) {
+            else if (Vector3.Distance(transform.position, movingPivot.position) < minMovePivotRange) {
                 rb2d.velocity = Vector2.zero;
                 state = MobState.Free;
             }
@@ -214,6 +216,10 @@ public class MobWorf : MonoBehaviour
     }
 
     public virtual void GetHit(HitParam hit) {
+        if (hit.targetTags.Contains(gameObject.tag)) {
+            return;
+        }
+
         getHit = true;
         //Debug.Log(current);
         //Debug.Log(current.hp);
