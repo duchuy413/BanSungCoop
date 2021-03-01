@@ -11,7 +11,8 @@ public class MonsterSpawner : MonoBehaviour
     private void Start() {
         for (int i = 0; i < amount; i++) {
             Vector3 pos = transform.position + new Vector3(Random.Range(-followRange, followRange), Random.Range(-followRange, followRange));
-            GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, pos);
+            GameObject go = GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, pos);
+            go.GetComponent<MobWorf>().movingPivot = transform;
         }
     }
 }

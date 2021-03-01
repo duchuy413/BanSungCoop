@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using Random = UnityEngine.Random;
+
+public enum MobState { Free, Returning, Chasing, Attack }
 
 [RequireComponent(typeof(MovementExecutor))]
 [RequireComponent(typeof(FramesAnimator))]
@@ -10,6 +13,10 @@ using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MobWorf : MonoBehaviour
 {
+    public Transform movingPivot;
+
+    public MobState state = MobState.Free;
+
     public CharacterStat stat;
     public int level;
     public TextMeshPro textName;
@@ -25,6 +32,9 @@ public class MobWorf : MonoBehaviour
     private bool died;
     private bool getHit = false;
     private float nextAttack = 0f;
+    //private Vector3 currentVelocity;
+
+    //private float nextChangeMovement;
 
     private void Awake() {
         executor = GetComponent<MovementExecutor>();
@@ -54,16 +64,55 @@ public class MobWorf : MonoBehaviour
         if (died)
             return;
 
-        if (GameSystem.GetPlayerDistance(transform) > stat.visionRange && getHit == false) {
+        // check state
+        if (Vector3.Distance(transform.position, movingPivot.position) > 25f) {
+            state = MobState.Returning;
+            getHit = false;
+        }
+
+        if (state == MobState.Returning) {
+
+            if (getHit) {
+                state = MobState.Chasing;
+            }
+            else if (Vector3.Distance(transform.position, movingPivot.position) < 5f) {
+                rb2d.velocity = Vector2.zero;
+                state = MobState.Free;
+            }
+        }
+
+        if (getHit && state != MobState.Returning) {
+            if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
+                state = MobState.Chasing;
+            } else {
+                state = MobState.Attack;
+            }
+        }
+
+        // update base on state
+        if (state == MobState.Returning) {
+            rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed;
+            executor.enabled = false;
+            getHit = false;
+            animator.spritesheet = stat.go;
+
+            if (rb2d.velocity.x > 0)
+                spriteRenderer.flipX = true;
+            else if (rb2d.velocity.x < 0)
+                spriteRenderer.flipX = false;
+
+            return;
+        }
+
+        if (state == MobState.Free) {
             executor.enabled = true;
-        } else if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
+        }
+
+        if (state == MobState.Chasing) {
             executor.enabled = false;
             animator.spritesheet = stat.run;
 
             Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
-            //if (!stat.canFly) {
-            //    velocity.y = rb2d.velocity.y;
-            //}
 
             rb2d.velocity = velocity;
 
@@ -71,7 +120,11 @@ public class MobWorf : MonoBehaviour
                 spriteRenderer.flipX = true;
             else if (velocity.x < 0)
                 spriteRenderer.flipX = false;
-        } else {
+
+            return;
+        }
+
+        if (state == MobState.Attack) {
             executor.enabled = false;
             animator.spritesheet = stat.attack;
             rb2d.velocity = Vector2.zero;
@@ -90,7 +143,58 @@ public class MobWorf : MonoBehaviour
 
                 NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
             }
+
+            return;
         }
+
+
+        //if (Vector3.Distance(transform.position, movingPivot.position) > 5f) {
+        //    rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed;
+        //    executor.enabled = false;
+        //    getHit = false;
+        //    animator.spritesheet = stat.go;
+        //    return;
+        //}
+
+        //executor.enabled = true;
+
+        //if (GameSystem.GetPlayerDistance(transform) > stat.visionRange && getHit == false) {
+        //    executor.enabled = true;
+        //} else if (GameSystem.GetPlayerDistance(transform) > stat.attackRange) {
+        //    executor.enabled = false;
+        //    animator.spritesheet = stat.run;
+
+        //    Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
+        //    //if (!stat.canFly) {
+        //    //    velocity.y = rb2d.velocity.y;
+        //    //}
+
+        //    rb2d.velocity = velocity;
+
+        //    if (velocity.x > 0)
+        //        spriteRenderer.flipX = true;
+        //    else if (velocity.x < 0)
+        //        spriteRenderer.flipX = false;
+        //} else {
+        //    executor.enabled = false;
+        //    animator.spritesheet = stat.attack;
+        //    rb2d.velocity = Vector2.zero;
+
+        //    if (transform.position.x > NetworkSystem.player.transform.position.x)
+        //        spriteRenderer.flipX = false;
+        //    else if (transform.position.x < NetworkSystem.player.transform.position.x)
+        //        spriteRenderer.flipX = true;
+
+        //    if (Time.time > nextAttack) {
+        //        nextAttack = Time.time + stat.attackCountDown;
+        //        HitParam hit = new HitParam {
+        //            targetTags = new List<string> { "Player" },
+        //            dame = current.dame,
+        //        };
+
+        //        NetworkSystem.player.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
+        //    }
+        //}
     }
 
     private void LoadLevel(int level) {
