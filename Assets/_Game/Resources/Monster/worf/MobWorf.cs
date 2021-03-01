@@ -6,6 +6,7 @@ using System;
 using Random = UnityEngine.Random;
 
 public enum MobState { Free, Returning, Chasing, Attack }
+public enum MobAction { Go, Run }
 
 [RequireComponent(typeof(MovementExecutor))]
 [RequireComponent(typeof(FramesAnimator))]
@@ -18,6 +19,7 @@ public class MobWorf : MonoBehaviour
     public float minMovePivotRange = 5f;
 
     public MobState state = MobState.Free;
+    public MobAction action = MobAction.Go;
 
     public CharacterStat stat;
     public int level;
@@ -95,10 +97,10 @@ public class MobWorf : MonoBehaviour
 
         // update base on state
         if (state == MobState.Returning) {
-            rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed;
+            rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed * 1.5f;
             executor.enabled = false;
             getHit = false;
-            animator.spritesheet = stat.go;
+            animator.spritesheet = stat.run;
 
             if (rb2d.velocity.x > 0)
                 spriteRenderer.flipX = true;
@@ -113,13 +115,20 @@ public class MobWorf : MonoBehaviour
 
             if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
                 nextChangeMovement = Time.time + Random.Range(2f, 5f);
-                targetFreeMovement = movingPivot.position +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.5f);
+                targetFreeMovement = movingPivot.position +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
+                action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
             }
 
-            rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed;
             executor.enabled = false;
             getHit = false;
-            animator.spritesheet = stat.go;
+
+            if (action == MobAction.Go) {
+                rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed;
+                animator.spritesheet = stat.go;
+            } else if (action == MobAction.Run) {
+                rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed * 1.5f;
+                animator.spritesheet = stat.run;
+            }
 
             if (rb2d.velocity.x > 0)
                 spriteRenderer.flipX = true;
@@ -131,7 +140,7 @@ public class MobWorf : MonoBehaviour
             executor.enabled = false;
             animator.spritesheet = stat.run;
 
-            Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed);
+            Vector3 velocity = GameSystem.GoToTargetVector(transform.position, NetworkSystem.player.transform.position, stat.speed) * 1.5f;
 
             rb2d.velocity = velocity;
 

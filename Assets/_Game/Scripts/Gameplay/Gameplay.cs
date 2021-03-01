@@ -138,7 +138,7 @@ public class Gameplay : MonoBehaviour {
         GameObject go = GameSystem.LoadPool("Monster/worf/worf", NetworkSystem.player.transform.position);
         go.tag = "Pet";
         go.GetComponent<MobWorf>().movingPivot = NetworkSystem.player.transform;
-        go.GetComponent<MobWorf>().maxMovePivotRange = 12f;
-        go.GetComponent<MobWorf>().minMovePivotRange = 3f;
+        go.GetComponent<MobWorf>().maxMovePivotRange = 14f;
+        go.GetComponent<MobWorf>().minMovePivotRange = 7f;
     }
 }
