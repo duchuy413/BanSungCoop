@@ -14,6 +14,8 @@ public class Gameplay : MonoBehaviour {
     //}
 
     public static Gameplay Instance;
+    public static float gold;
+    public static float hungry;
 
     [Header("SceneSetting \n")]
     public string sceneName;
@@ -23,8 +25,8 @@ public class Gameplay : MonoBehaviour {
     public GameObject gameplayCam;
 
     [Header("Do not change these var's preferences \n")]
-    public TextMeshProUGUI txtWaveName;
-    public TextMeshProUGUI txtCountDown;
+    public TextMeshProUGUI txtHungry;
+    public TextMeshProUGUI txtGold;
     public GameObject btnSkip;
     public GameObject popupWeapon;
 
@@ -43,6 +45,7 @@ public class Gameplay : MonoBehaviour {
 
     void Start() {
         StartCoroutine(SpawnPlayerAtStartPosition());
+        StartCoroutine(GoldMineGeneratingGold());
         AudioSystem.Instance.PlaySound("Sound/background/gunnytheme", 4);
         AudioSystem.Instance.SetLooping(true, 4);
     }
@@ -57,24 +60,17 @@ public class Gameplay : MonoBehaviour {
         }
     }
 
-    //IEnumerator RunGame() {
-    //    GameManager.isPlaying = true;
-
-    //    while (waveIndex < waves.Count) {
-    //        waveIndex++;
-    //        currentWave = waves[waveIndex];
-    //        nextWaveTime = Time.time + currentWave.time;
-
-    //        for (int i = 0; i < currentWave.mobs.Count; i++) {
-    //            for (int j = 0; j < currentWave.numbers[i]; j++) {
-    //                string mobName = currentWave.mobs[i];
-    //                Vector3 spawnPos = GetRandomMobSpawnPosition();
-    //                StartCoroutine(SpawnInRandomTime(mobName, spawnPos));
-    //            }
-    //        }
-    //        yield return new WaitForSeconds(currentWave.time);
-    //    }
-    //}
+    IEnumerator GoldMineGeneratingGold() {
+        while (true) {
+            gold += 7f;
+            txtGold.text = gold.ToString();
+            //if (NetworkSystem.player != null) {
+            //    NetworkSystem.player.transform.position = playerStartPosition.position;
+            //    break;
+            //}
+            yield return new WaitForSeconds(1f);
+        }
+    }
 
     private void Update() {
 
@@ -83,7 +79,7 @@ public class Gameplay : MonoBehaviour {
     IEnumerator UpdateCountDown() {
         while (GameManager.isPlaying) {
             TimeSpan remain = TimeSpan.FromSeconds((double)(nextWaveTime - Time.time));
-            txtCountDown.text = remain.ToString(@"mm\:ss");
+            //txtCountDown.text = remain.ToString(@"mm\:ss");
             yield return new WaitForSeconds(1f);
         }
     }
