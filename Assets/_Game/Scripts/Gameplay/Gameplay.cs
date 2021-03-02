@@ -13,7 +13,7 @@ public class Gameplay : MonoBehaviour {
     public static float hungry;
 
     public List<Transform> mobPositions;
-    public List<MobWorf> pets;
+    public List<IMob> pets;
     public List<GameObject> worldObjs;
 
     public string sceneName;
@@ -33,7 +33,7 @@ public class Gameplay : MonoBehaviour {
     private void Awake() {
         Instance = this;
         indexes = new Dictionary<GameObject, int>();
-        pets = new List<MobWorf>();
+        pets = new List<IMob>();
         GenerateWorld();
     }
 
@@ -66,8 +66,9 @@ public class Gameplay : MonoBehaviour {
     IEnumerator UpdatePetFormation() {
         while (true) {
             for (int i = 0; i < pets.Count; i++) {
-                pets[i].maxMovePivotRange = 5f + (i + 1) * 2;
-                pets[i].minMovePivotRange = 2f + i + 1;
+                pets[i].SetFollowDistance(3f + i, 7f + i * 2);
+                //pets[i].maxMovePivotRange = 
+                //pets[i].minMovePivotRange = 
             }
             yield return new WaitForSeconds(1f);
         }
@@ -136,12 +137,15 @@ public class Gameplay : MonoBehaviour {
         pets.Add(pet);
     }
 
-    public void AddAttackTargets(MonsterSpawner spawner) {
+    public void AddAttackTargets(List<IMob> targets) {
         for (int i = 0; i < pets.Count; i++) {
-            int rand = Random.Range(0,spawner.monsters.Count);
-            if (pets[i].attackTarget == null || pets[i].attackTarget.activeSelf == false) {
-                pets[i].attackTarget = spawner.monsters[rand].gameObject;
-            }
+            int rand = Random.Range(0, targets.Count);
+            //pets[i].SetAttackTarget()
+            pets[i].SetAttackTarget(targets[rand].GetGameObject());
+
+            //if (pets[i].attackTarget == null || pets[i].attackTarget.activeSelf == false) {
+            //    pets[i].attackTarget = spawner.monsters[rand].gameObject;
+            //}
         }
     }
 

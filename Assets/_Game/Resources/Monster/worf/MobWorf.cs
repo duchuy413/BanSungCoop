@@ -12,8 +12,7 @@ public enum MobAction { Go, Run }
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class MobWorf : MonoBehaviour, IMob
-{
+public class MobWorf : MonoBehaviour, IMob {
     public Transform movingPivot;
     public float maxMovePivotRange = 25f;
     public float minMovePivotRange = 5f;
@@ -221,7 +220,7 @@ public class MobWorf : MonoBehaviour, IMob
 
         MonsterSpawner spawner = movingPivot.GetComponent<MonsterSpawner>();
         if (spawner != null) {
-            Gameplay.Instance.AddAttackTargets(spawner);
+            Gameplay.Instance.AddAttackTargets(spawner.monsters);
         }
 
         if (hit.owner.tag == "Player" && Gameplay.Instance.pets.Count > 0) {
@@ -300,5 +299,26 @@ public class MobWorf : MonoBehaviour, IMob
         if (dame != null && dame.hit.targetTags.Contains(gameObject.tag)) {
             GetHit(dame.hit);
         }
+    }
+
+    public GameObject GetGameObject() {
+        return gameObject;
+    }
+
+    public void SetAttackTarget(GameObject attackTarget, bool forceChangeTarget = false) {
+        if (this.attackTarget != null && !forceChangeTarget) {
+            return;
+        }
+
+        if (attackTarget == null || attackTarget.activeSelf == false) {
+            return;
+        }
+
+        this.attackTarget = attackTarget;
+    }
+
+    public void SetFollowDistance(float minDistance, float maxDistance) {
+        this.minMovePivotRange = minDistance;
+        this.maxMovePivotRange = maxDistance;
     }
 }

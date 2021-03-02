@@ -20,7 +20,7 @@ public class GoldMine : MonoBehaviour
         if (!isCaptured) {
             bool monsterAlive = false;
             for (int i = 0; i < spawner.monsters.Count; i++) {
-                if (spawner.monsters[i].gameObject.activeSelf == true) {
+                if (spawner.monsters[i].GetGameObject().activeSelf == true) {
                     monsterAlive = true;
                 }
             }

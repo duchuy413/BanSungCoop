@@ -7,7 +7,7 @@ public class MonsterSpawner : MonoBehaviour
     public string monsterName;
     public int amount;
     public float followRange;
-    public List<MobWorf> monsters;
+    public List<IMob> monsters;
     //public bool attackMode = false;
 
     private void Start() {
@@ -19,12 +19,14 @@ public class MonsterSpawner : MonoBehaviour
         }
     }
 
-    public void AddAttackTargets(List<MobWorf> targets) {
+    public void AddAttackTargets(List<IMob> targets) {
         for (int i = 0; i < monsters.Count; i++) {
             int rand = Random.Range(0, targets.Count);
-            if (monsters[i].attackTarget == null || monsters[i].attackTarget.activeSelf == false) {
-                monsters[i].attackTarget = targets[rand].gameObject;
-            }
+            monsters[i].SetAttackTarget(targets[rand].GetGameObject());
+
+            //if (monsters[i].attackTarget == null || monsters[i].attackTarget.activeSelf == false) {
+            //    monsters[i].attackTarget = ;
+            //}
         }
     }
 }

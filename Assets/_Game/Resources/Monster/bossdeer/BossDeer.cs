@@ -17,6 +17,7 @@ public class BossDeer : MonoBehaviour, IMob
     Vector3 targetPos;
     float nextChangePos = 0; 
     private BattleStat current;
+    GameObject attackTarget;
 
     //private void Start() {
     //    LoadLevel(10);
@@ -57,6 +58,8 @@ public class BossDeer : MonoBehaviour, IMob
         //        spawner1.AddAttackTargets(Gameplay.Instance.pets);
         //    }
         //}
+
+        Gameplay.Instance.AddAttackTargets(new List<IMob> { this });
 
         float dameTake = hit.dame;
         GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), transform.position + new Vector3(0,3f));
@@ -119,4 +122,26 @@ public class BossDeer : MonoBehaviour, IMob
             GetHit(dame.hit);
         }
     }
+
+    public GameObject GetGameObject() {
+        return gameObject;
+    }
+
+    public void SetAttackTarget(GameObject attackTarget, bool forceChangeTarget = false) {
+        if (this.attackTarget != null && !forceChangeTarget) {
+            return;
+        }
+
+        if (attackTarget == null || attackTarget.activeSelf == false) {
+            return;
+        }
+
+        this.attackTarget = attackTarget;
+    }
+
+    public void SetFollowDistance(float minDistance, float maxDistance) {
+        //this.minMovePivotRange = minDistance;
+        //this.maxMovePivotRange = maxDistance;
+    }
+
 }

@@ -335,7 +335,7 @@ public class Player : NetworkBehaviour {
 
         MonsterSpawner spawner = hit.owner.GetComponent<MobWorf>().movingPivot.GetComponent<MonsterSpawner>();
         if (spawner != null) {
-            Gameplay.Instance.AddAttackTargets(spawner);
+            Gameplay.Instance.AddAttackTargets(spawner.monsters);
         }
 
         if (hit.direction == "right") {
