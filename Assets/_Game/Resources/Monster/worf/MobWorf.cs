@@ -12,7 +12,7 @@ public enum MobAction { Go, Run }
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class MobWorf : MonoBehaviour
+public class MobWorf : MonoBehaviour, IMob
 {
     public Transform movingPivot;
     public float maxMovePivotRange = 25f;
@@ -186,7 +186,15 @@ public class MobWorf : MonoBehaviour
         }
     }
 
-    private void LoadLevel(int level) {
+    public CharacterStat GetStatData() {
+        return stat;
+    }
+
+    public void SetStatData(CharacterStat stat) {
+        this.stat = stat;
+    }
+
+    public void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
         current = new BattleStat();
