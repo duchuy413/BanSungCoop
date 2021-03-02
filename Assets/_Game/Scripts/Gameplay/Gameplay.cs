@@ -66,7 +66,7 @@ public class Gameplay : MonoBehaviour {
     IEnumerator UpdatePetFormation() {
         while (true) {
             for (int i = 0; i < pets.Count; i++) {
-                pets[i].SetFollowDistance(3f + i, 7f + i * 2);
+                pets[i].SetFollow(NetworkSystem.player.transform, 3f + i, 7f + i * 2);
                 //pets[i].maxMovePivotRange = 
                 //pets[i].minMovePivotRange = 
             }

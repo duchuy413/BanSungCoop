@@ -139,7 +139,7 @@ public class BossDeer : MonoBehaviour, IMob
         this.attackTarget = attackTarget;
     }
 
-    public void SetFollowDistance(float minDistance, float maxDistance) {
+    public void SetFollow(Transform pivot, float minDistance, float maxDistance) {
         //this.minMovePivotRange = minDistance;
         //this.maxMovePivotRange = maxDistance;
     }

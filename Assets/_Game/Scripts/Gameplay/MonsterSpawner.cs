@@ -11,11 +11,12 @@ public class MonsterSpawner : MonoBehaviour
     //public bool attackMode = false;
 
     private void Start() {
+        monsters = new List<IMob>();
         for (int i = 0; i < amount; i++) {
             Vector3 pos = transform.position + new Vector3(Random.Range(-followRange, followRange), Random.Range(-followRange, followRange));
             GameObject go = GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, pos);
-            go.GetComponent<MobWorf>().movingPivot = transform;
-            monsters.Add(go.GetComponent<MobWorf>());
+            go.GetComponent<IMob>().SetFollow(transform, followRange * 0.5f, followRange);
+            monsters.Add(go.GetComponent<IMob>());
         }
     }
 
@@ -23,10 +24,6 @@ public class MonsterSpawner : MonoBehaviour
         for (int i = 0; i < monsters.Count; i++) {
             int rand = Random.Range(0, targets.Count);
             monsters[i].SetAttackTarget(targets[rand].GetGameObject());
-
-            //if (monsters[i].attackTarget == null || monsters[i].attackTarget.activeSelf == false) {
-            //    monsters[i].attackTarget = ;
-            //}
         }
     }
 }

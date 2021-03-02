@@ -12,5 +12,5 @@ public interface IMob
     void ApplyDame(GameObject target);
     void Died(HitParam hitParam);
     void SetAttackTarget(GameObject attackTarget, bool forceChangeTarget = false);
-    void SetFollowDistance(float minDistance, float maxDistance);
+    void SetFollow(Transform pivot, float minDistance, float maxDistance);
 }
