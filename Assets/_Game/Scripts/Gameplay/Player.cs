@@ -119,10 +119,12 @@ public class Player : NetworkBehaviour {
         if (!isLocalPlayer || !NetworkSystem.isPlaying)
             return;
 
+        Vector3 moveDirection = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical).normalized;
+
         if (isRunning) {
-            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED * 1.5f;
+            rb2d.velocity = moveDirection * SPEED * 1.5f;
         } else {
-            rb2d.velocity = new Vector3(Joystick.Instance.Horizontal, Joystick.Instance.Vertical) * SPEED;
+            rb2d.velocity = moveDirection * SPEED;
         }
 
         if (Joystick.Instance.Horizontal > 0 || Input.GetKeyDown(KeyCode.RightArrow)) {

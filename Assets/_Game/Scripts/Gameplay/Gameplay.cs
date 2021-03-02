@@ -14,6 +14,7 @@ public class Gameplay : MonoBehaviour {
 
     public List<Transform> mobPositions;
     public List<MobWorf> pets;
+    public List<GameObject> worldObjs;
 
     public string sceneName;
     public Transform playerStartPosition;
@@ -82,6 +83,8 @@ public class Gameplay : MonoBehaviour {
     }
 
     public void GenerateWorld() {
+        worldObjs = new List<GameObject>();
+
         for (int i = 0; i < 1000; i++) {
             pivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
@@ -93,9 +96,9 @@ public class Gameplay : MonoBehaviour {
         for (int i = 0; i < pivots.Count; i++) {
             int nearest = NearestAreaPivot(i);
             if (nearest < 5) {
-                GameSystem.LoadPool("tree", pivots[i]);
+                worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
             } else {
-                GameSystem.LoadPool("grass", pivots[i]);
+                worldObjs.Add(GameSystem.LoadPool("grass", pivots[i]));
             }
         }
 

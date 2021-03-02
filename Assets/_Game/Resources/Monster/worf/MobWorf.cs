@@ -216,7 +216,7 @@ public class MobWorf : MonoBehaviour
             Gameplay.Instance.AddAttackTargets(spawner);
         }
 
-        if (hit.owner.tag == "Player") {
+        if (hit.owner.tag == "Player" && Gameplay.Instance.pets.Count > 0) {
             MonsterSpawner spawner1 = movingPivot.GetComponent<MonsterSpawner>();
             if (spawner1 != null) {
                 spawner1.AddAttackTargets(Gameplay.Instance.pets);
