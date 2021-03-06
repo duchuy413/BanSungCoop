@@ -106,6 +106,10 @@ public class Gameplay : MonoBehaviour {
         for (int i = 0; i < 10; i++) {
             GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
+
+        for (int i = 0; i < 100; i++) {
+            GameSystem.LoadPool("Monster/snail/snail", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
     }
 
     int NearestAreaPivot(int pivotIndex) {
