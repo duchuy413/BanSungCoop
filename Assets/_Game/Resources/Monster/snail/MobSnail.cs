@@ -12,18 +12,20 @@ public class MobSnail : MonoBehaviour, IMob {
     public CharacterStat stat;
     public Transform hpValue;
     public TextMeshPro textName;
+    public int level = 1;
 
     Vector3 targetPos;
     float nextChangePos = 0;
     private BattleStat current;
     GameObject attackTarget;
 
+
     //private void Start() {
     //    LoadLevel(10);
     //}
 
     private void OnEnable() {
-        LoadLevel(10);
+        LoadLevel(level);
     }
 
     void Update() {

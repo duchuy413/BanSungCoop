@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static float MAP_SIZE = 100f;
     public static bool isPlaying = false;
     public static string sceneName = "WorldRandom";
-    public static string weapon = "hammer";
+    public static string weapon = "pike";
     public static Vector3 startPosition = new Vector3(0, 0);
 
     public GameObject mainUICamera;

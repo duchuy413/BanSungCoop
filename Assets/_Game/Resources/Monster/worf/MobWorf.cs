@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public enum MobState { Free, Returning, Chasing, Attack }
 public enum MobAction { Go, Run }
 
-[RequireComponent(typeof(MovementExecutor))]
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -26,7 +25,7 @@ public class MobWorf : MonoBehaviour, IMob {
     public Transform hpValue;
     public GameObject attackTarget;
 
-    private MovementExecutor executor;
+    //private MovementExecutor executor;
     private FramesAnimator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
@@ -42,7 +41,7 @@ public class MobWorf : MonoBehaviour, IMob {
 
 
     private void Awake() {
-        executor = GetComponent<MovementExecutor>();
+        //executor = GetComponent<MovementExecutor>();
         animator = GetComponent<FramesAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,11 +56,11 @@ public class MobWorf : MonoBehaviour, IMob {
         getHit = false;
         LoadLevel(level);
 
-        executor = GetComponent<MovementExecutor>();
-        if (executor != null) {
-            executor.enabled = true;
-            GetComponent<FramesAnimator>().enabled = true;
-        }
+        //executor = GetComponent<MovementExecutor>();
+        //if (executor != null) {
+        //    executor.enabled = true;
+        //    GetComponent<FramesAnimator>().enabled = true;
+        //}
     }
 
     private void Update() {
@@ -106,7 +105,7 @@ public class MobWorf : MonoBehaviour, IMob {
         // update base on state
         if (state == MobState.Returning) {
             rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed * 1.5f;
-            executor.enabled = false;
+            //executor.enabled = false;
             getHit = false;
             animator.spritesheet = stat.run;
 
@@ -119,7 +118,7 @@ public class MobWorf : MonoBehaviour, IMob {
         }
 
         if (state == MobState.Free) {
-            executor.enabled = false;
+            //executor.enabled = false;
 
             if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
                 nextChangeMovement = Time.time + Random.Range(2f, 5f);
@@ -127,7 +126,7 @@ public class MobWorf : MonoBehaviour, IMob {
                 action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
             }
 
-            executor.enabled = false;
+            //executor.enabled = false;
             getHit = false;
 
             if (action == MobAction.Go) {
@@ -145,7 +144,7 @@ public class MobWorf : MonoBehaviour, IMob {
         }
 
         if (state == MobState.Chasing) {
-            executor.enabled = false;
+            //executor.enabled = false;
             animator.spritesheet = stat.run;
 
             Vector3 velocity = GameSystem.GoToTargetVector(transform.position, attackTarget.transform.position, stat.speed) * 1.5f;
@@ -161,7 +160,7 @@ public class MobWorf : MonoBehaviour, IMob {
         }
 
         if (state == MobState.Attack) {
-            executor.enabled = false;
+            //executor.enabled = false;
             animator.spritesheet = stat.attack;
             rb2d.velocity = Vector2.zero;
 
@@ -247,13 +246,13 @@ public class MobWorf : MonoBehaviour, IMob {
     }
 
     IEnumerator PauseMovement(float sec) {
-        executor.enabled = false;
+        //executor.enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         yield return new WaitForSeconds(sec);
 
-        if (!died) {
-            executor.enabled = true;
-        }
+        //if (!died) {
+        //    executor.enabled = true;
+        //}
     }
 
     public float CalculateDame(HitParam hit) {
@@ -271,9 +270,9 @@ public class MobWorf : MonoBehaviour, IMob {
 
     public void Died(HitParam hitParam) {
         died = true;
-        executor.enabled = false;
+        //executor.enabled = false;
         gameObject.layer = LayerMask.NameToLayer("OnlyCollisionGround");
-        GetComponent<MovementExecutor>().enabled = false;
+        //GetComponent<MovementExecutor>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<FramesAnimator>().spritesheet = stat.die;
 

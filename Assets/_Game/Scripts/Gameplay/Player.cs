@@ -22,7 +22,7 @@ public class Player : NetworkBehaviour {
     public TextMeshPro textName;
     public MyNetworkPuppet puppet;
 
-    public int level = 20;
+    public int level = 1;
 
     [HideInInspector]
     public BattleStat current;
@@ -53,7 +53,7 @@ public class Player : NetworkBehaviour {
 
     void Start() {
         //transform.position = NetworkSystem.Instance.SpawnPosition;
-        LoadLevel(20);
+        LoadLevel(level);
 
         playerCommand = GetComponent<PlayerCommand>();
         framesAnimator = GetComponent<FramesAnimator>();
