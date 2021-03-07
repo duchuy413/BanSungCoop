@@ -86,17 +86,19 @@ public class MobSnail : MonoBehaviour, IMob {
     public void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
-        current = new BattleStat();
-        current.speed = stat.speed;
-        current.baseExp = stat.baseExp;
-        current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
-        current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
-        current.hp = stat.hp * Mathf.Pow(1.1f, level);
-        current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
-        current.dame = stat.dame * Mathf.Pow(1.1f, level);
-        current.attackRange = stat.attackRange;
-        current.visionRange = stat.visionRange;
-        current.attackCountDown = stat.attackCountDown;
+        current = GameSystem.LoadLevel(stat, level);
+        //current = new BattleStat();
+        //current.speed = stat.speed;
+        //current.baseExp = stat.baseExp;
+        //current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
+        //current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
+        //current.expGainWhenKill = stat.expGainWhenKill * Mathf.Pow(1.1f, level);
+        //current.hp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.dame = stat.dame * Mathf.Pow(1.1f, level);
+        //current.attackRange = stat.attackRange;
+        //current.visionRange = stat.visionRange;
+        //current.attackCountDown = stat.attackCountDown;
         hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
     }
 
@@ -115,6 +117,10 @@ public class MobSnail : MonoBehaviour, IMob {
 
     public void Died(HitParam hitParam) {
         gameObject.SetActive(false);
+        if (gameObject.CompareTag("Monster")) {
+            NetworkSystem.player.GetComponent<Player>().AddExp(current.expGainWhenKill);
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

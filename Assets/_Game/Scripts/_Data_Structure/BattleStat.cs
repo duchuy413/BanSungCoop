@@ -7,6 +7,7 @@ public class BattleStat
     public float speed = 4f;
     public float baseExp = 200;
     public float currentExp = 0;
+    public float expGainWhenKill = 42f;
     public float nextLvlExp = 0;
     public float hp = 200;
     public float maxhp = 200;

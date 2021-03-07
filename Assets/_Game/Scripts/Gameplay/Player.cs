@@ -102,17 +102,18 @@ public class Player : NetworkBehaviour {
     private void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
-        current = new BattleStat();
-        current.speed = stat.speed;
-        current.baseExp = stat.baseExp;
-        current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
-        current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
-        current.hp = stat.hp * Mathf.Pow(1.1f, level);
-        current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
-        current.dame = stat.dame * Mathf.Pow(1.1f, level);
-        current.attackRange = stat.attackRange;
-        current.visionRange = stat.visionRange;
-        current.attackCountDown = stat.attackCountDown;
+        current = GameSystem.LoadLevel(stat, level);
+        //current = new BattleStat();
+        //current.speed = stat.speed;
+        //current.baseExp = stat.baseExp;
+        //current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
+        //current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
+        //current.hp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.dame = stat.dame * Mathf.Pow(1.1f, level);
+        //current.attackRange = stat.attackRange;
+        //current.visionRange = stat.visionRange;
+        //current.attackCountDown = stat.attackCountDown;
     }
 
     void Update() {
@@ -356,5 +357,18 @@ public class Player : NetworkBehaviour {
 
     public void UpdateHPBar() {
         hpValue.transform.localScale = new Vector3((current.hp / current.maxhp), 1);
+    }
+
+    public void AddExp(float exp) {
+        current.currentExp += exp;
+        if (current.currentExp > current.nextLvlExp) {
+            level++;
+            LoadLevel(level);
+            LeanTween.delayedCall(2f, () => {
+                GameSystem.TextFly("Level Up", transform.position + new Vector3(0, 1f), "blue");
+            });        
+        }
+        //textName.text = current.currentExp + "/" + current.nextLvlExp;
+        GameSystem.TextFly("+" + (int)exp + "exp", transform.position + new Vector3(0, 1f), "blue");
     }
 }

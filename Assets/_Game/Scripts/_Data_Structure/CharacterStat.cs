@@ -79,6 +79,7 @@ public class CharacterStat : ScriptableObject
     public float baseExp = 200;
     public float currentExp = 0;
     public float nextLvlExp = 0;
+    public float expGainWhenKill = 42;
     public float hp = 200;
     public float maxhp = 200;
     public float dame = 20;

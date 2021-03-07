@@ -44,6 +44,26 @@ public class GameSystem : MonoBehaviour
         return copy;
     }
 
+    public static BattleStat LoadLevel(CharacterStat stat, int level) {
+        BattleStat current = new BattleStat();
+
+        current = new BattleStat();
+        current.speed = stat.speed;
+        current.baseExp = stat.baseExp;
+        //current.currentExp = stat.baseExp * Mathf.Pow(1.2f, level);
+        current.currentExp = 0;
+        current.nextLvlExp = stat.baseExp * Mathf.Pow(1.2f, level + 1);
+        current.expGainWhenKill = stat.expGainWhenKill * Mathf.Pow(1.1f, level);
+        current.hp = stat.hp * Mathf.Pow(1.1f, level);
+        current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
+        current.dame = stat.dame * Mathf.Pow(1.1f, level);
+        current.attackRange = stat.attackRange;
+        current.visionRange = stat.visionRange;
+        current.attackCountDown = stat.attackCountDown;
+
+        return current;
+    }
+
     public static double GetCurrentTimeStamp() {
         var epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc);
         var timestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;

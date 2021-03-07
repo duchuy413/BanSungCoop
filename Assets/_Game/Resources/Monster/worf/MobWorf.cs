@@ -195,17 +195,18 @@ public class MobWorf : MonoBehaviour, IMob {
     public void LoadLevel(int level) {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
-        current = new BattleStat();
-        current.speed = stat.speed;
-        current.baseExp = stat.baseExp;
-        current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
-        current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
-        current.hp = stat.hp * Mathf.Pow(1.1f, level);
-        current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
-        current.dame = stat.dame * Mathf.Pow(1.1f, level);
-        current.attackRange = stat.attackRange;
-        current.visionRange = stat.visionRange;
-        current.attackCountDown = stat.attackCountDown;
+        current = GameSystem.LoadLevel(stat, level);
+        //current = new BattleStat();
+        //current.speed = stat.speed;
+        //current.baseExp = stat.baseExp;
+        //current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
+        //current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
+        //current.hp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
+        //current.dame = stat.dame * Mathf.Pow(1.1f, level);
+        //current.attackRange = stat.attackRange;
+        //current.visionRange = stat.visionRange;
+        //current.attackCountDown = stat.attackCountDown;
     }
 
     public virtual void GetHit(HitParam hit) {
@@ -285,6 +286,10 @@ public class MobWorf : MonoBehaviour, IMob {
         LeanTween.delayedCall(1f, () => {
             GameSystem.TextFly(current.baseExp.ToString(), NetworkSystem.player.transform.position, "blue");
         });
+
+        if (gameObject.CompareTag("Monster")) {
+            NetworkSystem.player.GetComponent<Player>().AddExp(current.currentExp);
+        }
 
         Invoke("Disappear", 2f);
     }
