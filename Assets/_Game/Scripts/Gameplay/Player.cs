@@ -199,6 +199,8 @@ public class Player : NetworkBehaviour {
         } else {
             transform.localScale = new Vector3(-scale, scale);
         }
+
+        Debug.Log("PLAYER CURRENT DAME: " + current.dame);
     }
 
     public void Jump() {
@@ -364,6 +366,7 @@ public class Player : NetworkBehaviour {
         if (current.currentExp > current.nextLvlExp) {
             level++;
             LoadLevel(level);
+            weapon.UpdateStat(this);
             LeanTween.delayedCall(2f, () => {
                 GameSystem.TextFly("Level Up", transform.position + new Vector3(0, 1f), "blue");
             });        

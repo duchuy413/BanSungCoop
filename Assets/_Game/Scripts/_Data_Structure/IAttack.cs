@@ -9,4 +9,6 @@ public interface IAttack
     void AttackButtonDown();
     void AttackButtonUp();
     void Attack();
+    HitParam GetHitParam();
+    void UpdateStat(Player player);
 }

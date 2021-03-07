@@ -63,4 +63,8 @@ public class WeaponLongGun : MonoBehaviour, IAttack
     public WeaponStat GetWeaponStat() {
         return weaponStat;
     }
+
+    public void UpdateStat(Player player) {
+        transform.GetComponentInChildren<DameOnContact>().hit = GetHitParam();
+    }
 }

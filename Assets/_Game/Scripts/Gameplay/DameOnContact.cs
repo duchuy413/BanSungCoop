@@ -5,6 +5,7 @@ using UnityEngine;
 public class DameOnContact : MonoBehaviour
 {
     public HitParam hit;
+    public IAttack weapon;
     //public List<string> targets;
 
     //private void OnCollisionEnter2D(Collision2D collision) {

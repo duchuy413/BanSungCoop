@@ -16,6 +16,7 @@ public class WeaponPike : MonoBehaviour, IAttack {
     public static float RETURN_TIME_SPEED = 0.5f; //between 0 and 1, lower is faster
 
     public WeaponStat weaponStat;
+    public BoxCollider2D hitBox;
 
     Player player;
     Vector3 attackPos;
@@ -91,8 +92,10 @@ public class WeaponPike : MonoBehaviour, IAttack {
                 transform.parent.localPosition = attackPos;
 
                 float delay = weaponStat.attackCountDown * (DELAY_TIME_BIG_RATE - 1f);
+                hitBox.enabled = true;
 
                 LeanTween.delayedCall(delay, () => {
+                    hitBox.enabled = false;
                     LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
                 });
             } else if (isBiggestAttack) {
@@ -100,13 +103,19 @@ public class WeaponPike : MonoBehaviour, IAttack {
                 transform.parent.localPosition = attackPos;
 
                 float delay = weaponStat.attackCountDown * (DELAY_TIME_BIGGEST_RATE - 1f);
+                hitBox.enabled = true;
 
                 LeanTween.delayedCall(delay, () => {
+                    hitBox.enabled = false;
                     LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
                 });
             } else {
                 attackPos = originalHand + new Vector3(ATTACK_RANGE_CHANGE, 0);
                 transform.parent.localPosition = attackPos;
+                hitBox.enabled = true;
+                LeanTween.delayedCall(0.2f, () => {
+                    hitBox.enabled = false;
+                });
                 LeanTween.moveLocalX(transform.parent.gameObject, originalHand.x, RETURN_TIME);
             }
         }
@@ -114,5 +123,9 @@ public class WeaponPike : MonoBehaviour, IAttack {
 
     public WeaponStat GetWeaponStat() {
         return weaponStat;
+    }
+
+    public void UpdateStat(Player player) {
+        transform.GetComponentInChildren<DameOnContact>().hit = GetHitParam();
     }
 }
