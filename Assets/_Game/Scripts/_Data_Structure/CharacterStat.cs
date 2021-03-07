@@ -80,6 +80,10 @@ public class CharacterStat : ScriptableObject
     public float currentExp = 0;
     public float nextLvlExp = 0;
     public float expGainWhenKill = 42;
+    public float goldGainWhenKill = 20f;
+    public float foodGainWhenKill = 84f;
+    public float foodConsumePerSec = 2.4f;
+    public float shopPrice = 400f;
     public float hp = 200;
     public float maxhp = 200;
     public float dame = 20;

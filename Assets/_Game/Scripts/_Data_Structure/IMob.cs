@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IMob 
 {
-    CharacterStat GetStatData();
+    CharacterStat GetBaseStat();
+    BattleStat GetCurrentStat();
     void SetStatData(CharacterStat stat);
     GameObject GetGameObject();
     void GetHit(HitParam hit);

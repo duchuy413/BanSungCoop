@@ -78,8 +78,12 @@ public class BossDeer : MonoBehaviour, IMob
         hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
     }
 
-    public CharacterStat GetStatData() {
+    public CharacterStat GetBaseStat() {
         return stat;
+    }
+
+    public BattleStat GetCurrentStat() {
+        return current;
     }
 
     public void LoadLevel(int level) {

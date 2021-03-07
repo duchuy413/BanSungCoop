@@ -184,8 +184,12 @@ public class MobWorf : MonoBehaviour, IMob {
         }
     }
 
-    public CharacterStat GetStatData() {
+    public CharacterStat GetBaseStat() {
         return stat;
+    }
+
+    public BattleStat GetCurrentStat() {
+        return current;
     }
 
     public void SetStatData(CharacterStat stat) {
@@ -289,6 +293,8 @@ public class MobWorf : MonoBehaviour, IMob {
 
         if (gameObject.CompareTag("Monster")) {
             NetworkSystem.player.GetComponent<Player>().AddExp(current.currentExp);
+            Gameplay.AddGold(current.goldGainWhenKill);
+            Gameplay.AddFood(current.foodGainWhenKill);
         }
 
         Invoke("Disappear", 2f);

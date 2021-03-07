@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -53,6 +54,10 @@ public class GameSystem : MonoBehaviour
         current.currentExp = 0;
         current.nextLvlExp = stat.baseExp * Mathf.Pow(GameManager.INCREASE_RATE_EXP, level + 1);
         current.expGainWhenKill = stat.expGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
+        current.goldGainWhenKill = stat.goldGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
+        current.foodGainWhenKill = stat.foodGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
+        current.foodConsumePerSec = stat.foodConsumePerSec * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
+        current.shopPrice = stat.foodGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
         current.hp = stat.hp * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
         current.maxhp = stat.hp * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
         current.dame = stat.dame * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
@@ -62,6 +67,31 @@ public class GameSystem : MonoBehaviour
 
         return current;
     }
+
+    //public static bool GetHit(IMob mob, HitParam hit) {
+    //    //if (!hit.targetTags.Contains(gameObject.tag)) {
+    //    //    return;
+    //    //}
+
+    //    //Gameplay.Instance.AddAttackTargets(new List<IMob> { this });
+
+    //    float dameTake = hit.dame;
+    //    GameSystem.TextFly(Convert.ToInt32(dameTake).ToString(), mob.GetGameObject().transform.position + new Vector3(0, 3f));
+
+    //    BattleStat current = mob.GetCurrentStat();
+    //    current.hp -= dameTake;
+
+    //    if (current.hp <= 0) {
+    //        current.hp = 0;
+    //        mob.Died(hit);
+    //        return true;
+    //    } else {
+    //        //StartCoroutine(PauseMovement(0.1f));
+    //    }
+
+    //    textName.text = current.hp + "/" + current.maxhp;
+    //    hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
+    //}
 
     public static double GetCurrentTimeStamp() {
         var epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc);

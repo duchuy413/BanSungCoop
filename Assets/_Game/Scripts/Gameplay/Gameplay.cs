@@ -10,7 +10,8 @@ public class Gameplay : MonoBehaviour {
     public static Dictionary<GameObject, int> indexes;
 
     public static float gold;
-    public static float hungry;
+    public static float food = 2000;
+    public static float foodConsumePerSec = 3f;
 
     public List<Transform> mobPositions;
     public List<IMob> pets;
@@ -22,7 +23,7 @@ public class Gameplay : MonoBehaviour {
     public GameObject gameplayCam;
     public GameObject btnSkip;
     public GameObject popupWeapon;
-    public TextMeshProUGUI txtHungry;
+    public TextMeshProUGUI txtFood;
     public TextMeshProUGUI txtGold;
 
     List<Vector3> pivots = new List<Vector3>();
@@ -39,8 +40,9 @@ public class Gameplay : MonoBehaviour {
 
     void Start() {
         StartCoroutine(SpawnPlayerAtStartPosition());
-        StartCoroutine(GoldMineGeneratingGold());
+        //StartCoroutine(GoldMineGeneratingGold());
         StartCoroutine(UpdatePetFormation());
+        StartCoroutine(ConsumeFoodEverySec());
         AudioSystem.Instance.PlaySound("Sound/background/gunnytheme", 4);
         AudioSystem.Instance.SetLooping(true, 4);
     }
@@ -63,6 +65,15 @@ public class Gameplay : MonoBehaviour {
         }
     }
 
+    IEnumerator ConsumeFoodEverySec() {
+        while (true) {
+            food -= foodConsumePerSec;
+            //txtFood.text = "Food:" + ((int)food).ToString() + "(-" + foodConsumePerSec + "/s)";
+            UpdateDisplay();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
     IEnumerator UpdatePetFormation() {
         while (true) {
             for (int i = 0; i < pets.Count; i++) {
@@ -75,7 +86,14 @@ public class Gameplay : MonoBehaviour {
     }
 
     private void Update() {
-
+        foodConsumePerSec = 3;
+        foreach (IMob pet in pets) {
+            if (pet.GetGameObject() == null || pet.GetGameObject().activeSelf == false) {
+                pets.Remove(pet);
+            } else {
+                foodConsumePerSec += pet.GetCurrentStat().foodConsumePerSec;
+            }
+        }
     }
 
     public Vector3 GetRandomMobSpawnPosition() {
@@ -160,5 +178,24 @@ public class Gameplay : MonoBehaviour {
             indexes.Add(obj, indexes.Count);
         }
         return indexes[obj];
+    }
+
+    public static void AddGold(float amount) {
+        Gameplay.gold += amount;
+        LeanTween.delayedCall(Random.Range(0, 2f), () => {
+            GameSystem.TextFly("+" + (int)amount + "gold", NetworkSystem.player.transform.position + new Vector3(0, 1f), "yellow");
+        });        
+    }
+
+    public static void AddFood(float amount) {
+        Gameplay.food += amount;
+        LeanTween.delayedCall(Random.Range(0, 2f), () => {
+            GameSystem.TextFly("+" + (int)amount + "food", NetworkSystem.player.transform.position + new Vector3(0, 1f), "red");
+        });
+    }
+
+    public static void UpdateDisplay() {
+        Instance.txtGold.text = "Gold:" + ((int)gold).ToString();
+        Instance.txtFood.text = "Food:" + ((int)food).ToString() + "(-" + foodConsumePerSec + "/s)";
     }
 }

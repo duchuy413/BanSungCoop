@@ -79,8 +79,12 @@ public class MobSnail : MonoBehaviour, IMob {
         hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
     }
 
-    public CharacterStat GetStatData() {
+    public CharacterStat GetBaseStat() {
         return stat;
+    }
+
+    public BattleStat GetCurrentStat() {
+        return current;
     }
 
     public void LoadLevel(int level) {
@@ -119,6 +123,8 @@ public class MobSnail : MonoBehaviour, IMob {
         gameObject.SetActive(false);
         if (gameObject.CompareTag("Monster")) {
             NetworkSystem.player.GetComponent<Player>().AddExp(current.expGainWhenKill);
+            Gameplay.AddGold(current.goldGainWhenKill);
+            Gameplay.AddFood(current.foodGainWhenKill);
         }
         LeanTween.delayedCall(5f,() => {
             gameObject.SetActive(true);
