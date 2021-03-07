@@ -137,6 +137,8 @@ public class Gameplay : MonoBehaviour {
         pet.movingPivot = NetworkSystem.player.transform;
         pet.maxMovePivotRange = 10f + petCount*2;
         pet.minMovePivotRange = 5f + petCount;
+        pet.level = 1;
+        pet.LoadLevel(1);
         pet.textName.text = "--------------------";
         pets.Add(pet);
     }

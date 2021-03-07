@@ -120,7 +120,9 @@ public class MobSnail : MonoBehaviour, IMob {
         if (gameObject.CompareTag("Monster")) {
             NetworkSystem.player.GetComponent<Player>().AddExp(current.expGainWhenKill);
         }
-        
+        LeanTween.delayedCall(5f,() => {
+            gameObject.SetActive(true);
+        });
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
