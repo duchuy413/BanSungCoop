@@ -14,4 +14,5 @@ public interface IMob
     void Died(HitParam hitParam);
     void SetAttackTarget(GameObject attackTarget, bool forceChangeTarget = false);
     void SetFollow(Transform pivot, float minDistance, float maxDistance);
+    void GainExp(float amount);
 }

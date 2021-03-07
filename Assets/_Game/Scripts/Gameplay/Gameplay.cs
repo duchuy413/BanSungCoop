@@ -87,13 +87,28 @@ public class Gameplay : MonoBehaviour {
 
     private void Update() {
         foodConsumePerSec = 3;
-        foreach (IMob pet in pets) {
-            if (pet.GetGameObject() == null || pet.GetGameObject().activeSelf == false) {
-                pets.Remove(pet);
+        if (pets.Count == 0) {
+            return;
+        } 
+
+        for (int i = pets.Count - 1; i >= 0; i--) {
+            Debug.Log("PETS i , i = " + i);
+            Debug.Log("PETS i , GetGameObject() = " + pets[i].GetGameObject());
+            Debug.Log("PETS i , pets[i].GetGameObject().activeSelf = " + pets[i].GetGameObject().activeSelf);
+
+            if (pets[i].GetGameObject() == null || pets[i].GetGameObject().activeSelf == false) {
+                pets.RemoveAt(i);
             } else {
-                foodConsumePerSec += pet.GetCurrentStat().foodConsumePerSec;
+                foodConsumePerSec += pets[i].GetCurrentStat().foodConsumePerSec;
             }
         }
+        //foreach (IMob pet in pets) {
+        //    if (pet.GetGameObject() == null || pet.GetGameObject().activeSelf == false) {
+        //        pets.Remove(pet);
+        //    } else {
+        //        foodConsumePerSec += pet.GetCurrentStat().foodConsumePerSec;
+        //    }
+        //}
     }
 
     public Vector3 GetRandomMobSpawnPosition() {

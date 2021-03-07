@@ -122,9 +122,13 @@ public class MobSnail : MonoBehaviour, IMob {
     public void Died(HitParam hitParam) {
         gameObject.SetActive(false);
         if (gameObject.CompareTag("Monster")) {
-            NetworkSystem.player.GetComponent<Player>().AddExp(current.expGainWhenKill);
+            NetworkSystem.player.GetComponent<Player>().GainExp(current.expGainWhenKill);
             Gameplay.AddGold(current.goldGainWhenKill);
             Gameplay.AddFood(current.foodGainWhenKill);
+
+            if (hitParam.owner.CompareTag("Pet")) {
+                hitParam.owner.GetComponent<IMob>().GainExp(current.expGainWhenKill);
+            }
         }
         LeanTween.delayedCall(5f,() => {
             gameObject.SetActive(true);
@@ -159,4 +163,17 @@ public class MobSnail : MonoBehaviour, IMob {
         //this.maxMovePivotRange = maxDistance;
     }
 
+    public void GainExp(float amount) {
+        current.currentExp += amount;
+        if (current.currentExp > current.nextLvlExp) {
+            level++;
+            LoadLevel(level);
+            //weapon.UpdateStat(this);
+            LeanTween.delayedCall(2f, () => {
+                GameSystem.TextFly("Level Up", transform.position + new Vector3(0, 1f), "blue");
+            });
+        }
+        //textName.text = current.currentExp + "/" + current.nextLvlExp;
+        GameSystem.TextFly("+" + (int)amount + "exp", transform.position + new Vector3(0, 1f), "blue");
+    }
 }

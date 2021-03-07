@@ -55,6 +55,7 @@ public class MobWorf : MonoBehaviour, IMob {
         died = false;
         getHit = false;
         LoadLevel(level);
+        hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
 
         //executor = GetComponent<MovementExecutor>();
         //if (executor != null) {
@@ -292,9 +293,13 @@ public class MobWorf : MonoBehaviour, IMob {
         });
 
         if (gameObject.CompareTag("Monster")) {
-            NetworkSystem.player.GetComponent<Player>().AddExp(current.currentExp);
+            NetworkSystem.player.GetComponent<Player>().GainExp(current.currentExp);
             Gameplay.AddGold(current.goldGainWhenKill);
             Gameplay.AddFood(current.foodGainWhenKill);
+
+            if (hitParam.owner.CompareTag("Pet")) {
+                hitParam.owner.GetComponent<IMob>().GainExp(current.expGainWhenKill);
+            }
         }
 
         Invoke("Disappear", 2f);
@@ -331,5 +336,19 @@ public class MobWorf : MonoBehaviour, IMob {
         movingPivot = pivot;
         this.minMovePivotRange = minDistance;
         this.maxMovePivotRange = maxDistance;
+    }
+
+    public void GainExp(float amount) {
+        current.currentExp += amount;
+        if (current.currentExp > current.nextLvlExp) {
+            level++;
+            LoadLevel(level);
+            //weapon.UpdateStat(this);
+            LeanTween.delayedCall(2f, () => {
+                GameSystem.TextFly("Level Up", transform.position + new Vector3(0, 1f), "blue");
+            });
+        }
+        //textName.text = current.currentExp + "/" + current.nextLvlExp;
+        GameSystem.TextFly("+" + (int)amount + "exp", transform.position + new Vector3(0, 1f), "blue");
     }
 }

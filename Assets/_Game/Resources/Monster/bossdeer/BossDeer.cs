@@ -148,4 +148,17 @@ public class BossDeer : MonoBehaviour, IMob
         //this.maxMovePivotRange = maxDistance;
     }
 
+    public void GainExp(float amount) {
+        //current.currentExp += amount;
+        //if (current.currentExp > current.nextLvlExp) {
+        //    level++;
+        //    LoadLevel(level);
+        //    //weapon.UpdateStat(this);
+        //    LeanTween.delayedCall(2f, () => {
+        //        GameSystem.TextFly("Level Up", transform.position + new Vector3(0, 1f), "blue");
+        //    });
+        //}
+        ////textName.text = current.currentExp + "/" + current.nextLvlExp;
+        //GameSystem.TextFly("+" + (int)amount + "exp", transform.position + new Vector3(0, 1f), "blue");
+    }
 }

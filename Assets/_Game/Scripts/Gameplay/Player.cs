@@ -361,7 +361,7 @@ public class Player : NetworkBehaviour {
         hpValue.transform.localScale = new Vector3((current.hp / current.maxhp), 1);
     }
 
-    public void AddExp(float exp) {
+    public void GainExp(float exp) {
         current.currentExp += exp;
         if (current.currentExp > current.nextLvlExp) {
             level++;
