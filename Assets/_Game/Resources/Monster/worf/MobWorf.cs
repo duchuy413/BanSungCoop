@@ -25,7 +25,6 @@ public class MobWorf : MonoBehaviour, IMob {
     public Transform hpValue;
     public GameObject attackTarget;
 
-    //private MovementExecutor executor;
     private FramesAnimator animator;
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
@@ -41,7 +40,6 @@ public class MobWorf : MonoBehaviour, IMob {
 
 
     private void Awake() {
-        //executor = GetComponent<MovementExecutor>();
         animator = GetComponent<FramesAnimator>();
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -56,12 +54,6 @@ public class MobWorf : MonoBehaviour, IMob {
         getHit = false;
         LoadLevel(level);
         hpValue.localScale = new Vector3(current.hp / current.maxhp, 1);
-
-        //executor = GetComponent<MovementExecutor>();
-        //if (executor != null) {
-        //    executor.enabled = true;
-        //    GetComponent<FramesAnimator>().enabled = true;
-        //}
     }
 
     private void Update() {
@@ -98,9 +90,6 @@ public class MobWorf : MonoBehaviour, IMob {
             state = MobState.Returning;
             getHit = false;
             attackTarget = null;
-            //nextChangeMovement = Time.time + Random.Range(2f, 5f);
-            //targetFreeMovement = movingPivot.position + new Vector3(Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
-            //action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
         }
 
         // update base on state
@@ -201,17 +190,6 @@ public class MobWorf : MonoBehaviour, IMob {
         textName.text = "lv" + level.ToString() + "." + stat.characterName;
 
         current = GameSystem.LoadLevel(stat, level);
-        //current = new BattleStat();
-        //current.speed = stat.speed;
-        //current.baseExp = stat.baseExp;
-        //current.currentExp = stat.baseExp * Mathf.Pow(1.1f, level);
-        //current.nextLvlExp = stat.baseExp * Mathf.Pow(1.1f, level + 1);
-        //current.hp = stat.hp * Mathf.Pow(1.1f, level);
-        //current.maxhp = stat.hp * Mathf.Pow(1.1f, level);
-        //current.dame = stat.dame * Mathf.Pow(1.1f, level);
-        //current.attackRange = stat.attackRange;
-        //current.visionRange = stat.visionRange;
-        //current.attackCountDown = stat.attackCountDown;
     }
 
     public virtual void GetHit(HitParam hit) {
@@ -276,9 +254,7 @@ public class MobWorf : MonoBehaviour, IMob {
 
     public void Died(HitParam hitParam) {
         died = true;
-        //executor.enabled = false;
         gameObject.layer = LayerMask.NameToLayer("OnlyCollisionGround");
-        //GetComponent<MovementExecutor>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         GetComponent<FramesAnimator>().spritesheet = stat.die;
 

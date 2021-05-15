@@ -136,12 +136,18 @@ public class Gameplay : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < 10; i++) {
-            GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        }
+        //for (int i = 0; i < 10; i++) {
+        //    GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //}
 
         for (int i = 0; i < 100; i++) {
             GameSystem.LoadPool("Monster/snail/snail", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster1";
+            go.GetComponent<MonsterSpawner>().Spawn();
         }
     }
 
@@ -161,10 +167,10 @@ public class Gameplay : MonoBehaviour {
         }
     }
 
-    public void CreatePet() {
+    public void CreatePet(string monsterName) {
         petCount++;
         gold -= 200;
-        GameObject go = GameSystem.LoadPool("Monster/worf/worf", NetworkSystem.player.transform.position);
+        GameObject go = GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, NetworkSystem.player.transform.position);
         go.tag = "Pet";
         MobWorf pet = go.GetComponent<MobWorf>();
         pet.movingPivot = NetworkSystem.player.transform;
