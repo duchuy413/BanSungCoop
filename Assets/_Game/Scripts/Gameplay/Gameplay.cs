@@ -144,9 +144,40 @@ public class Gameplay : MonoBehaviour {
             GameSystem.LoadPool("Monster/snail/snail", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
             go.GetComponent<MonsterSpawner>().monsterName = "monster1";
+            go.GetComponent<MonsterSpawner>().Spawn();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster2";
+            go.GetComponent<MonsterSpawner>().Spawn();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster3";
+            go.GetComponent<MonsterSpawner>().Spawn();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster4";
+            go.GetComponent<MonsterSpawner>().Spawn();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster5";
+            go.GetComponent<MonsterSpawner>().Spawn();
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().monsterName = "monster7";
+            go.GetComponent<MonsterSpawner>().amount = 7;
             go.GetComponent<MonsterSpawner>().Spawn();
         }
     }
