@@ -20,7 +20,10 @@ public class MonsterSpawner : MonoBehaviour
         //}
     }
 
-    public void Spawn() {
+    public void Spawn(string monsterName, int amount) {
+        this.monsterName = monsterName;
+        this.amount = amount;
+
         monsters = new List<IMob>();
         for (int i = 0; i < amount; i++) {
             Vector3 pos = transform.position + new Vector3(Random.Range(-followRange, followRange), Random.Range(-followRange, followRange));
