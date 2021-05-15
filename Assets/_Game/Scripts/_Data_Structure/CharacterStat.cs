@@ -83,6 +83,7 @@ public class CharacterStat : ScriptableObject
     public float goldGainWhenKill = 20f;
     public float foodGainWhenKill = 84f;
     public float foodConsumePerSec = 2.4f;
+    
     public float shopPrice = 400f;
     public float hp = 200;
     public float maxhp = 200;
@@ -90,7 +91,6 @@ public class CharacterStat : ScriptableObject
     public float attackRange = 0.3f;
     public float visionRange = 0.7f;
     public float attackCountDown = 1f;
-
     public float jumpForce = 200f;
     public float runSpeedMultipler = 1.5f;
     public float fallingDelay = 0.5f;
@@ -98,4 +98,5 @@ public class CharacterStat : ScriptableObject
 
     public string attackObjectName;
     public bool canFly = false;
+    public int foodCount = 2;
 }

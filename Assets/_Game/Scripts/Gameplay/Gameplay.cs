@@ -42,7 +42,7 @@ public class Gameplay : MonoBehaviour {
         StartCoroutine(SpawnPlayerAtStartPosition());
         //StartCoroutine(GoldMineGeneratingGold());
         StartCoroutine(UpdatePetFormation());
-        StartCoroutine(ConsumeFoodEverySec());
+        StartCoroutine(UpdateDisplayCorou());
         AudioSystem.Instance.PlaySound("Sound/background/gunnytheme", 4);
         AudioSystem.Instance.SetLooping(true, 4);
     }
@@ -65,12 +65,17 @@ public class Gameplay : MonoBehaviour {
         }
     }
 
-    IEnumerator ConsumeFoodEverySec() {
+    IEnumerator UpdateDisplayCorou() {
         while (true) {
-            food -= foodConsumePerSec;
+
+            //food -= foodConsumePerSec;
             //txtFood.text = "Food:" + ((int)food).ToString() + "(-" + foodConsumePerSec + "/s)";
-            UpdateDisplay();
-            yield return new WaitForSeconds(1f);
+            //UpdateDisplay();
+
+            Instance.txtGold.text = "Gold:" + ((int)gold).ToString();
+            Instance.txtFood.text = "Food:" + ((int)food).ToString() + "/12";
+
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -87,6 +92,16 @@ public class Gameplay : MonoBehaviour {
 
     private void Update() {
         foodConsumePerSec = 3;
+
+        int totalFood = 0;
+        if (pets != null) {
+            for (int i = 0; i < pets.Count; i++) {
+                totalFood += pets[i].GetBaseStat().foodCount;
+            }
+        }
+
+        food = totalFood;
+
         if (pets.Count == 0) {
             return;
         } 
@@ -153,37 +168,6 @@ public class Gameplay : MonoBehaviour {
             GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
             go.GetComponent<MonsterSpawner>().Spawn("monster1", 5);
         }
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    //go.GetComponent<MonsterSpawner>().monsterName = "monster2";
-        //    go.GetComponent<MonsterSpawner>().Spawn("monster2", 5);
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    //go.GetComponent<MonsterSpawner>().monsterName = "monster3";
-        //    go.GetComponent<MonsterSpawner>().Spawn();
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    go.GetComponent<MonsterSpawner>().monsterName = "monster4";
-        //    go.GetComponent<MonsterSpawner>().Spawn();
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    go.GetComponent<MonsterSpawner>().monsterName = "monster5";
-        //    go.GetComponent<MonsterSpawner>().Spawn();
-        //}
-
-        //for (int i = 0; i < 20; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    go.GetComponent<MonsterSpawner>().monsterName = "monster7";
-        //    go.GetComponent<MonsterSpawner>().amount = 7;
-        //    go.GetComponent<MonsterSpawner>().Spawn();
-        //}
     }
 
     int NearestAreaPivot(int pivotIndex) {
@@ -203,6 +187,8 @@ public class Gameplay : MonoBehaviour {
     }
 
     public void CreatePet(string monsterName) {
+        if (food >= 12) return;
+
         petCount++;
         gold -= 200;
         GameObject go = GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, NetworkSystem.player.transform.position);
@@ -244,14 +230,13 @@ public class Gameplay : MonoBehaviour {
     }
 
     public static void AddFood(float amount) {
-        Gameplay.food += amount;
-        LeanTween.delayedCall(Random.Range(0, 2f), () => {
-            GameSystem.TextFly("+" + (int)amount + "food", NetworkSystem.player.transform.position + new Vector3(0, 1f), "red");
-        });
+        //Gameplay.food += amount;
+        //LeanTween.delayedCall(Random.Range(0, 2f), () => {
+        //    GameSystem.TextFly("+" + (int)amount + "food", NetworkSystem.player.transform.position + new Vector3(0, 1f), "red");
+        //});
     }
 
-    public static void UpdateDisplay() {
-        Instance.txtGold.text = "Gold:" + ((int)gold).ToString();
-        Instance.txtFood.text = "Food:" + ((int)food).ToString() + "(-" + foodConsumePerSec + "/s)";
-    }
+    //public static void UpdateDisplay() {
+
+    //}
 }
