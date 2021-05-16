@@ -12,6 +12,9 @@ public class MobWorf : MonoBehaviour, IMob {
 
     public Vector3 Pivot {
         get {
+            if (movingPivot == null) {
+                Debug.LogError("Moving Pivot not set in object: " + gameObject);
+            }
             if (stat.mobType == MobType.Crowded) {
                 return movingPivot.transform.position;
             } else {
@@ -70,6 +73,17 @@ public class MobWorf : MonoBehaviour, IMob {
         if (died)
             return;
 
+        // if is a brutal monster, and be a lonely one, auto attack player when seen
+        bool playerSeen = Vector3.Distance(transform.position, NetworkSystem.player.transform.position) < stat.visionRange;
+
+        if (playerSeen && 
+            stat.isBrutal && stat.mobType == MobType.Lonely && 
+            (attackTarget == null || attackTarget.activeSelf == false)) {
+
+            attackTarget = NetworkSystem.player;
+            lastGetHitPosition = transform.position;
+        }
+
         // check change state
         if (Vector3.Distance(transform.position, Pivot) > maxMovePivotRange) {
             state = MobState.Returning;
@@ -96,6 +110,7 @@ public class MobWorf : MonoBehaviour, IMob {
             }
         }
 
+        // If attack target dies, then stop attacking
         if ((state == MobState.Attack || state == MobState.Chasing) && (attackTarget == null || attackTarget.activeSelf == false)) {
             state = MobState.Returning;
             getHit = false;

@@ -5,15 +5,18 @@ using TMPro;
 
 public class GoldMine : MonoBehaviour
 {
+    public List<string> monsterNames;
+    public List<IMob> monsters;
+
     public MonsterSpawner spawner;
     public TextMeshPro txtStatus;
 
     bool isCaptured = false;
-    //Coroutine generatingGold;
     float nextSpawnGold = 0;
 
     private void Start() {
         txtStatus.text = "Protected";
+        GetComponent<MonsterSpawner>().Spawn("worf", 5);
     }
 
     private void Update() {

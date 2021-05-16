@@ -101,6 +101,7 @@ public class CharacterStat : ScriptableObject
 
     public string attackObjectName;
     public bool canFly = false;
+    public bool isBrutal = false;
     public int foodCount = 2;
     public MobType mobType = MobType.Crowded;
 }

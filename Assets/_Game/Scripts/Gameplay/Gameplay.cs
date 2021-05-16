@@ -200,7 +200,7 @@ public class Gameplay : MonoBehaviour {
         pet.minMovePivotRange = 5f + petCount;
         pet.level = NetworkSystem.player.GetComponent<Player>().level;
         pet.LoadLevel(1);
-        pet.textName.text = "--------------------";
+        //pet.textName.text = "--------------------";
         pets.Add(pet);
     }
 
