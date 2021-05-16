@@ -5,13 +5,21 @@ using TMPro;
 using System;
 using Random = UnityEngine.Random;
 
-public enum MobState { Free, Returning, Chasing, Attack }
-public enum MobAction { Go, Run }
-
 [RequireComponent(typeof(FramesAnimator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class MobWorf : MonoBehaviour, IMob {
+
+    public Vector3 Pivot {
+        get {
+            if (stat.mobType == MobType.Crowded) {
+                return movingPivot.transform.position;
+            } else {
+                return lastGetHitPosition;
+            }
+        }
+    }
+
     public Transform movingPivot;
     public float maxMovePivotRange = 25f;
     public float minMovePivotRange = 5f;
@@ -24,6 +32,7 @@ public class MobWorf : MonoBehaviour, IMob {
     public TextMeshPro textName;
     public Transform hpValue;
     public GameObject attackTarget;
+    
 
     private FramesAnimator animator;
     private Rigidbody2D rb2d;
@@ -37,7 +46,7 @@ public class MobWorf : MonoBehaviour, IMob {
 
     private float nextChangeMovement;
     private Vector3 targetFreeMovement;
-
+    private Vector3 lastGetHitPosition;
 
     private void Awake() {
         animator = GetComponent<FramesAnimator>();
@@ -48,6 +57,7 @@ public class MobWorf : MonoBehaviour, IMob {
     }
 
     public virtual void OnEnable() {
+        lastGetHitPosition = transform.position;
         gameObject.layer = LayerMask.NameToLayer("Monster");
         attackTarget = null;
         died = false;
@@ -61,7 +71,7 @@ public class MobWorf : MonoBehaviour, IMob {
             return;
 
         // check change state
-        if (Vector3.Distance(transform.position, movingPivot.position) > maxMovePivotRange) {
+        if (Vector3.Distance(transform.position, Pivot) > maxMovePivotRange) {
             state = MobState.Returning;
             getHit = false;
             attackTarget = null;
@@ -72,7 +82,7 @@ public class MobWorf : MonoBehaviour, IMob {
             if (getHit) {
                 state = MobState.Chasing;
             }
-            else if (Vector3.Distance(transform.position, movingPivot.position) < minMovePivotRange) {
+            else if (Vector3.Distance(transform.position, Pivot) < minMovePivotRange) {
                 rb2d.velocity = Vector2.zero;
                 state = MobState.Free;
             }
@@ -94,7 +104,7 @@ public class MobWorf : MonoBehaviour, IMob {
 
         // update base on state
         if (state == MobState.Returning) {
-            rb2d.velocity = (movingPivot.position - transform.position) / (Vector3.Distance(movingPivot.position, transform.position)) * stat.speed * 1.5f;
+            rb2d.velocity = (Pivot - transform.position) / (Vector3.Distance(Pivot, transform.position)) * stat.speed * 1.5f;
             //executor.enabled = false;
             getHit = false;
             animator.spritesheet = stat.run;
@@ -112,7 +122,7 @@ public class MobWorf : MonoBehaviour, IMob {
 
             if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
                 nextChangeMovement = Time.time + Random.Range(2f, 5f);
-                targetFreeMovement = movingPivot.position +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
+                targetFreeMovement = Pivot +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
                 action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
             }
 
@@ -197,6 +207,7 @@ public class MobWorf : MonoBehaviour, IMob {
             return;
         }
 
+        lastGetHitPosition = transform.position;
         Debug.Log("Get hit from " + hit.owner.name);
         getHit = true;
         attackTarget = hit.owner;

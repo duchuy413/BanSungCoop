@@ -57,6 +57,9 @@ using UnityEngine.UI;
 //    public int respawnMapIndex;
 //    public Vector3 respawnMapPosition;
 //}
+public enum MobState { Free, Returning, Chasing, Attack }
+public enum MobAction { Go, Run }
+public enum MobType { Crowded, Lonely }
 
 [CreateAssetMenu(fileName = "New CharacterStat", menuName = "CharacterStat")]
 public class CharacterStat : ScriptableObject
@@ -99,4 +102,5 @@ public class CharacterStat : ScriptableObject
     public string attackObjectName;
     public bool canFly = false;
     public int foodCount = 2;
+    public MobType mobType = MobType.Crowded;
 }

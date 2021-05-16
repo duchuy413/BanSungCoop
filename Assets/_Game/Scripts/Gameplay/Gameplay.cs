@@ -139,13 +139,13 @@ public class Gameplay : MonoBehaviour {
             pivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             areaPivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
         for (int i = 0; i < pivots.Count; i++) {
             int nearest = NearestAreaPivot(i);
-            if (nearest < 5) {
+            if (nearest < 10) {
                 worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
             } else {
                 worldObjs.Add(GameSystem.LoadPool("grass", pivots[i]));
@@ -165,9 +165,9 @@ public class Gameplay : MonoBehaviour {
             go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 25; i++) {
             GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster1", 5);
+            go.GetComponent<MonsterSpawner>().Spawn("monster1", 1);
         }
     }
 
@@ -188,7 +188,7 @@ public class Gameplay : MonoBehaviour {
     }
 
     public void CreatePet(string monsterName) {
-        if (food >= 12) return;
+        if (food >= 12 || gold < 200) return;
 
         petCount++;
         gold -= 200;

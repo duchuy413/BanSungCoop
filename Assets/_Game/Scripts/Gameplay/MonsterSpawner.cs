@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpawnType { Crowded, Lonely }
+
 public class MonsterSpawner : MonoBehaviour
 {
     public string monsterName;
@@ -28,7 +30,15 @@ public class MonsterSpawner : MonoBehaviour
         for (int i = 0; i < amount; i++) {
             Vector3 pos = transform.position + new Vector3(Random.Range(-followRange, followRange), Random.Range(-followRange, followRange));
             GameObject go = GameSystem.LoadPool("Monster/" + monsterName + "/" + monsterName, pos);
+
             go.GetComponent<IMob>().SetFollow(transform, followRange * 0.5f, followRange);
+
+            //if (spawnType == SpawnType.Lonely) {
+            //    go.GetComponent<IMob>().SetFollow(go.transform, followRange * 0.5f, followRange);
+            //} else {
+                
+            //}
+            
             monsters.Add(go.GetComponent<IMob>());
         }
     }
