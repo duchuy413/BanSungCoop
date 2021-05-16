@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     //const - setting
     public static float GRAVITY = 0f;
-    public static float MAP_SIZE = 100f;
+    public static float MAP_SIZE = 200f;
     public static float INCREASE_RATE_STAT = 1.5f;
     public static float INCREASE_RATE_EXP = 1.7f;
 

@@ -135,17 +135,17 @@ public class Gameplay : MonoBehaviour {
     public void GenerateWorld() {
         worldObjs = new List<GameObject>();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 2000; i++) {
             pivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             areaPivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
         for (int i = 0; i < pivots.Count; i++) {
             int nearest = NearestAreaPivot(i);
-            if (nearest < 10) {
+            if (nearest < 100) {
                 worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
             } else {
                 worldObjs.Add(GameSystem.LoadPool("grass", pivots[i]));
@@ -160,7 +160,7 @@ public class Gameplay : MonoBehaviour {
         //    GameSystem.LoadPool("Monster/snail/snail", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         //}
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
             go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
         }
