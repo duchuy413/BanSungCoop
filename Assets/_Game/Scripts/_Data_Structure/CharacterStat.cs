@@ -75,7 +75,7 @@ public class CharacterStat : ScriptableObject
     public Sprite[] custom2;
     public Sprite[] sleep;
 
-    public float speed = 0.7f;
+    public float speed = 2f;
     public float baseExp = 200;
     public float currentExp = 0;
     public float nextLvlExp = 0;

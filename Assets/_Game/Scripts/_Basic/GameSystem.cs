@@ -51,7 +51,7 @@ public class GameSystem : MonoBehaviour
         current = new BattleStat();
         current.speed = stat.speed;
         current.baseExp = stat.baseExp;
-        current.currentExp = 0;
+        current.currentExp = stat.baseExp;
         current.nextLvlExp = stat.baseExp * Mathf.Pow(GameManager.INCREASE_RATE_EXP, level + 1);
         current.expGainWhenKill = stat.expGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);
         current.goldGainWhenKill = stat.goldGainWhenKill * Mathf.Pow(GameManager.INCREASE_RATE_STAT, level);

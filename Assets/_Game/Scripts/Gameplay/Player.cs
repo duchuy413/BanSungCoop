@@ -24,6 +24,7 @@ public class Player : NetworkBehaviour {
 
     public int level = 1;
 
+
     [HideInInspector]
     public BattleStat current;
     [HideInInspector]
@@ -363,6 +364,9 @@ public class Player : NetworkBehaviour {
 
     public void GainExp(float exp) {
         current.currentExp += exp;
+
+        Debug.Log("XP NEED TO LEVEL UP: " + current.currentExp + "/" + current.nextLvlExp);
+
         if (current.currentExp > current.nextLvlExp) {
             level++;
             LoadLevel(level);
