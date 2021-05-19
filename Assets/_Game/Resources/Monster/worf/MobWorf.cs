@@ -85,12 +85,14 @@ public class MobWorf : MonoBehaviour, IMob {
         }
 
         // check change state
+        // mob will return to pivot if distance to pivot too far
         if (Vector3.Distance(transform.position, Pivot) > maxMovePivotRange) {
             state = MobState.Returning;
             getHit = false;
             attackTarget = null;
         }
 
+        // when return to pivot, if get hit, then chase player again
         if (state == MobState.Returning) {
 
             if (getHit) {
@@ -102,6 +104,7 @@ public class MobWorf : MonoBehaviour, IMob {
             }
         }
 
+        // if attacking and target is not null or empty, then attack or chase target base on distance
         if (getHit && state != MobState.Returning || attackTarget != null && attackTarget.activeSelf == true) {
             if (Vector3.Distance(transform.position, attackTarget.transform.position) > stat.attackRange) {
                 state = MobState.Chasing;
@@ -117,86 +120,102 @@ public class MobWorf : MonoBehaviour, IMob {
             attackTarget = null;
         }
 
-        // update base on state
-        if (state == MobState.Returning) {
-            rb2d.velocity = (Pivot - transform.position) / (Vector3.Distance(Pivot, transform.position)) * stat.speed * 1.5f;
-            //executor.enabled = false;
-            getHit = false;
+        switch (state) {
+            case MobState.Returning:
+                StateReturn();
+                break;
+            case MobState.Free:
+                StateFree();
+                break;
+            case MobState.Chasing:
+                StateChase();
+                break;
+            case MobState.Attack:
+                StateAttack();
+                break;
+            default:
+                return;
+        }
+    }
+
+    void StateFree() {
+        //executor.enabled = false;
+
+        if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
+            nextChangeMovement = Time.time + Random.Range(2f, 5f);
+            targetFreeMovement = Pivot + new Vector3(Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
+            action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
+        }
+
+        //executor.enabled = false;
+        getHit = false;
+
+        if (action == MobAction.Go) {
+            rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed;
+            animator.spritesheet = stat.go;
+        } else if (action == MobAction.Run) {
+            rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed * 1.5f;
             animator.spritesheet = stat.run;
-
-            if (rb2d.velocity.x > 0)
-                spriteRenderer.flipX = true;
-            else if (rb2d.velocity.x < 0)
-                spriteRenderer.flipX = false;
-
-            return;
         }
 
-        if (state == MobState.Free) {
-            //executor.enabled = false;
+        if (rb2d.velocity.x > 0)
+            spriteRenderer.flipX = true;
+        else if (rb2d.velocity.x < 0)
+            spriteRenderer.flipX = false;
+    }
 
-            if (Time.time > nextChangeMovement || Vector3.Distance(targetFreeMovement, transform.position) < 0.5f) {
-                nextChangeMovement = Time.time + Random.Range(2f, 5f);
-                targetFreeMovement = Pivot +  new Vector3(Random.Range (-maxMovePivotRange, maxMovePivotRange) * 0.5f, Random.Range(-maxMovePivotRange, maxMovePivotRange) * 0.25f);
-                action = Random.Range(0, 5) == 0 ? MobAction.Run : MobAction.Go;
-            }
+    void StateChase() {
+        //executor.enabled = false;
+        animator.spritesheet = stat.run;
 
-            //executor.enabled = false;
-            getHit = false;
+        Vector3 velocity = GameSystem.GoToTargetVector(transform.position, attackTarget.transform.position, stat.speed) * 1.5f;
 
-            if (action == MobAction.Go) {
-                rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed;
-                animator.spritesheet = stat.go;
-            } else if (action == MobAction.Run) {
-                rb2d.velocity = (targetFreeMovement - transform.position) / (Vector3.Distance(targetFreeMovement, transform.position)) * stat.speed * 1.5f;
-                animator.spritesheet = stat.run;
-            }
+        rb2d.velocity = velocity;
 
-            if (rb2d.velocity.x > 0)
-                spriteRenderer.flipX = true;
-            else if (rb2d.velocity.x < 0)
-                spriteRenderer.flipX = false;
+        if (velocity.x > 0)
+            spriteRenderer.flipX = true;
+        else if (velocity.x < 0)
+            spriteRenderer.flipX = false;
+
+        return;
+    }
+
+    void StateAttack() {
+        //executor.enabled = false;
+        animator.spritesheet = stat.attack;
+        rb2d.velocity = Vector2.zero;
+
+        if (transform.position.x > attackTarget.transform.position.x)
+            spriteRenderer.flipX = false;
+        else if (transform.position.x < attackTarget.transform.position.x)
+            spriteRenderer.flipX = true;
+
+        if (Time.time > nextAttack) {
+            nextAttack = Time.time + stat.attackCountDown;
+            List<string> targetTags = gameObject.tag == "Pet" ? new List<string> { "Monster" } : new List<string> { "Player", "Pet" };
+            HitParam hit = new HitParam();
+            hit.targetTags = targetTags;
+            hit.dame = current.dame;
+            hit.owner = gameObject;
+
+            attackTarget.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
         }
 
-        if (state == MobState.Chasing) {
-            //executor.enabled = false;
-            animator.spritesheet = stat.run;
+        return;
+    }
 
-            Vector3 velocity = GameSystem.GoToTargetVector(transform.position, attackTarget.transform.position, stat.speed) * 1.5f;
+    void StateReturn() {
+        rb2d.velocity = (Pivot - transform.position) / (Vector3.Distance(Pivot, transform.position)) * stat.speed * 1.5f;
+        //executor.enabled = false;
+        getHit = false;
+        animator.spritesheet = stat.run;
 
-            rb2d.velocity = velocity;
+        if (rb2d.velocity.x > 0)
+            spriteRenderer.flipX = true;
+        else if (rb2d.velocity.x < 0)
+            spriteRenderer.flipX = false;
 
-            if (velocity.x > 0)
-                spriteRenderer.flipX = true;
-            else if (velocity.x < 0)
-                spriteRenderer.flipX = false;
-
-            return;
-        }
-
-        if (state == MobState.Attack) {
-            //executor.enabled = false;
-            animator.spritesheet = stat.attack;
-            rb2d.velocity = Vector2.zero;
-
-            if (transform.position.x > attackTarget.transform.position.x)
-                spriteRenderer.flipX = false;
-            else if (transform.position.x < attackTarget.transform.position.x)
-                spriteRenderer.flipX = true;
-
-            if (Time.time > nextAttack) {
-                nextAttack = Time.time + stat.attackCountDown;
-                List<string> targetTags = gameObject.tag == "Pet" ? new List<string> { "Monster" } : new List<string> { "Player", "Pet" };
-                HitParam hit = new HitParam();
-                hit.targetTags = targetTags;
-                hit.dame = current.dame;
-                hit.owner = gameObject;
-
-                attackTarget.SendMessage("GetHit", hit, SendMessageOptions.DontRequireReceiver);
-            }
-
-            return;
-        }
+        return;
     }
 
     public CharacterStat GetBaseStat() {
