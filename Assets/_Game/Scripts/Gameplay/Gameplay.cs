@@ -109,9 +109,9 @@ public class Gameplay : MonoBehaviour {
         } 
 
         for (int i = pets.Count - 1; i >= 0; i--) {
-            Debug.Log("PETS i , i = " + i);
-            Debug.Log("PETS i , GetGameObject() = " + pets[i].GetGameObject());
-            Debug.Log("PETS i , pets[i].GetGameObject().activeSelf = " + pets[i].GetGameObject().activeSelf);
+            //Debug.Log("PETS i , i = " + i);
+            //Debug.Log("PETS i , GetGameObject() = " + pets[i].GetGameObject());
+            //Debug.Log("PETS i , pets[i].GetGameObject().activeSelf = " + pets[i].GetGameObject().activeSelf);
 
             if (pets[i].GetGameObject() == null || pets[i].GetGameObject().activeSelf == false) {
                 pets.RemoveAt(i);

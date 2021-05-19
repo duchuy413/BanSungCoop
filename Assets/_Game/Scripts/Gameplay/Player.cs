@@ -201,7 +201,7 @@ public class Player : NetworkBehaviour {
             transform.localScale = new Vector3(-scale, scale);
         }
 
-        Debug.Log("PLAYER CURRENT DAME: " + current.dame);
+        //Debug.Log("PLAYER CURRENT DAME: " + current.dame);
     }
 
     public void Jump() {
