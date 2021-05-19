@@ -140,56 +140,58 @@ public class Gameplay : MonoBehaviour {
             pivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 350; i++) {
             areaPivots.Add(new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
         }
 
         for (int i = 0; i < pivots.Count; i++) {
             int nearest = NearestAreaPivot(i);
-            if (nearest < 100) {
-                worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
-            } else {
-                worldObjs.Add(GameSystem.LoadPool("grass", pivots[i]));
+            if (nearest < 50) {
+                worldObjs.Add(GameSystem.LoadPool("world/tree", pivots[i]));
+            } else if (nearest > 500 && nearest <= 100) {
+                worldObjs.Add(GameSystem.LoadPool("world/grass", pivots[i]));
+            } else if (nearest > 100 && nearest <= 150) {
+                worldObjs.Add(GameSystem.LoadPool("world/stone", pivots[i]));
+            } else if (nearest > 150 && nearest <= 200) {
+                worldObjs.Add(GameSystem.LoadPool("world/sapling", pivots[i]));
+            } else if (nearest > 200 && nearest <= 250) {
+                worldObjs.Add(GameSystem.LoadPool("world/house", pivots[i]));
+            } else if (nearest > 250 && nearest <= 300) {
+                worldObjs.Add(GameSystem.LoadPool("world/spiderden", pivots[i]));
+            } else if (nearest > 300 && nearest <= 350) {
+                worldObjs.Add(GameSystem.LoadPool("world/grassyellow", pivots[i]));
             }
         }
 
-        //for (int i = 0; i < 10; i++) {
-        //    GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //for (int i = 0; i < 200; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
         //}
 
-        //for (int i = 0; i < 100; i++) {
-        //    GameSystem.LoadPool("Monster/snail/snail", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //for (int i = 0; i < 20; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster4", 5);
         //}
 
-        for (int i = 0; i < 200; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
-        }
+        //for (int i = 0; i < 20; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster3", 5);
+        //}
 
-        for (int i = 0; i < 20; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster4", 5);
-        }
+        //for (int i = 0; i < 20; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster2", 5);
+        //}
 
-        for (int i = 0; i < 20; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster3", 5);
-        }
+        //for (int i = 0; i < 25; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster1", 1);
+        //}
 
-        for (int i = 0; i < 20; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster2", 5);
-        }
-
-        for (int i = 0; i < 25; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster1", 1);
-        }
-
-        for (int i = 0; i < 20; i++) {
-            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-            go.GetComponent<MonsterSpawner>().Spawn("monster7", 5);
-        }
+        //for (int i = 0; i < 20; i++) {
+        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+        //    go.GetComponent<MonsterSpawner>().Spawn("monster7", 5);
+        //}
     }
 
     int NearestAreaPivot(int pivotIndex) {
