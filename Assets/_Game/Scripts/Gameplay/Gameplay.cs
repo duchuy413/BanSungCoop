@@ -211,7 +211,7 @@ public class Gameplay : MonoBehaviour {
     }
 
     public void CreatePet(string monsterName) {
-        if (food >= 12 || gold < 200) return;
+        //if (food >= 12 || gold < 200) return;
 
         petCount++;
         gold -= 200;
