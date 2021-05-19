@@ -28,6 +28,7 @@ public class Gameplay : MonoBehaviour {
 
     List<Vector3> pivots = new List<Vector3>();
     List<Vector3> areaPivots = new List<Vector3>();
+    List<MonsterSpawner> monsterSpawners = new List<MonsterSpawner>();
 
     int petCount = 0;
 
@@ -165,9 +166,29 @@ public class Gameplay : MonoBehaviour {
             go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
         }
 
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().Spawn("monster4", 5);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().Spawn("monster3", 5);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().Spawn("monster2", 5);
+        }
+
         for (int i = 0; i < 25; i++) {
             GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
             go.GetComponent<MonsterSpawner>().Spawn("monster1", 1);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().Spawn("monster7", 5);
         }
     }
 
