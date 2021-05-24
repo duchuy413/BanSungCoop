@@ -36,7 +36,7 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
         indexes = new Dictionary<GameObject, int>();
         pets = new List<IMob>();
-        //GenerateWorld();
+        GenerateWorld();
     }
 
     void Start() {
@@ -44,7 +44,7 @@ public class Gameplay : MonoBehaviour {
         //StartCoroutine(GoldMineGeneratingGold());
         StartCoroutine(UpdatePetFormation());
         StartCoroutine(UpdateDisplayCorou());
-        AudioSystem.Instance.PlaySound("Sound/background/gunnytheme", 4);
+        AudioSystem.Instance.PlaySound("Sound/background/Mystery of Love", 4);
         AudioSystem.Instance.SetLooping(true, 4);
     }
 
