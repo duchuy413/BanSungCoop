@@ -36,7 +36,7 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
         indexes = new Dictionary<GameObject, int>();
         pets = new List<IMob>();
-        GenerateWorld();
+        //GenerateWorld();
     }
 
     void Start() {
