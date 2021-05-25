@@ -148,12 +148,9 @@ public class Gameplay : MonoBehaviour {
             int nearest = NearestAreaPivot(i);
             if (nearest < 50) {
                 worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
-            } 
-            
-            //else if (nearest > 500 && nearest <= 100) {
-            //    worldObjs.Add(GameSystem.LoadPool("world/grass", pivots[i]));
-            //} 
-            else if (nearest > 100 && nearest <= 150) {
+            } else if (nearest > 500 && nearest <= 100) {
+                worldObjs.Add(GameSystem.LoadPool("world/grass", pivots[i]));
+            } else if (nearest > 100 && nearest <= 150) {
                 worldObjs.Add(GameSystem.LoadPool("world/stone", pivots[i]));
             } 
             //else if (nearest > 150 && nearest <= 200) {
@@ -165,6 +162,11 @@ public class Gameplay : MonoBehaviour {
             //} else if (nearest > 300 && nearest <= 350) {
             //    worldObjs.Add(GameSystem.LoadPool("world/grassyellow", pivots[i]));
             //}
+        }
+
+        for (int i = 0; i < 500; i++) {
+            GameObject go = GameSystem.LoadPool("grass", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            //go.GetComponent<MonsterSpawner>().Spawn("monster5", 5);
         }
 
         //for (int i = 0; i < 200; i++) {
