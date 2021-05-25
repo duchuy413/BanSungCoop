@@ -147,20 +147,24 @@ public class Gameplay : MonoBehaviour {
         for (int i = 0; i < pivots.Count; i++) {
             int nearest = NearestAreaPivot(i);
             if (nearest < 50) {
-                worldObjs.Add(GameSystem.LoadPool("world/tree", pivots[i]));
-            } else if (nearest > 500 && nearest <= 100) {
-                worldObjs.Add(GameSystem.LoadPool("world/grass", pivots[i]));
-            } else if (nearest > 100 && nearest <= 150) {
+                worldObjs.Add(GameSystem.LoadPool("tree", pivots[i]));
+            } 
+            
+            //else if (nearest > 500 && nearest <= 100) {
+            //    worldObjs.Add(GameSystem.LoadPool("world/grass", pivots[i]));
+            //} 
+            else if (nearest > 100 && nearest <= 150) {
                 worldObjs.Add(GameSystem.LoadPool("world/stone", pivots[i]));
-            } else if (nearest > 150 && nearest <= 200) {
-                worldObjs.Add(GameSystem.LoadPool("world/sapling", pivots[i]));
-            } else if (nearest > 200 && nearest <= 250) {
-                worldObjs.Add(GameSystem.LoadPool("world/house", pivots[i]));
-            } else if (nearest > 250 && nearest <= 300) {
-                worldObjs.Add(GameSystem.LoadPool("world/spiderden", pivots[i]));
-            } else if (nearest > 300 && nearest <= 350) {
-                worldObjs.Add(GameSystem.LoadPool("world/grassyellow", pivots[i]));
-            }
+            } 
+            //else if (nearest > 150 && nearest <= 200) {
+            //    worldObjs.Add(GameSystem.LoadPool("world/sapling", pivots[i]));
+            //} else if (nearest > 200 && nearest <= 250) {
+            //    worldObjs.Add(GameSystem.LoadPool("world/house", pivots[i]));
+            //} else if (nearest > 250 && nearest <= 300) {
+            //    worldObjs.Add(GameSystem.LoadPool("world/spiderden", pivots[i]));
+            //} else if (nearest > 300 && nearest <= 350) {
+            //    worldObjs.Add(GameSystem.LoadPool("world/grassyellow", pivots[i]));
+            //}
         }
 
         //for (int i = 0; i < 200; i++) {
