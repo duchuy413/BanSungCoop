@@ -12,6 +12,7 @@ public class FramesAnimator : MonoBehaviour
     public Sprite[] spritesheet;
     public float RATE = 0.2f;
     public float DELAY_RANGE = 0.2f;
+
     public bool looping = true;
 
     [HideInInspector]

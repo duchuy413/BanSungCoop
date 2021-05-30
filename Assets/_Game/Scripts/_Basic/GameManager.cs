@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     //public field
     public static bool isPlaying = false;
-    public static string sceneName = "WorldRandom";
+    public static string sceneName = "Map1";
     public static string weapon = "pike";
     public static Vector3 startPosition = new Vector3(0, 0);
 

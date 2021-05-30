@@ -24,6 +24,7 @@ public class Gameplay : MonoBehaviour {
     public GameObject gameplayCam;
     public GameObject btnSkip;
     public GameObject popupWeapon;
+    public GameObject canvasInput;
     public TextMeshProUGUI txtFood;
     public TextMeshProUGUI txtGold;
 
@@ -37,6 +38,7 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
         indexes = new Dictionary<GameObject, int>();
         pets = new List<IMob>();
+        canvasInput.SetActive(true);
 
         if (SceneManager.GetActiveScene().name == "WorldRandom") {
             GenerateWorld();

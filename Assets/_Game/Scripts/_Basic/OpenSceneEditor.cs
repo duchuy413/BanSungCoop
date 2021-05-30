@@ -14,6 +14,23 @@ public class OpenSceneEditor : MonoBehaviour
         OpenScene("Login");
     }
 
+    [MenuItem("Project/Open Map1", priority = 5000)]
+    public static void OpenMap1() {
+        OpenScene("_Main/Map1");
+    }
+
+    [MenuItem("Project/Cheat/Turn On CanvasInput", priority = 5000)]
+    public static void InputOn() {
+        GameObject.Find("Canvas Input").SetActive(true);
+        //OpenScene("Map1");
+    }
+
+    [MenuItem("Project/Cheat/Turn Off CanvasInput", priority = 5000)]
+    public static void InputOff() {
+        GameObject.Find("Canvas Input").SetActive(false);
+        //OpenScene("Map1");
+    }
+
     [MenuItem("Project/Open Scene Gameplay", false, 5000)]
     public static void OpenMain() {
         OpenScene("Gameplay");
