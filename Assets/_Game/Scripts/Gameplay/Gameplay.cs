@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class Gameplay : MonoBehaviour {
     public static Gameplay Instance;
@@ -36,7 +37,10 @@ public class Gameplay : MonoBehaviour {
         Instance = this;
         indexes = new Dictionary<GameObject, int>();
         pets = new List<IMob>();
-        GenerateWorld();
+
+        if (SceneManager.GetActiveScene().name == "WorldRandom") {
+            GenerateWorld();
+        }    
     }
 
     void Start() {
@@ -176,10 +180,10 @@ public class Gameplay : MonoBehaviour {
             //go.GetComponent<MonsterSpawner>().Spawn("monster5", 5);
         }
 
-        //for (int i = 0; i < 200; i++) {
-        //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
-        //    go.GetComponent<MonsterSpawner>().Spawn("monster5",5);
-        //}
+        for (int i = 0; i < 10; i++) {
+            GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
+            go.GetComponent<MonsterSpawner>().Spawn("monster1", 5);
+        }
 
         //for (int i = 0; i < 20; i++) {
         //    GameObject go = GameSystem.LoadPool("Monster/worf/worfspawner", new Vector3(Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE), Random.Range(-GameManager.MAP_SIZE, GameManager.MAP_SIZE)));
